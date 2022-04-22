@@ -2,6 +2,7 @@
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32f4xx_hal_msp.o"
+"./Core/Src/stm32f4xx_hal_timebase_tim.o"
 "./Core/Src/stm32f4xx_it.o"
 "./Core/Src/syscalls.o"
 "./Core/Src/sysmem.o"
@@ -34,4 +35,5 @@
 "./Middlewares/FreeRTOS/stream_buffer.o"
 "./Middlewares/FreeRTOS/tasks.o"
 "./Middlewares/FreeRTOS/timers.o"
+"./Modules/Src/module_led.o"
 "./Services/Src/service_uart.o"

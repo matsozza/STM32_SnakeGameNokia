@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "service_uart.h"
+#include "module_led.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,6 +51,7 @@ int ledCounter;
 
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
+osTimerId timer_100msHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -57,11 +59,15 @@ osThreadId defaultTaskHandle;
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
+void timer_100ms_callback(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
+
+/* GetTimerTaskMemory prototype (linked to static allocation support) */
+void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize );
 
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
 static StaticTask_t xIdleTaskTCBBuffer;
@@ -75,6 +81,19 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
   /* place for user code */
 }
 /* USER CODE END GET_IDLE_TASK_MEMORY */
+
+/* USER CODE BEGIN GET_TIMER_TASK_MEMORY */
+static StaticTask_t xTimerTaskTCBBuffer;
+static StackType_t xTimerStack[configTIMER_TASK_STACK_DEPTH];
+
+void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize )
+{
+  *ppxTimerTaskTCBBuffer = &xTimerTaskTCBBuffer;
+  *ppxTimerTaskStackBuffer = &xTimerStack[0];
+  *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
+  /* place for user code */
+}
+/* USER CODE END GET_TIMER_TASK_MEMORY */
 
 /**
   * @brief  FreeRTOS initialization
@@ -102,8 +121,15 @@ void MX_FREERTOS_Init(void) {
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
+  /* Create the timer(s) */
+  /* definition and creation of timer_100ms */
+  osTimerDef(timer_100ms, timer_100ms_callback);
+  timer_100msHandle = osTimerCreate(osTimer(timer_100ms), osTimerPeriodic, NULL);
+
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
+  osStatus timer_100ms_status = osTimerStart(timer_100msHandle, 100);
+
   /* USER CODE END RTOS_TIMERS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -132,26 +158,29 @@ void StartDefaultTask(void const * argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
-  for(;;)
-  {
 
-	  //Print Message + Counter
-	  itoa(ledCounter,numberStr,10);
-	  strcpy(testStrCat,testStr);
-	  strcat(testStrCat, numberStr);
-	  USART2_sendString( testStrCat );
+	for(;;){
+		ledCounter++;
 
-	  //Toggle LED
-	  if(ledCounter > 200){
-		  HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-		  ledCounter=0;
-	  }
+		 if (ledCounter>20000){
+			 //toggle_LED1();
+			 ledCounter = 0;
+		 }
 
-	  ledCounter++;
-	  osDelay(1);
-	  taskYIELD();
-  }
+		 vTaskDelay(1500);
+		//taskYIELD();
+	}
+
   /* USER CODE END StartDefaultTask */
+}
+
+/* timer_100ms_callback function */
+void timer_100ms_callback(void const * argument)
+{
+  /* USER CODE BEGIN timer_100ms_callback */
+
+	toggle_LED1();
+  /* USER CODE END timer_100ms_callback */
 }
 
 /* Private application code --------------------------------------------------*/

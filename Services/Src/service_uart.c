@@ -1,6 +1,6 @@
 /*
  * UART High Level Services
- * uart_hl_services.c
+ * service_uart.c
  *
  *  Created on: Apr 21, 2022
  *      Author: Matheus Sozza
