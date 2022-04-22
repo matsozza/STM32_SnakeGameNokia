@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define UART_USE_IT true
+#define UART_USE_IT 0
 
 int USART2_sendString(char *msg)
 {
@@ -25,7 +25,7 @@ int USART2_sendString(char *msg)
 		strcat(preparedStr, "\n\r");
 
 		// Transmit prepared message to USART2
-#if !UART_USE_IT
+#if(UART_USE_IT == 0)
 		HAL_StatusTypeDef txStatus = HAL_UART_Transmit( &huart2,
 														(uint8_t*) preparedStr,
 														strlen(preparedStr),

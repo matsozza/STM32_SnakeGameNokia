@@ -1,7 +1,7 @@
 #MicroXplorer Configuration settings - do not modify
-FREERTOS.IPParameters=Tasks01,configUSE_TIMERS,Timers01,configTIMER_TASK_PRIORITY,configUSE_NEWLIB_REENTRANT
-FREERTOS.Tasks01=defaultTask,0,128,StartDefaultTask,Default,NULL,Dynamic,NULL,NULL
-FREERTOS.Timers01=timer_100ms,timer_100ms_callback,osTimerPeriodic,Default,NULL,Dynamic,NULL
+FREERTOS.FootprintOK=true
+FREERTOS.IPParameters=Tasks01,configUSE_TIMERS,configTIMER_TASK_PRIORITY,configUSE_NEWLIB_REENTRANT,FootprintOK
+FREERTOS.Tasks01=task_100ms,0,128,StartTask100ms,Default,NULL,Dynamic,NULL,NULL;task_500ms,1,128,StartTask500ms,Default,NULL,Dynamic,NULL,NULL
 FREERTOS.configTIMER_TASK_PRIORITY=6
 FREERTOS.configUSE_NEWLIB_REENTRANT=1
 FREERTOS.configUSE_TIMERS=1
@@ -125,7 +125,7 @@ RCC.VCOI2SOutputFreq_Value=384000000
 RCC.VCOInputFreq_Value=2000000
 RCC.VCOOutputFreq_Value=384000000
 RCC.VcooutputI2S=192000000
-USART2.BaudRate=9600
+USART2.BaudRate=115200
 USART2.IPParameters=VirtualMode,Parity,OverSampling,BaudRate
 USART2.OverSampling=UART_OVERSAMPLING_8
 USART2.Parity=PARITY_NONE

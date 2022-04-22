@@ -6,5 +6,4 @@
  *      Author: Matheus Sozza
  */
 
-
 void toggle_LED1();

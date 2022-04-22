@@ -36,4 +36,5 @@
 "./Middlewares/FreeRTOS/tasks.o"
 "./Middlewares/FreeRTOS/timers.o"
 "./Modules/Src/module_led.o"
+"./Modules/Src/module_uart.o"
 "./Services/Src/service_uart.o"

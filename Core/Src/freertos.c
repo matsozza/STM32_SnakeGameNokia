@@ -29,6 +29,7 @@
 #include <string.h>
 #include "service_uart.h"
 #include "module_led.h"
+#include "module_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,21 +46,17 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-
-char *testStr, *testStrCat, *numberStr;
-int ledCounter;
-
 /* USER CODE END Variables */
-osThreadId defaultTaskHandle;
-osTimerId timer_100msHandle;
+osThreadId task_100msHandle;
+osThreadId task_500msHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
 /* USER CODE END FunctionPrototypes */
 
-void StartDefaultTask(void const * argument);
-void timer_100ms_callback(void const * argument);
+void StartTask100ms(void const * argument);
+void StartTask500ms(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -104,13 +101,6 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
 
   //Variables initialization
-  ledCounter = 0;
-  testStr = malloc(sizeof(char)*16);
-  testStrCat = malloc(sizeof(char)*32);
-  numberStr = malloc(sizeof(char)*32);
-
-  strcpy(testStr,"TestStr ");
-
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -121,15 +111,8 @@ void MX_FREERTOS_Init(void) {
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
-  /* Create the timer(s) */
-  /* definition and creation of timer_100ms */
-  osTimerDef(timer_100ms, timer_100ms_callback);
-  timer_100msHandle = osTimerCreate(osTimer(timer_100ms), osTimerPeriodic, NULL);
-
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
-  osStatus timer_100ms_status = osTimerStart(timer_100msHandle, 100);
-
   /* USER CODE END RTOS_TIMERS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -137,9 +120,13 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  /* definition and creation of task_100ms */
+  osThreadDef(task_100ms, StartTask100ms, osPriorityNormal, 0, 128);
+  task_100msHandle = osThreadCreate(osThread(task_100ms), NULL);
+
+  /* definition and creation of task_500ms */
+  osThreadDef(task_500ms, StartTask500ms, osPriorityAboveNormal, 0, 128);
+  task_500msHandle = osThreadCreate(osThread(task_500ms), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -147,40 +134,42 @@ void MX_FREERTOS_Init(void) {
 
 }
 
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_StartTask100ms */
 /**
-  * @brief  Function implementing the defaultTask thread.
+  * @brief  Function implementing the task_100ms thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void const * argument)
+/* USER CODE END Header_StartTask100ms */
+void StartTask100ms(void const * argument)
 {
-  /* USER CODE BEGIN StartDefaultTask */
-  /* Infinite loop */
-
+  /* USER CODE BEGIN StartTask100ms */
+	/* Infinite loop */
 	for(;;){
-		ledCounter++;
-
-		 if (ledCounter>20000){
-			 //toggle_LED1();
-			 ledCounter = 0;
-		 }
-
-		 vTaskDelay(1500);
-		//taskYIELD();
+		toggle_LED1();
+		UART_printLEDString();
+		vTaskDelay(100);
 	}
 
-  /* USER CODE END StartDefaultTask */
+  /* USER CODE END StartTask100ms */
 }
 
-/* timer_100ms_callback function */
-void timer_100ms_callback(void const * argument)
+/* USER CODE BEGIN Header_StartTask500ms */
+/**
+* @brief Function implementing the task_500ms thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTask500ms */
+void StartTask500ms(void const * argument)
 {
-  /* USER CODE BEGIN timer_100ms_callback */
-
-	toggle_LED1();
-  /* USER CODE END timer_100ms_callback */
+  /* USER CODE BEGIN StartTask500ms */
+	/* Infinite loop */
+	for(;;){
+		UART_printTestString();
+		vTaskDelay(500);
+	}
+  /* USER CODE END StartTask500ms */
 }
 
 /* Private application code --------------------------------------------------*/
