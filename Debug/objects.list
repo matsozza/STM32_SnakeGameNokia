@@ -1,4 +1,3 @@
-"./Core/Src/Core_HL_Services/uart_hl_services.o"
 "./Core/Src/freertos.o"
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"
@@ -35,3 +34,4 @@
 "./Middlewares/FreeRTOS/stream_buffer.o"
 "./Middlewares/FreeRTOS/tasks.o"
 "./Middlewares/FreeRTOS/timers.o"
+"./Services/Src/service_uart.o"

@@ -27,29 +27,26 @@
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
 #include <string.h>
-#include "Core_HL_Services/uart_hl_services.h"
+#include "service_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 
-  char *testStr, *testStrCat, *numberStr;
-  int ledCounter;
+char *testStr, *testStrCat, *numberStr;
+int ledCounter;
 
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;

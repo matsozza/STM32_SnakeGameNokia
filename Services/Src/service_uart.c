@@ -6,7 +6,7 @@
  *      Author: Matheus Sozza
  */
 
-#include "Core_HL_Services/uart_hl_services.h"
+#include "service_uart.h"
 #include "usart.h"
 #include <string.h>
 #include <stdlib.h>
