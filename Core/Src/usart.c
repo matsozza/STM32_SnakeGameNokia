@@ -18,13 +18,11 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <stdlib.h>
-#include <string.h>
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
-
-void USART2_printMsg(char *msg);
+#include <stdio.h>
+#include <stdlib.h>
 
 /* USER CODE END 0 */
 
@@ -43,7 +41,7 @@ void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
+  huart2.Init.BaudRate = 9600;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
@@ -115,21 +113,6 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 /* USER CODE BEGIN 1 */
 
-void USART2_printMsg(char *msg)
-{
-	//Allocate memory for string preparation
-	char *preparedStr = malloc(sizeof(char)* (strlen(msg) + 32));
-
-	//Prepare a string with a line break + carriage return
-	strcpy(preparedStr, msg);
-	strcat(preparedStr, "\n\r");
-
-	// Transmit prepared message to USART2
-	HAL_UART_Transmit(&huart2, preparedStr, strlen(preparedStr), 5000);
-
-	//Free allocated memory
-	free(preparedStr);
-}
 
 
 /* USER CODE END 1 */
