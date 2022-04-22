@@ -25,4 +25,5 @@ Core/Src/Core_HL_Services \
 Core/Src \
 Core/Startup \
 Drivers/STM32F4xx_HAL_Driver \
+Middlewares/FreeRTOS \
 
