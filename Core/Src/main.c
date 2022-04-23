@@ -21,6 +21,7 @@
 #include "cmsis_os.h"
 #include "usart.h"
 #include "gpio.h"
+#include "SEGGER_SYSVIEW.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -73,6 +74,11 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+
+  // SEGGER SystemView configuration
+  SEGGER_SYSVIEW_Conf();
+  //SEGGER_SYSVIEW_Start();
+
   /* USER CODE END Init */
 
   /* Configure the system clock */

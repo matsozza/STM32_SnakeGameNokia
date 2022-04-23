@@ -30,6 +30,13 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/mathe/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  C:/Users/mathe/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
+ C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.h \
+ C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.h \
+ C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/SEGGER/SEGGER.h \
+ C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/Config/Global.h \
+ C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW_ConfDefaults.h \
+ C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Conf.h \
+ C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/Config/SEGGER_RTT_Conf.h \
  C:/Users/mathe/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \
  C:/Users/mathe/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Middlewares/Third_Party/FreeRTOS/Source/include/portable.h \
  C:/Users/mathe/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h \
@@ -77,6 +84,13 @@ C:/Users/mathe/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HA
 C:/Users/mathe/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 C:/Users/mathe/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 ../Core/Inc/FreeRTOSConfig.h:
+C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.h:
+C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.h:
+C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/SEGGER/SEGGER.h:
+C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/Config/Global.h:
+C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW_ConfDefaults.h:
+C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Conf.h:
+C:/Users/mathe/Documentos/GitHub/STM32_SnakeGame/STM32_SnakeGameNokia/Middlewares/SEGGER/Config/SEGGER_RTT_Conf.h:
 C:/Users/mathe/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h:
 C:/Users/mathe/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Middlewares/Third_Party/FreeRTOS/Source/include/portable.h:
 C:/Users/mathe/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h:

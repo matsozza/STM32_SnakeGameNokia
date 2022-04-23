@@ -1,7 +1,8 @@
 #MicroXplorer Configuration settings - do not modify
 FREERTOS.FootprintOK=true
-FREERTOS.IPParameters=Tasks01,configUSE_TIMERS,configTIMER_TASK_PRIORITY,configUSE_NEWLIB_REENTRANT,FootprintOK
+FREERTOS.IPParameters=Tasks01,configUSE_TIMERS,configTIMER_TASK_PRIORITY,configUSE_NEWLIB_REENTRANT,FootprintOK,configENABLE_FPU
 FREERTOS.Tasks01=task_100ms,0,128,StartTask100ms,Default,NULL,Dynamic,NULL,NULL;task_500ms,1,128,StartTask500ms,Default,NULL,Dynamic,NULL,NULL
+FREERTOS.configENABLE_FPU=0
 FREERTOS.configTIMER_TASK_PRIORITY=6
 FREERTOS.configUSE_NEWLIB_REENTRANT=1
 FREERTOS.configUSE_TIMERS=1
