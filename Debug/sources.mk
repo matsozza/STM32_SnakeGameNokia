@@ -25,10 +25,9 @@ Core/Src \
 Core/Startup \
 Drivers/STM32F4xx_HAL_Driver \
 Middlewares/FreeRTOS \
-Middlewares/SEGGER/Config \
-Middlewares/SEGGER/SEGGER \
-Middlewares/SEGGER/SEGGER/Syscalls \
-Middlewares/SEGGER/Sample/FreeRTOSV10 \
 Modules/Src \
+SEGGER/Config \
+SEGGER/OS \
+SEGGER/SEGGER \
 Services/Src \
 

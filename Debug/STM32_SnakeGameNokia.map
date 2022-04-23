@@ -35,7 +35,9 @@ c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externalt
 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-strcpy.o)
                               ./Services/Src/service_uart.o (strcpy)
 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-strlen.o)
-                              ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o (strlen)
+                              ./SEGGER/SEGGER/SEGGER_RTT.o (strlen)
+c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-writer.o)
+                              c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-stdio.o) (_write_r)
 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-closer.o)
                               c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-stdio.o) (_close_r)
 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-fflush.o)
@@ -375,7 +377,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x12a ./Core/Src/main.o
  .debug_macro   0x0000000000000000       0x10 ./Core/Src/main.o
  .debug_macro   0x0000000000000000       0x35 ./Core/Src/main.o
- .debug_macro   0x0000000000000000      0x3d1 ./Core/Src/main.o
+ .debug_macro   0x0000000000000000      0x3d8 ./Core/Src/main.o
  .debug_macro   0x0000000000000000       0xb5 ./Core/Src/main.o
  .debug_macro   0x0000000000000000       0xaa ./Core/Src/main.o
  .debug_macro   0x0000000000000000       0x91 ./Core/Src/main.o
@@ -3349,7 +3351,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0xde ./Middlewares/FreeRTOS/cmsis_os.o
  .debug_macro   0x0000000000000000       0x1c ./Middlewares/FreeRTOS/cmsis_os.o
  .debug_macro   0x0000000000000000       0x26 ./Middlewares/FreeRTOS/cmsis_os.o
- .debug_macro   0x0000000000000000      0x3d1 ./Middlewares/FreeRTOS/cmsis_os.o
+ .debug_macro   0x0000000000000000      0x3d8 ./Middlewares/FreeRTOS/cmsis_os.o
  .debug_macro   0x0000000000000000       0xb5 ./Middlewares/FreeRTOS/cmsis_os.o
  .debug_macro   0x0000000000000000       0xaa ./Middlewares/FreeRTOS/cmsis_os.o
  .debug_macro   0x0000000000000000       0x91 ./Middlewares/FreeRTOS/cmsis_os.o
@@ -3437,12 +3439,12 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x12a ./Middlewares/FreeRTOS/croutine.o
  .debug_macro   0x0000000000000000       0x10 ./Middlewares/FreeRTOS/croutine.o
  .debug_macro   0x0000000000000000       0x35 ./Middlewares/FreeRTOS/croutine.o
- .debug_macro   0x0000000000000000      0x3d1 ./Middlewares/FreeRTOS/croutine.o
+ .debug_macro   0x0000000000000000      0x3d8 ./Middlewares/FreeRTOS/croutine.o
  .debug_macro   0x0000000000000000       0xb5 ./Middlewares/FreeRTOS/croutine.o
  .debug_macro   0x0000000000000000       0xaa ./Middlewares/FreeRTOS/croutine.o
  .debug_macro   0x0000000000000000       0x43 ./Middlewares/FreeRTOS/croutine.o
- .debug_line    0x0000000000000000      0x854 ./Middlewares/FreeRTOS/croutine.o
- .debug_str     0x0000000000000000     0xdcea ./Middlewares/FreeRTOS/croutine.o
+ .debug_line    0x0000000000000000      0x824 ./Middlewares/FreeRTOS/croutine.o
+ .debug_str     0x0000000000000000     0xdd08 ./Middlewares/FreeRTOS/croutine.o
  .comment       0x0000000000000000       0x51 ./Middlewares/FreeRTOS/croutine.o
  .ARM.attributes
                 0x0000000000000000       0x34 ./Middlewares/FreeRTOS/croutine.o
@@ -3560,13 +3562,13 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x26 ./Middlewares/FreeRTOS/event_groups.o
  .debug_macro   0x0000000000000000       0x16 ./Middlewares/FreeRTOS/event_groups.o
  .debug_macro   0x0000000000000000       0x35 ./Middlewares/FreeRTOS/event_groups.o
- .debug_macro   0x0000000000000000      0x3d1 ./Middlewares/FreeRTOS/event_groups.o
+ .debug_macro   0x0000000000000000      0x3d8 ./Middlewares/FreeRTOS/event_groups.o
  .debug_macro   0x0000000000000000       0xb5 ./Middlewares/FreeRTOS/event_groups.o
  .debug_macro   0x0000000000000000       0xaa ./Middlewares/FreeRTOS/event_groups.o
  .debug_macro   0x0000000000000000       0x91 ./Middlewares/FreeRTOS/event_groups.o
  .debug_macro   0x0000000000000000       0x19 ./Middlewares/FreeRTOS/event_groups.o
- .debug_line    0x0000000000000000      0xd08 ./Middlewares/FreeRTOS/event_groups.o
- .debug_str     0x0000000000000000     0xfc35 ./Middlewares/FreeRTOS/event_groups.o
+ .debug_line    0x0000000000000000      0xcd8 ./Middlewares/FreeRTOS/event_groups.o
+ .debug_str     0x0000000000000000     0xfc53 ./Middlewares/FreeRTOS/event_groups.o
  .comment       0x0000000000000000       0x51 ./Middlewares/FreeRTOS/event_groups.o
  .debug_frame   0x0000000000000000      0x1a4 ./Middlewares/FreeRTOS/event_groups.o
  .ARM.attributes
@@ -3665,7 +3667,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x26 ./Middlewares/FreeRTOS/heap_4.o
  .debug_macro   0x0000000000000000       0x16 ./Middlewares/FreeRTOS/heap_4.o
  .debug_macro   0x0000000000000000       0x35 ./Middlewares/FreeRTOS/heap_4.o
- .debug_macro   0x0000000000000000      0x3d1 ./Middlewares/FreeRTOS/heap_4.o
+ .debug_macro   0x0000000000000000      0x3d8 ./Middlewares/FreeRTOS/heap_4.o
  .debug_macro   0x0000000000000000       0xb5 ./Middlewares/FreeRTOS/heap_4.o
  .debug_macro   0x0000000000000000       0xaa ./Middlewares/FreeRTOS/heap_4.o
  .group         0x0000000000000000        0xc ./Middlewares/FreeRTOS/list.o
@@ -3751,7 +3753,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x26 ./Middlewares/FreeRTOS/list.o
  .debug_macro   0x0000000000000000       0x16 ./Middlewares/FreeRTOS/list.o
  .debug_macro   0x0000000000000000       0x35 ./Middlewares/FreeRTOS/list.o
- .debug_macro   0x0000000000000000      0x3d1 ./Middlewares/FreeRTOS/list.o
+ .debug_macro   0x0000000000000000      0x3d8 ./Middlewares/FreeRTOS/list.o
  .debug_macro   0x0000000000000000       0xb5 ./Middlewares/FreeRTOS/list.o
  .group         0x0000000000000000        0xc ./Middlewares/FreeRTOS/port.o
  .group         0x0000000000000000        0xc ./Middlewares/FreeRTOS/port.o
@@ -3831,7 +3833,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x12a ./Middlewares/FreeRTOS/port.o
  .debug_macro   0x0000000000000000       0x10 ./Middlewares/FreeRTOS/port.o
  .debug_macro   0x0000000000000000       0x35 ./Middlewares/FreeRTOS/port.o
- .debug_macro   0x0000000000000000      0x3d1 ./Middlewares/FreeRTOS/port.o
+ .debug_macro   0x0000000000000000      0x3d8 ./Middlewares/FreeRTOS/port.o
  .debug_macro   0x0000000000000000       0xb5 ./Middlewares/FreeRTOS/port.o
  .debug_macro   0x0000000000000000       0xaa ./Middlewares/FreeRTOS/port.o
  .group         0x0000000000000000        0xc ./Middlewares/FreeRTOS/queue.o
@@ -3959,7 +3961,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x1c ./Middlewares/FreeRTOS/queue.o
  .debug_macro   0x0000000000000000       0x26 ./Middlewares/FreeRTOS/queue.o
  .debug_macro   0x0000000000000000       0x16 ./Middlewares/FreeRTOS/queue.o
- .debug_macro   0x0000000000000000      0x3d1 ./Middlewares/FreeRTOS/queue.o
+ .debug_macro   0x0000000000000000      0x3d8 ./Middlewares/FreeRTOS/queue.o
  .debug_macro   0x0000000000000000       0xb5 ./Middlewares/FreeRTOS/queue.o
  .debug_macro   0x0000000000000000       0xaa ./Middlewares/FreeRTOS/queue.o
  .group         0x0000000000000000        0xc ./Middlewares/FreeRTOS/stream_buffer.o
@@ -4093,12 +4095,12 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x1c ./Middlewares/FreeRTOS/stream_buffer.o
  .debug_macro   0x0000000000000000       0x26 ./Middlewares/FreeRTOS/stream_buffer.o
  .debug_macro   0x0000000000000000       0x16 ./Middlewares/FreeRTOS/stream_buffer.o
- .debug_macro   0x0000000000000000      0x3d1 ./Middlewares/FreeRTOS/stream_buffer.o
+ .debug_macro   0x0000000000000000      0x3d8 ./Middlewares/FreeRTOS/stream_buffer.o
  .debug_macro   0x0000000000000000       0xb5 ./Middlewares/FreeRTOS/stream_buffer.o
  .debug_macro   0x0000000000000000       0xaa ./Middlewares/FreeRTOS/stream_buffer.o
  .debug_macro   0x0000000000000000       0x18 ./Middlewares/FreeRTOS/stream_buffer.o
- .debug_line    0x0000000000000000     0x11f9 ./Middlewares/FreeRTOS/stream_buffer.o
- .debug_str     0x0000000000000000     0xfbdb ./Middlewares/FreeRTOS/stream_buffer.o
+ .debug_line    0x0000000000000000     0x11c9 ./Middlewares/FreeRTOS/stream_buffer.o
+ .debug_str     0x0000000000000000     0xfbf9 ./Middlewares/FreeRTOS/stream_buffer.o
  .comment       0x0000000000000000       0x51 ./Middlewares/FreeRTOS/stream_buffer.o
  .debug_frame   0x0000000000000000      0x350 ./Middlewares/FreeRTOS/stream_buffer.o
  .ARM.attributes
@@ -4247,7 +4249,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x1c ./Middlewares/FreeRTOS/tasks.o
  .debug_macro   0x0000000000000000       0x26 ./Middlewares/FreeRTOS/tasks.o
  .debug_macro   0x0000000000000000       0x16 ./Middlewares/FreeRTOS/tasks.o
- .debug_macro   0x0000000000000000      0x3d1 ./Middlewares/FreeRTOS/tasks.o
+ .debug_macro   0x0000000000000000      0x3d8 ./Middlewares/FreeRTOS/tasks.o
  .debug_macro   0x0000000000000000       0xb5 ./Middlewares/FreeRTOS/tasks.o
  .debug_macro   0x0000000000000000       0xaa ./Middlewares/FreeRTOS/tasks.o
  .debug_macro   0x0000000000000000       0x91 ./Middlewares/FreeRTOS/tasks.o
@@ -4361,573 +4363,10 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x26 ./Middlewares/FreeRTOS/timers.o
  .debug_macro   0x0000000000000000       0x16 ./Middlewares/FreeRTOS/timers.o
  .debug_macro   0x0000000000000000       0x35 ./Middlewares/FreeRTOS/timers.o
- .debug_macro   0x0000000000000000      0x3d1 ./Middlewares/FreeRTOS/timers.o
+ .debug_macro   0x0000000000000000      0x3d8 ./Middlewares/FreeRTOS/timers.o
  .debug_macro   0x0000000000000000       0xb5 ./Middlewares/FreeRTOS/timers.o
  .debug_macro   0x0000000000000000       0xaa ./Middlewares/FreeRTOS/timers.o
  .debug_macro   0x0000000000000000       0x87 ./Middlewares/FreeRTOS/timers.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .text          0x0000000000000000        0x0 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .data          0x0000000000000000        0x0 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .bss           0x0000000000000000        0x0 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000      0xa78 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x174 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x22 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x8e ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x51 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x103 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x6a ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x1df ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x10a ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x58 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x46 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x64 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x49 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0xc3 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x204 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x450 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x15a ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0xde ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x1c ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x26 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x52 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x1e ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x3c ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x34 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x16 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x43 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x34 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x10 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x58 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x71 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x1c ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x12a ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x10 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x35 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x3d1 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text          0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .data          0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .bss           0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .data._aTerminalId
-                0x0000000000000000       0x10 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .bss._ActiveTerminal
-                0x0000000000000000        0x1 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text._WriteBlocking
-                0x0000000000000000       0xba ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text._WriteNoCheck
-                0x0000000000000000       0x90 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text._PostTerminalSwitch
-                0x0000000000000000       0x34 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text._GetAvailWriteSpace
-                0x0000000000000000       0x46 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_ReadUpBufferNoLock
-                0x0000000000000000      0x10c ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_ReadUpBuffer
-                0x0000000000000000       0x36 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_Read
-                0x0000000000000000       0x36 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_WriteWithOverwriteNoLock
-                0x0000000000000000      0x124 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_WriteDownBufferNoLock
-                0x0000000000000000       0xa0 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_WriteNoLock
-                0x0000000000000000       0xa0 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_WriteDownBuffer
-                0x0000000000000000       0x4c ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_Write
-                0x0000000000000000       0x4c ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_WriteString
-                0x0000000000000000       0x26 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_PutCharSkipNoLock
-                0x0000000000000000       0x78 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_PutCharSkip
-                0x0000000000000000       0x98 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_PutChar
-                0x0000000000000000       0xac ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_GetKey
-                0x0000000000000000       0x32 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_WaitKey
-                0x0000000000000000       0x1c ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_HasKey
-                0x0000000000000000       0x48 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_HasData
-                0x0000000000000000       0x38 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_HasDataUp
-                0x0000000000000000       0x38 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_AllocDownBuffer
-                0x0000000000000000      0x104 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_ConfigUpBuffer
-                0x0000000000000000       0x94 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_SetNameUpBuffer
-                0x0000000000000000       0x6c ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_SetNameDownBuffer
-                0x0000000000000000       0x6c ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_SetFlagsUpBuffer
-                0x0000000000000000       0x6c ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_SetFlagsDownBuffer
-                0x0000000000000000       0x6c ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_Init
-                0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_SetTerminal
-                0x0000000000000000       0xb8 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_TerminalOut
-                0x0000000000000000      0x128 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_GetAvailWriteSpace
-                0x0000000000000000       0x30 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_GetBytesInBuffer
-                0x0000000000000000       0x74 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000      0xa78 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x49 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x1e ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x22 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x4c ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x94 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x3c ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x34 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x16 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000      0x10e ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x8d ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x16 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x43 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x57 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x34 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x10 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x58 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x71 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x1c ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000      0x12a ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000      0x341 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x16 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x29 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x58 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x16 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x35 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000000000       0x20 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text          0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .data          0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .bss           0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .bss.SEGGER_SYSVIEW_TickCnt
-                0x0000000000000000        0x4 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .bss.SEGGER_SYSVIEW_InterruptId
-                0x0000000000000000        0x4 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text._EncodeData
-                0x0000000000000000       0x4a ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text._VPrintHost
-                0x0000000000000000      0x17c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text._StoreChar
-                0x0000000000000000       0xf6 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text._PrintUnsigned
-                0x0000000000000000      0x12c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text._PrintInt
-                0x0000000000000000      0x11e ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text._VPrintTarget
-                0x0000000000000000      0x3f0 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RecordU32x5
-                0x0000000000000000      0x15c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RecordU32x6
-                0x0000000000000000      0x194 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RecordU32x7
-                0x0000000000000000      0x1cc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RecordU32x8
-                0x0000000000000000      0x204 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RecordU32x9
-                0x0000000000000000      0x240 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RecordU32x10
-                0x0000000000000000      0x280 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RecordString
-                0x0000000000000000       0x48 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_GetChannelID
-                0x0000000000000000       0x18 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RecordEnterTimer
-                0x0000000000000000       0x80 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RecordExitTimer
-                0x0000000000000000       0x38 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RecordEndCall
-                0x0000000000000000       0x78 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RecordEndCallU32
-                0x0000000000000000       0xb0 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_OnTaskTerminate
-                0x0000000000000000       0x84 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_OnTaskStopExec
-                0x0000000000000000       0x38 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_MarkStart
-                0x0000000000000000       0x78 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_MarkStop
-                0x0000000000000000       0x78 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_Mark
-                0x0000000000000000       0xb0 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_NameMarker
-                0x0000000000000000       0xbc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_NameResource
-                0x0000000000000000       0x90 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_SendPacket
-                0x0000000000000000       0x38 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_EncodeU32
-                0x0000000000000000       0x50 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_EncodeString
-                0x0000000000000000       0x20 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_EncodeData
-                0x0000000000000000       0x20 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_EncodeId
-                0x0000000000000000       0x60 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RegisterModule
-                0x0000000000000000       0x90 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_RecordModuleDescription
-                0x0000000000000000       0xf4 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_PrintfHostEx
-                0x0000000000000000       0x2c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_PrintfHost
-                0x0000000000000000       0x28 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_WarnfHost
-                0x0000000000000000       0x28 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_ErrorfHost
-                0x0000000000000000       0x28 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_PrintfTargetEx
-                0x0000000000000000       0x2c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_PrintfTarget
-                0x0000000000000000       0x28 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_WarnfTarget
-                0x0000000000000000       0x28 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_ErrorfTarget
-                0x0000000000000000       0x28 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_Print
-                0x0000000000000000       0xb8 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_Error
-                0x0000000000000000       0xb8 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_EnableEvents
-                0x0000000000000000       0x28 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_DisableEvents
-                0x0000000000000000       0x24 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_IsStarted
-                0x0000000000000000       0x5c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .rodata._aV2C.0
-                0x0000000000000000       0x10 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000      0xa78 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x22 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x4c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x1e ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x94 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x3c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x34 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000      0x174 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x16 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x43 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x57 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x34 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x10 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x58 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x71 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x1c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000      0x12a ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000      0x341 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x10 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x35 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x20 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x16 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x16 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x29 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x58 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x46 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x64 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0x49 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000000000       0xc3 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .text          0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .data          0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .bss           0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .text._write   0x0000000000000000       0x20 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .text._write_r
-                0x0000000000000000       0x22 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_info    0x0000000000000000      0x86d ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_abbrev  0x0000000000000000      0x1a3 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_aranges
-                0x0000000000000000       0x28 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_ranges  0x0000000000000000       0x18 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000      0x143 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000      0xa78 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x22 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x4c ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x1e ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x94 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x3c ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x34 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000      0x174 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x16 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x43 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x57 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x34 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x10 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x58 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x71 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x1c ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000      0x12a ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x10 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x35 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x49 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x34 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x16 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000      0x341 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x16 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x29 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000       0x58 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_macro   0x0000000000000000      0x138 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_line    0x0000000000000000      0x5ea ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_str     0x0000000000000000     0x7305 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .comment       0x0000000000000000       0x51 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .debug_frame   0x0000000000000000       0x58 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .ARM.attributes
-                0x0000000000000000       0x34 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .text          0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .data          0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .bss           0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .debug_info    0x0000000000000000       0x21 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .debug_abbrev  0x0000000000000000       0x13 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .debug_aranges
-                0x0000000000000000       0x18 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .debug_macro   0x0000000000000000       0x11 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .debug_macro   0x0000000000000000      0xa78 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .debug_line    0x0000000000000000       0x60 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .debug_str     0x0000000000000000     0x2d14 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .comment       0x0000000000000000       0x51 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .ARM.attributes
-                0x0000000000000000       0x34 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .text          0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .data          0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .bss           0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .debug_info    0x0000000000000000       0x21 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .debug_abbrev  0x0000000000000000       0x13 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .debug_aranges
-                0x0000000000000000       0x18 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .debug_macro   0x0000000000000000       0x11 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .debug_macro   0x0000000000000000      0xa78 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .debug_line    0x0000000000000000       0x61 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .debug_str     0x0000000000000000     0x2d15 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .comment       0x0000000000000000       0x51 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .ARM.attributes
-                0x0000000000000000       0x34 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .text          0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .data          0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .bss           0x0000000000000000        0x0 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .debug_info    0x0000000000000000       0x21 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .debug_abbrev  0x0000000000000000       0x13 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .debug_aranges
-                0x0000000000000000       0x18 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .debug_macro   0x0000000000000000       0x11 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .debug_macro   0x0000000000000000      0xa78 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .debug_line    0x0000000000000000       0x60 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .debug_str     0x0000000000000000     0x2d14 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .comment       0x0000000000000000       0x51 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .ARM.attributes
-                0x0000000000000000       0x34 ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .group         0x0000000000000000        0xc ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .text          0x0000000000000000        0x0 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .data          0x0000000000000000        0x0 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .bss           0x0000000000000000        0x0 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .text.SYSVIEW_UpdateTask
-                0x0000000000000000       0xe0 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .text.SYSVIEW_DeleteTask
-                0x0000000000000000      0x178 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000      0xa78 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x174 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x22 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x8e ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x51 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x103 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x6a ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x1df ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x10a ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x58 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x46 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x64 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x49 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0xc3 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x204 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x450 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x15a ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0xde ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x1c ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x26 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x52 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x1e ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x3c ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x34 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x16 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x43 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x34 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x10 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x58 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x71 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x1c ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x12a ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x10 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x35 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x3d1 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0xb5 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0xaa ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000      0x341 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x10 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000000000       0x20 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
  .group         0x0000000000000000        0xc ./Modules/Src/module_led.o
  .group         0x0000000000000000        0xc ./Modules/Src/module_led.o
  .group         0x0000000000000000        0xc ./Modules/Src/module_led.o
@@ -5133,6 +4572,452 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x295 ./Modules/Src/module_uart.o
  .debug_macro   0x0000000000000000      0x12d ./Modules/Src/module_uart.o
  .debug_macro   0x0000000000000000       0x1c ./Modules/Src/module_uart.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .text          0x0000000000000000        0x0 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .data          0x0000000000000000        0x0 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .bss           0x0000000000000000        0x0 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0xa78 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x174 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x22 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x8e ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x51 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x103 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x6a ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x1df ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x10a ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x58 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x46 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x64 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x49 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0xc3 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x204 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x450 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x15a ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0xde ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x1c ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x26 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x52 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x1e ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x3c ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x34 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x16 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x43 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x34 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x10 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x58 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x71 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x1c ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x12a ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x10 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x35 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x3d8 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .text          0x0000000000000000        0x0 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .data          0x0000000000000000        0x0 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .bss           0x0000000000000000        0x0 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .text.SYSVIEW_UpdateTask
+                0x0000000000000000       0xe0 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .text.SYSVIEW_DeleteTask
+                0x0000000000000000      0x178 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0xa78 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x174 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x22 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x8e ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x51 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x103 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x6a ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x1df ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x10a ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x58 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x46 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x64 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x49 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0xc3 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x204 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x450 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x15a ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0xde ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x1c ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x26 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x52 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x1e ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x3c ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x34 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x16 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x43 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x34 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x10 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x58 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x71 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x1c ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x12a ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x10 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x35 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x3d8 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0xb5 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0xaa ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000      0x341 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x10 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x0000000000000000       0x20 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text          0x0000000000000000        0x0 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .data          0x0000000000000000        0x0 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .bss           0x0000000000000000        0x0 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .data._aTerminalId
+                0x0000000000000000       0x10 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .bss._ActiveTerminal
+                0x0000000000000000        0x1 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text._WriteBlocking
+                0x0000000000000000       0xba ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text._WriteNoCheck
+                0x0000000000000000       0x90 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text._PostTerminalSwitch
+                0x0000000000000000       0x34 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text._GetAvailWriteSpace
+                0x0000000000000000       0x46 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_ReadUpBufferNoLock
+                0x0000000000000000      0x10c ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_ReadUpBuffer
+                0x0000000000000000       0x36 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_Read
+                0x0000000000000000       0x36 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_WriteWithOverwriteNoLock
+                0x0000000000000000      0x124 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_WriteDownBufferNoLock
+                0x0000000000000000       0xa0 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_WriteNoLock
+                0x0000000000000000       0xa0 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_WriteDownBuffer
+                0x0000000000000000       0x4c ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_Write
+                0x0000000000000000       0x4c ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_WriteString
+                0x0000000000000000       0x26 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_PutCharSkipNoLock
+                0x0000000000000000       0x78 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_PutCharSkip
+                0x0000000000000000       0x98 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_PutChar
+                0x0000000000000000       0xac ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_GetKey
+                0x0000000000000000       0x32 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_WaitKey
+                0x0000000000000000       0x1c ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_HasKey
+                0x0000000000000000       0x48 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_HasData
+                0x0000000000000000       0x38 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_HasDataUp
+                0x0000000000000000       0x38 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_AllocDownBuffer
+                0x0000000000000000      0x104 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_ConfigUpBuffer
+                0x0000000000000000       0x94 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_SetNameUpBuffer
+                0x0000000000000000       0x6c ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_SetNameDownBuffer
+                0x0000000000000000       0x6c ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_SetFlagsUpBuffer
+                0x0000000000000000       0x6c ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_SetFlagsDownBuffer
+                0x0000000000000000       0x6c ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_Init
+                0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_SetTerminal
+                0x0000000000000000       0xb8 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_TerminalOut
+                0x0000000000000000      0x128 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_GetAvailWriteSpace
+                0x0000000000000000       0x30 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_GetBytesInBuffer
+                0x0000000000000000       0x74 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000      0xa78 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x49 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x1e ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x22 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x4c ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x94 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x3c ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x34 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x16 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000      0x10e ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x8d ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x16 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x43 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x57 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x34 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x10 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x58 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x71 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x1c ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000      0x12a ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000      0x341 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x16 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x29 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x58 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x16 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x35 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000000000       0x20 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .group         0x0000000000000000        0xc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text          0x0000000000000000        0x0 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .data          0x0000000000000000        0x0 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .bss           0x0000000000000000        0x0 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .bss.SEGGER_SYSVIEW_TickCnt
+                0x0000000000000000        0x4 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .bss.SEGGER_SYSVIEW_InterruptId
+                0x0000000000000000        0x4 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text._EncodeData
+                0x0000000000000000       0x4a ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text._VPrintHost
+                0x0000000000000000      0x17c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text._StoreChar
+                0x0000000000000000       0xf6 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text._PrintUnsigned
+                0x0000000000000000      0x12c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text._PrintInt
+                0x0000000000000000      0x11e ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text._VPrintTarget
+                0x0000000000000000      0x3f0 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RecordU32x5
+                0x0000000000000000      0x15c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RecordU32x6
+                0x0000000000000000      0x194 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RecordU32x7
+                0x0000000000000000      0x1cc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RecordU32x8
+                0x0000000000000000      0x204 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RecordU32x9
+                0x0000000000000000      0x240 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RecordU32x10
+                0x0000000000000000      0x280 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RecordString
+                0x0000000000000000       0x48 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_GetChannelID
+                0x0000000000000000       0x18 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RecordEnterTimer
+                0x0000000000000000       0x80 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RecordExitTimer
+                0x0000000000000000       0x38 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RecordEndCall
+                0x0000000000000000       0x78 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RecordEndCallU32
+                0x0000000000000000       0xb0 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_OnTaskTerminate
+                0x0000000000000000       0x84 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_OnTaskStopExec
+                0x0000000000000000       0x38 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_MarkStart
+                0x0000000000000000       0x78 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_MarkStop
+                0x0000000000000000       0x78 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_Mark
+                0x0000000000000000       0xb0 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_NameMarker
+                0x0000000000000000       0xbc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_NameResource
+                0x0000000000000000       0x90 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_SendPacket
+                0x0000000000000000       0x38 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_EncodeU32
+                0x0000000000000000       0x50 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_EncodeString
+                0x0000000000000000       0x20 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_EncodeData
+                0x0000000000000000       0x20 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_EncodeId
+                0x0000000000000000       0x60 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RegisterModule
+                0x0000000000000000       0x90 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_RecordModuleDescription
+                0x0000000000000000       0xf4 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_PrintfHostEx
+                0x0000000000000000       0x2c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_PrintfHost
+                0x0000000000000000       0x28 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_WarnfHost
+                0x0000000000000000       0x28 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_ErrorfHost
+                0x0000000000000000       0x28 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_PrintfTargetEx
+                0x0000000000000000       0x2c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_PrintfTarget
+                0x0000000000000000       0x28 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_WarnfTarget
+                0x0000000000000000       0x28 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_ErrorfTarget
+                0x0000000000000000       0x28 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_Print
+                0x0000000000000000       0xb8 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_Error
+                0x0000000000000000       0xb8 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_EnableEvents
+                0x0000000000000000       0x28 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_DisableEvents
+                0x0000000000000000       0x24 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_IsStarted
+                0x0000000000000000       0x5c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .rodata._aV2C.0
+                0x0000000000000000       0x10 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000      0xa78 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x22 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x4c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x1e ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x94 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x3c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x34 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000      0x174 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x16 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x43 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x57 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x34 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x10 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x58 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x71 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x1c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000      0x12a ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000      0x341 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x10 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x35 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x20 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x16 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x16 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x29 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x58 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x46 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x64 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0x49 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000000000       0xc3 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
  .group         0x0000000000000000        0xc ./Services/Src/service_uart.o
  .group         0x0000000000000000        0xc ./Services/Src/service_uart.o
  .group         0x0000000000000000        0xc ./Services/Src/service_uart.o
@@ -5387,6 +5272,14 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-strcpy.o)
  .data          0x0000000000000000        0x0 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-strlen.o)
  .bss           0x0000000000000000        0x0 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-strlen.o)
+ .text          0x0000000000000000        0x0 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-writer.o)
+ .data          0x0000000000000000        0x0 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-writer.o)
+ .bss           0x0000000000000000        0x0 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-writer.o)
+ .text._write_r
+                0x0000000000000000       0x24 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-writer.o)
+ .debug_frame   0x0000000000000000       0x2c c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-writer.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-writer.o)
  .text          0x0000000000000000        0x0 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-closer.o)
  .data          0x0000000000000000        0x0 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-closer.o)
  .bss           0x0000000000000000        0x0 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-closer.o)
@@ -5492,16 +5385,12 @@ LOAD ./Middlewares/FreeRTOS/queue.o
 LOAD ./Middlewares/FreeRTOS/stream_buffer.o
 LOAD ./Middlewares/FreeRTOS/tasks.o
 LOAD ./Middlewares/FreeRTOS/timers.o
-LOAD ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
-LOAD ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
-LOAD ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-LOAD ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o
-LOAD ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o
-LOAD ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_KEIL.o
-LOAD ./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_SES.o
-LOAD ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
 LOAD ./Modules/Src/module_led.o
 LOAD ./Modules/Src/module_uart.o
+LOAD ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+LOAD ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+LOAD ./SEGGER/SEGGER/SEGGER_RTT.o
+LOAD ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
 LOAD ./Services/Src/service_uart.o
 START GROUP
 LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a
@@ -6007,133 +5896,133 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x000000000800509c       0xc8 ./Middlewares/FreeRTOS/timers.o
  .text.prvCheckForValidListAndQueue
                 0x0000000008005164       0x80 ./Middlewares/FreeRTOS/timers.o
- .text._cbSendSystemDesc
-                0x00000000080051e4       0x1c ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .text.SEGGER_SYSVIEW_Conf
-                0x0000000008005200       0x2c ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
-                0x0000000008005200                SEGGER_SYSVIEW_Conf
- .text._DoInit  0x000000000800522c       0xb0 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .text.SEGGER_RTT_ReadNoLock
-                0x00000000080052dc      0x10c ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
-                0x00000000080052dc                SEGGER_RTT_ReadNoLock
- .text.SEGGER_RTT_AllocUpBuffer
-                0x00000000080053e8      0x108 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
-                0x00000000080053e8                SEGGER_RTT_AllocUpBuffer
- .text.SEGGER_RTT_ConfigDownBuffer
-                0x00000000080054f0       0x98 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
-                0x00000000080054f0                SEGGER_RTT_ConfigDownBuffer
- .text._EncodeStr
-                0x0000000008005588       0xa0 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text._PreparePacket
-                0x0000000008005628       0x18 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text._HandleIncomingPacket
-                0x0000000008005640       0xe4 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text._TrySendOverflowPacket
-                0x0000000008005724       0xe4 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text._SendPacket
-                0x0000000008005808      0x1cc ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .text.SEGGER_SYSVIEW_Init
-                0x00000000080059d4       0x88 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x00000000080059d4                SEGGER_SYSVIEW_Init
- .text.SEGGER_SYSVIEW_SetRAMBase
-                0x0000000008005a5c       0x20 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008005a5c                SEGGER_SYSVIEW_SetRAMBase
- .text.SEGGER_SYSVIEW_RecordVoid
-                0x0000000008005a7c       0x3c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008005a7c                SEGGER_SYSVIEW_RecordVoid
- .text.SEGGER_SYSVIEW_RecordU32
-                0x0000000008005ab8       0x78 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008005ab8                SEGGER_SYSVIEW_RecordU32
- .text.SEGGER_SYSVIEW_RecordU32x2
-                0x0000000008005b30       0xb4 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008005b30                SEGGER_SYSVIEW_RecordU32x2
- .text.SEGGER_SYSVIEW_RecordU32x3
-                0x0000000008005be4       0xec ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008005be4                SEGGER_SYSVIEW_RecordU32x3
- .text.SEGGER_SYSVIEW_RecordU32x4
-                0x0000000008005cd0      0x124 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008005cd0                SEGGER_SYSVIEW_RecordU32x4
- .text.SEGGER_SYSVIEW_Start
-                0x0000000008005df4      0x174 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008005df4                SEGGER_SYSVIEW_Start
- .text.SEGGER_SYSVIEW_Stop
-                0x0000000008005f68       0x4c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008005f68                SEGGER_SYSVIEW_Stop
- .text.SEGGER_SYSVIEW_GetSysDesc
-                0x0000000008005fb4      0x134 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008005fb4                SEGGER_SYSVIEW_GetSysDesc
- .text.SEGGER_SYSVIEW_SendTaskInfo
-                0x00000000080060e8      0x1c8 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x00000000080060e8                SEGGER_SYSVIEW_SendTaskInfo
- .text.SEGGER_SYSVIEW_SendTaskList
-                0x00000000080062b0       0x28 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x00000000080062b0                SEGGER_SYSVIEW_SendTaskList
- .text.SEGGER_SYSVIEW_SendSysDesc
-                0x00000000080062d8       0x48 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x00000000080062d8                SEGGER_SYSVIEW_SendSysDesc
- .text.SEGGER_SYSVIEW_RecordSystime
-                0x0000000008006320       0x64 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008006320                SEGGER_SYSVIEW_RecordSystime
- .text.SEGGER_SYSVIEW_RecordEnterISR
-                0x0000000008006384       0x84 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008006384                SEGGER_SYSVIEW_RecordEnterISR
- .text.SEGGER_SYSVIEW_RecordExitISR
-                0x0000000008006408       0x38 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008006408                SEGGER_SYSVIEW_RecordExitISR
- .text.SEGGER_SYSVIEW_RecordExitISRToScheduler
-                0x0000000008006440       0x38 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008006440                SEGGER_SYSVIEW_RecordExitISRToScheduler
- .text.SEGGER_SYSVIEW_OnIdle
-                0x0000000008006478       0x38 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008006478                SEGGER_SYSVIEW_OnIdle
- .text.SEGGER_SYSVIEW_OnTaskCreate
-                0x00000000080064b0       0x84 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x00000000080064b0                SEGGER_SYSVIEW_OnTaskCreate
- .text.SEGGER_SYSVIEW_OnTaskStartExec
-                0x0000000008006534       0x84 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008006534                SEGGER_SYSVIEW_OnTaskStartExec
- .text.SEGGER_SYSVIEW_OnTaskStartReady
-                0x00000000080065b8       0x84 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x00000000080065b8                SEGGER_SYSVIEW_OnTaskStartReady
- .text.SEGGER_SYSVIEW_OnTaskStopReady
-                0x000000000800663c       0xc0 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x000000000800663c                SEGGER_SYSVIEW_OnTaskStopReady
- .text.SEGGER_SYSVIEW_ShrinkId
-                0x00000000080066fc       0x20 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x00000000080066fc                SEGGER_SYSVIEW_ShrinkId
- .text.SEGGER_SYSVIEW_SendModule
-                0x000000000800671c      0x100 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x000000000800671c                SEGGER_SYSVIEW_SendModule
- .text.SEGGER_SYSVIEW_SendModuleDescription
-                0x000000000800681c       0x3c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x000000000800681c                SEGGER_SYSVIEW_SendModuleDescription
- .text.SEGGER_SYSVIEW_SendNumModules
-                0x0000000008006858       0x7c ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x0000000008006858                SEGGER_SYSVIEW_SendNumModules
- .text.SEGGER_SYSVIEW_Warn
-                0x00000000080068d4       0xb8 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                0x00000000080068d4                SEGGER_SYSVIEW_Warn
- .text._cbSendTaskList
-                0x000000000800698c       0x90 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .text._cbGetTime
-                0x0000000008006a1c       0x86 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- *fill*         0x0000000008006aa2        0x2 
- .text.SYSVIEW_AddTask
-                0x0000000008006aa4       0xd0 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
-                0x0000000008006aa4                SYSVIEW_AddTask
- .text.SYSVIEW_SendTaskInfo
-                0x0000000008006b74       0x42 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
-                0x0000000008006b74                SYSVIEW_SendTaskInfo
- *fill*         0x0000000008006bb6        0x2 
  .text.toggle_LED1
-                0x0000000008006bb8       0x18 ./Modules/Src/module_led.o
-                0x0000000008006bb8                toggle_LED1
+                0x00000000080051e4       0x18 ./Modules/Src/module_led.o
+                0x00000000080051e4                toggle_LED1
  .text.UART_printTestString
-                0x0000000008006bd0       0x80 ./Modules/Src/module_uart.o
-                0x0000000008006bd0                UART_printTestString
+                0x00000000080051fc       0x80 ./Modules/Src/module_uart.o
+                0x00000000080051fc                UART_printTestString
  .text.UART_printLEDString
-                0x0000000008006c50       0x80 ./Modules/Src/module_uart.o
-                0x0000000008006c50                UART_printLEDString
+                0x000000000800527c       0x80 ./Modules/Src/module_uart.o
+                0x000000000800527c                UART_printLEDString
+ .text._cbSendSystemDesc
+                0x00000000080052fc       0x1c ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .text.SEGGER_SYSVIEW_Conf
+                0x0000000008005318       0x2c ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+                0x0000000008005318                SEGGER_SYSVIEW_Conf
+ .text._cbSendTaskList
+                0x0000000008005344       0x90 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .text._cbGetTime
+                0x00000000080053d4       0x86 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ *fill*         0x000000000800545a        0x2 
+ .text.SYSVIEW_AddTask
+                0x000000000800545c       0xd0 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+                0x000000000800545c                SYSVIEW_AddTask
+ .text.SYSVIEW_SendTaskInfo
+                0x000000000800552c       0x42 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+                0x000000000800552c                SYSVIEW_SendTaskInfo
+ *fill*         0x000000000800556e        0x2 
+ .text._DoInit  0x0000000008005570       0xb0 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .text.SEGGER_RTT_ReadNoLock
+                0x0000000008005620      0x10c ./SEGGER/SEGGER/SEGGER_RTT.o
+                0x0000000008005620                SEGGER_RTT_ReadNoLock
+ .text.SEGGER_RTT_AllocUpBuffer
+                0x000000000800572c      0x108 ./SEGGER/SEGGER/SEGGER_RTT.o
+                0x000000000800572c                SEGGER_RTT_AllocUpBuffer
+ .text.SEGGER_RTT_ConfigDownBuffer
+                0x0000000008005834       0x98 ./SEGGER/SEGGER/SEGGER_RTT.o
+                0x0000000008005834                SEGGER_RTT_ConfigDownBuffer
+ .text._EncodeStr
+                0x00000000080058cc       0xa0 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text._PreparePacket
+                0x000000000800596c       0x18 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text._HandleIncomingPacket
+                0x0000000008005984       0xe4 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text._TrySendOverflowPacket
+                0x0000000008005a68       0xe4 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text._SendPacket
+                0x0000000008005b4c      0x1cc ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .text.SEGGER_SYSVIEW_Init
+                0x0000000008005d18       0x88 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008005d18                SEGGER_SYSVIEW_Init
+ .text.SEGGER_SYSVIEW_SetRAMBase
+                0x0000000008005da0       0x20 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008005da0                SEGGER_SYSVIEW_SetRAMBase
+ .text.SEGGER_SYSVIEW_RecordVoid
+                0x0000000008005dc0       0x3c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008005dc0                SEGGER_SYSVIEW_RecordVoid
+ .text.SEGGER_SYSVIEW_RecordU32
+                0x0000000008005dfc       0x78 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008005dfc                SEGGER_SYSVIEW_RecordU32
+ .text.SEGGER_SYSVIEW_RecordU32x2
+                0x0000000008005e74       0xb4 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008005e74                SEGGER_SYSVIEW_RecordU32x2
+ .text.SEGGER_SYSVIEW_RecordU32x3
+                0x0000000008005f28       0xec ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008005f28                SEGGER_SYSVIEW_RecordU32x3
+ .text.SEGGER_SYSVIEW_RecordU32x4
+                0x0000000008006014      0x124 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008006014                SEGGER_SYSVIEW_RecordU32x4
+ .text.SEGGER_SYSVIEW_Start
+                0x0000000008006138      0x174 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008006138                SEGGER_SYSVIEW_Start
+ .text.SEGGER_SYSVIEW_Stop
+                0x00000000080062ac       0x4c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x00000000080062ac                SEGGER_SYSVIEW_Stop
+ .text.SEGGER_SYSVIEW_GetSysDesc
+                0x00000000080062f8      0x134 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x00000000080062f8                SEGGER_SYSVIEW_GetSysDesc
+ .text.SEGGER_SYSVIEW_SendTaskInfo
+                0x000000000800642c      0x1c8 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x000000000800642c                SEGGER_SYSVIEW_SendTaskInfo
+ .text.SEGGER_SYSVIEW_SendTaskList
+                0x00000000080065f4       0x28 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x00000000080065f4                SEGGER_SYSVIEW_SendTaskList
+ .text.SEGGER_SYSVIEW_SendSysDesc
+                0x000000000800661c       0x48 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x000000000800661c                SEGGER_SYSVIEW_SendSysDesc
+ .text.SEGGER_SYSVIEW_RecordSystime
+                0x0000000008006664       0x64 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008006664                SEGGER_SYSVIEW_RecordSystime
+ .text.SEGGER_SYSVIEW_RecordEnterISR
+                0x00000000080066c8       0x84 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x00000000080066c8                SEGGER_SYSVIEW_RecordEnterISR
+ .text.SEGGER_SYSVIEW_RecordExitISR
+                0x000000000800674c       0x38 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x000000000800674c                SEGGER_SYSVIEW_RecordExitISR
+ .text.SEGGER_SYSVIEW_RecordExitISRToScheduler
+                0x0000000008006784       0x38 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008006784                SEGGER_SYSVIEW_RecordExitISRToScheduler
+ .text.SEGGER_SYSVIEW_OnIdle
+                0x00000000080067bc       0x38 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x00000000080067bc                SEGGER_SYSVIEW_OnIdle
+ .text.SEGGER_SYSVIEW_OnTaskCreate
+                0x00000000080067f4       0x84 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x00000000080067f4                SEGGER_SYSVIEW_OnTaskCreate
+ .text.SEGGER_SYSVIEW_OnTaskStartExec
+                0x0000000008006878       0x84 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008006878                SEGGER_SYSVIEW_OnTaskStartExec
+ .text.SEGGER_SYSVIEW_OnTaskStartReady
+                0x00000000080068fc       0x84 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x00000000080068fc                SEGGER_SYSVIEW_OnTaskStartReady
+ .text.SEGGER_SYSVIEW_OnTaskStopReady
+                0x0000000008006980       0xc0 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008006980                SEGGER_SYSVIEW_OnTaskStopReady
+ .text.SEGGER_SYSVIEW_ShrinkId
+                0x0000000008006a40       0x20 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008006a40                SEGGER_SYSVIEW_ShrinkId
+ .text.SEGGER_SYSVIEW_SendModule
+                0x0000000008006a60      0x100 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008006a60                SEGGER_SYSVIEW_SendModule
+ .text.SEGGER_SYSVIEW_SendModuleDescription
+                0x0000000008006b60       0x3c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008006b60                SEGGER_SYSVIEW_SendModuleDescription
+ .text.SEGGER_SYSVIEW_SendNumModules
+                0x0000000008006b9c       0x7c ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008006b9c                SEGGER_SYSVIEW_SendNumModules
+ .text.SEGGER_SYSVIEW_Warn
+                0x0000000008006c18       0xb8 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000008006c18                SEGGER_SYSVIEW_Warn
  .text.USART2_sendString
                 0x0000000008006cd0       0x8c ./Services/Src/service_uart.o
                 0x0000000008006cd0                USART2_sendString
@@ -6216,14 +6105,14 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  *fill*         0x0000000008007169        0x3 
  .rodata        0x000000000800716c        0xd ./Middlewares/FreeRTOS/timers.o
  *fill*         0x0000000008007179        0x3 
- .rodata        0x000000000800717c       0x41 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- *fill*         0x00000000080071bd        0x3 
- .rodata        0x00000000080071c0       0x17 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- *fill*         0x00000000080071d7        0x1 
- .rodata        0x00000000080071d8        0x8 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .rodata        0x00000000080071e0       0x58 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .rodata        0x0000000008007238       0x1a ./Modules/Src/module_uart.o
- *fill*         0x0000000008007252        0x2 
+ .rodata        0x000000000800717c       0x1a ./Modules/Src/module_uart.o
+ *fill*         0x0000000008007196        0x2 
+ .rodata        0x0000000008007198       0x41 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ *fill*         0x00000000080071d9        0x3 
+ .rodata        0x00000000080071dc       0x58 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .rodata        0x0000000008007234       0x17 ./SEGGER/SEGGER/SEGGER_RTT.o
+ *fill*         0x000000000800724b        0x1 
+ .rodata        0x000000000800724c        0x8 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
  .rodata        0x0000000008007254        0x3 ./Services/Src/service_uart.o
  *(.rodata*)
  *fill*         0x0000000008007257        0x1 
@@ -6233,12 +6122,12 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .rodata.APBPrescTable
                 0x0000000008007268        0x8 ./Core/Src/system_stm32f4xx.o
                 0x0000000008007268                APBPrescTable
- .rodata._abSync
-                0x0000000008007270        0xa ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- *fill*         0x000000000800727a        0x2 
  .rodata.SYSVIEW_X_OS_TraceAPI
-                0x000000000800727c        0x8 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
-                0x000000000800727c                SYSVIEW_X_OS_TraceAPI
+                0x0000000008007270        0x8 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+                0x0000000008007270                SYSVIEW_X_OS_TraceAPI
+ .rodata._abSync
+                0x0000000008007278        0xa ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ *fill*         0x0000000008007282        0x2 
  .rodata.__sf_fake_stderr
                 0x0000000008007284       0x20 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-findfp.o)
                 0x0000000008007284                __sf_fake_stderr
@@ -6332,7 +6221,7 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x0000000010000000                _eccmram = .
                 0x0000000010000000                . = ALIGN (0x4)
 
-.bss            0x0000000020000074     0x5144
+.bss            0x0000000020000074     0x5140
                 0x0000000020000074                _sbss = .
                 0x0000000020000074                __bss_start__ = _sbss
  *(.bss)
@@ -6442,57 +6331,56 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x0000000020004664       0x78 ./Middlewares/FreeRTOS/timers.o
  .bss.xStaticTimerQueue.0
                 0x00000000200046dc       0x48 ./Middlewares/FreeRTOS/timers.o
- .bss._SEGGER_RTT
-                0x0000000020004724       0xa8 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
-                0x0000000020004724                _SEGGER_RTT
- .bss._acUpBuffer
-                0x00000000200047cc      0x400 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .bss._acDownBuffer
-                0x0000000020004bcc       0x10 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .bss._UpBuffer
-                0x0000000020004bdc      0x400 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .bss._DownBuffer
-                0x0000000020004fdc        0x8 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .bss._SYSVIEW_Globals
-                0x0000000020004fe4       0x28 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .bss._pFirstModule
-                0x000000002000500c        0x4 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .bss._NumModules
-                0x0000000020005010        0x1 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- *fill*         0x0000000020005011        0x3 
- .bss._aPacket  0x0000000020005014       0xe3 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- *fill*         0x00000000200050f7        0x1 
- .bss._aTasks   0x00000000200050f8       0xa0 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .bss._NumTasks
-                0x0000000020005198        0x4 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .bss.testStr   0x000000002000519c        0x4 ./Modules/Src/module_uart.o
-                0x000000002000519c                testStr
+ .bss.testStr   0x0000000020004724        0x4 ./Modules/Src/module_uart.o
+                0x0000000020004724                testStr
  .bss.testStrCat
-                0x00000000200051a0        0x4 ./Modules/Src/module_uart.o
-                0x00000000200051a0                testStrCat
+                0x0000000020004728        0x4 ./Modules/Src/module_uart.o
+                0x0000000020004728                testStrCat
  .bss.numberStr
-                0x00000000200051a4        0x4 ./Modules/Src/module_uart.o
-                0x00000000200051a4                numberStr
+                0x000000002000472c        0x4 ./Modules/Src/module_uart.o
+                0x000000002000472c                numberStr
+ .bss._aTasks   0x0000000020004730       0xa0 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .bss._NumTasks
+                0x00000000200047d0        0x4 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .bss._SEGGER_RTT
+                0x00000000200047d4       0xa8 ./SEGGER/SEGGER/SEGGER_RTT.o
+                0x00000000200047d4                _SEGGER_RTT
+ .bss._acUpBuffer
+                0x000000002000487c      0x400 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .bss._acDownBuffer
+                0x0000000020004c7c       0x10 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .bss._UpBuffer
+                0x0000000020004c8c      0x400 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .bss._DownBuffer
+                0x000000002000508c        0x8 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .bss._SYSVIEW_Globals
+                0x0000000020005094       0x28 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .bss._pFirstModule
+                0x00000000200050bc        0x4 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .bss._NumModules
+                0x00000000200050c0        0x1 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ *fill*         0x00000000200050c1        0x3 
+ .bss._aPacket  0x00000000200050c4       0xe3 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
  .bss.__lock___malloc_recursive_mutex
-                0x00000000200051a8        0x1 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-lock.o)
-                0x00000000200051a8                __lock___malloc_recursive_mutex
- *fill*         0x00000000200051a9        0x3 
+                0x00000000200051a7        0x1 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-lock.o)
+                0x00000000200051a7                __lock___malloc_recursive_mutex
  .bss.__malloc_free_list
-                0x00000000200051ac        0x4 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-mallocr.o)
-                0x00000000200051ac                __malloc_free_list
+                0x00000000200051a8        0x4 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                0x00000000200051a8                __malloc_free_list
  .bss.__malloc_sbrk_start
-                0x00000000200051b0        0x4 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-mallocr.o)
-                0x00000000200051b0                __malloc_sbrk_start
- .bss.errno     0x00000000200051b4        0x4 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-reent.o)
-                0x00000000200051b4                errno
+                0x00000000200051ac        0x4 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                0x00000000200051ac                __malloc_sbrk_start
+ .bss.errno     0x00000000200051b0        0x4 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-reent.o)
+                0x00000000200051b0                errno
  *(COMMON)
-                0x00000000200051b8                . = ALIGN (0x4)
-                0x00000000200051b8                _ebss = .
-                0x00000000200051b8                __bss_end__ = _ebss
+                0x00000000200051b4                . = ALIGN (0x4)
+                0x00000000200051b4                _ebss = .
+                0x00000000200051b4                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x00000000200051b8      0x600
+                0x00000000200051b4      0x604
                 0x00000000200051b8                . = ALIGN (0x8)
+ *fill*         0x00000000200051b4        0x4 
                 [!provide]                        PROVIDE (end = .)
                 0x00000000200051b8                PROVIDE (_end = .)
                 0x00000000200053b8                . = (. + _Min_Heap_Size)
@@ -6562,17 +6450,17 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .ARM.attributes
                 0x00000000000004eb       0x34 ./Middlewares/FreeRTOS/timers.o
  .ARM.attributes
-                0x000000000000051f       0x34 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+                0x000000000000051f       0x34 ./Modules/Src/module_led.o
  .ARM.attributes
-                0x0000000000000553       0x34 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
+                0x0000000000000553       0x34 ./Modules/Src/module_uart.o
  .ARM.attributes
-                0x0000000000000587       0x34 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x0000000000000587       0x34 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
  .ARM.attributes
-                0x00000000000005bb       0x34 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
+                0x00000000000005bb       0x34 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
  .ARM.attributes
-                0x00000000000005ef       0x34 ./Modules/Src/module_led.o
+                0x00000000000005ef       0x34 ./SEGGER/SEGGER/SEGGER_RTT.o
  .ARM.attributes
-                0x0000000000000623       0x34 ./Modules/Src/module_uart.o
+                0x0000000000000623       0x34 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
  .ARM.attributes
                 0x0000000000000657       0x34 ./Services/Src/service_uart.o
  .ARM.attributes
@@ -6646,12 +6534,12 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .debug_info    0x00000000000111a4     0x19ef ./Middlewares/FreeRTOS/queue.o
  .debug_info    0x0000000000012b93     0x27e7 ./Middlewares/FreeRTOS/tasks.o
  .debug_info    0x000000000001537a     0x1a17 ./Middlewares/FreeRTOS/timers.o
- .debug_info    0x0000000000016d91      0x181 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_info    0x0000000000016f12     0x1575 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_info    0x0000000000018487     0x380a ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_info    0x000000000001bc91      0x43d ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_info    0x000000000001c0ce      0x186 ./Modules/Src/module_led.o
- .debug_info    0x000000000001c254      0x12a ./Modules/Src/module_uart.o
+ .debug_info    0x0000000000016d91      0x186 ./Modules/Src/module_led.o
+ .debug_info    0x0000000000016f17      0x12a ./Modules/Src/module_uart.o
+ .debug_info    0x0000000000017041      0x181 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_info    0x00000000000171c2      0x43d ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_info    0x00000000000175ff     0x1575 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_info    0x0000000000018b74     0x380a ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
  .debug_info    0x000000000001c37e      0x6ba ./Services/Src/service_uart.o
 
 .debug_abbrev   0x0000000000000000     0x3e4a
@@ -6679,12 +6567,12 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .debug_abbrev  0x0000000000002875      0x3a1 ./Middlewares/FreeRTOS/queue.o
  .debug_abbrev  0x0000000000002c16      0x3f1 ./Middlewares/FreeRTOS/tasks.o
  .debug_abbrev  0x0000000000003007      0x344 ./Middlewares/FreeRTOS/timers.o
- .debug_abbrev  0x000000000000334b       0xdd ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_abbrev  0x0000000000003428      0x24e ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_abbrev  0x0000000000003676      0x326 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_abbrev  0x000000000000399c      0x19e ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_abbrev  0x0000000000003b3a       0xd2 ./Modules/Src/module_led.o
- .debug_abbrev  0x0000000000003c0c       0xaa ./Modules/Src/module_uart.o
+ .debug_abbrev  0x000000000000334b       0xd2 ./Modules/Src/module_led.o
+ .debug_abbrev  0x000000000000341d       0xaa ./Modules/Src/module_uart.o
+ .debug_abbrev  0x00000000000034c7       0xdd ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_abbrev  0x00000000000035a4      0x19e ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_abbrev  0x0000000000003742      0x24e ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_abbrev  0x0000000000003990      0x326 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
  .debug_abbrev  0x0000000000003cb6      0x194 ./Services/Src/service_uart.o
 
 .debug_aranges  0x0000000000000000     0x1718
@@ -6737,17 +6625,17 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .debug_aranges
                 0x00000000000011b8       0xd0 ./Middlewares/FreeRTOS/timers.o
  .debug_aranges
-                0x0000000000001288       0x28 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+                0x0000000000001288       0x20 ./Modules/Src/module_led.o
  .debug_aranges
-                0x00000000000012b0      0x138 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
+                0x00000000000012a8       0x28 ./Modules/Src/module_uart.o
  .debug_aranges
-                0x00000000000013e8      0x280 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                0x00000000000012d0       0x28 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
  .debug_aranges
-                0x0000000000001668       0x48 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
+                0x00000000000012f8       0x48 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
  .debug_aranges
-                0x00000000000016b0       0x20 ./Modules/Src/module_led.o
+                0x0000000000001340      0x138 ./SEGGER/SEGGER/SEGGER_RTT.o
  .debug_aranges
-                0x00000000000016d0       0x28 ./Modules/Src/module_uart.o
+                0x0000000000001478      0x280 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
  .debug_aranges
                 0x00000000000016f8       0x20 ./Services/Src/service_uart.o
 
@@ -6776,15 +6664,15 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .debug_ranges  0x0000000000000dd0      0x100 ./Middlewares/FreeRTOS/queue.o
  .debug_ranges  0x0000000000000ed0      0x1b0 ./Middlewares/FreeRTOS/tasks.o
  .debug_ranges  0x0000000000001080       0xc0 ./Middlewares/FreeRTOS/timers.o
- .debug_ranges  0x0000000000001140       0x18 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_ranges  0x0000000000001158      0x128 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_ranges  0x0000000000001280      0x270 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_ranges  0x00000000000014f0       0x38 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_ranges  0x0000000000001528       0x10 ./Modules/Src/module_led.o
- .debug_ranges  0x0000000000001538       0x18 ./Modules/Src/module_uart.o
+ .debug_ranges  0x0000000000001140       0x10 ./Modules/Src/module_led.o
+ .debug_ranges  0x0000000000001150       0x18 ./Modules/Src/module_uart.o
+ .debug_ranges  0x0000000000001168       0x18 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_ranges  0x0000000000001180       0x38 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_ranges  0x00000000000011b8      0x128 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_ranges  0x00000000000012e0      0x270 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
  .debug_ranges  0x0000000000001550       0x10 ./Services/Src/service_uart.o
 
-.debug_macro    0x0000000000000000    0x2542c
+.debug_macro    0x0000000000000000    0x25441
  .debug_macro   0x0000000000000000      0x418 ./Core/Src/freertos.o
  .debug_macro   0x0000000000000418      0xa78 ./Core/Src/freertos.o
  .debug_macro   0x0000000000000e90      0x174 ./Core/Src/freertos.o
@@ -6820,191 +6708,191 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .debug_macro   0x0000000000002299      0x12a ./Core/Src/freertos.o
  .debug_macro   0x00000000000023c3       0x10 ./Core/Src/freertos.o
  .debug_macro   0x00000000000023d3       0x35 ./Core/Src/freertos.o
- .debug_macro   0x0000000000002408      0x3d1 ./Core/Src/freertos.o
- .debug_macro   0x00000000000027d9       0xb5 ./Core/Src/freertos.o
- .debug_macro   0x000000000000288e       0xaa ./Core/Src/freertos.o
- .debug_macro   0x0000000000002938      0x29b ./Core/Src/freertos.o
- .debug_macro   0x0000000000002bd3       0x2e ./Core/Src/freertos.o
- .debug_macro   0x0000000000002c01       0x2f ./Core/Src/freertos.o
- .debug_macro   0x0000000000002c30       0x1c ./Core/Src/freertos.o
- .debug_macro   0x0000000000002c4c       0x22 ./Core/Src/freertos.o
- .debug_macro   0x0000000000002c6e       0xd9 ./Core/Src/freertos.o
- .debug_macro   0x0000000000002d47     0x102d ./Core/Src/freertos.o
- .debug_macro   0x0000000000003d74      0x11f ./Core/Src/freertos.o
- .debug_macro   0x0000000000003e93    0x15e82 ./Core/Src/freertos.o
- .debug_macro   0x0000000000019d15       0x6d ./Core/Src/freertos.o
- .debug_macro   0x0000000000019d82     0x367e ./Core/Src/freertos.o
- .debug_macro   0x000000000001d400       0x5c ./Core/Src/freertos.o
- .debug_macro   0x000000000001d45c      0x96b ./Core/Src/freertos.o
- .debug_macro   0x000000000001ddc7      0x9fe ./Core/Src/freertos.o
- .debug_macro   0x000000000001e7c5      0x115 ./Core/Src/freertos.o
- .debug_macro   0x000000000001e8da      0x13e ./Core/Src/freertos.o
- .debug_macro   0x000000000001ea18       0xa5 ./Core/Src/freertos.o
- .debug_macro   0x000000000001eabd      0x174 ./Core/Src/freertos.o
- .debug_macro   0x000000000001ec31      0x287 ./Core/Src/freertos.o
- .debug_macro   0x000000000001eeb8       0x5f ./Core/Src/freertos.o
- .debug_macro   0x000000000001ef17      0x236 ./Core/Src/freertos.o
- .debug_macro   0x000000000001f14d      0x12c ./Core/Src/freertos.o
- .debug_macro   0x000000000001f279      0x21e ./Core/Src/freertos.o
- .debug_macro   0x000000000001f497       0x2e ./Core/Src/freertos.o
- .debug_macro   0x000000000001f4c5      0x11a ./Core/Src/freertos.o
- .debug_macro   0x000000000001f5df       0x7e ./Core/Src/freertos.o
- .debug_macro   0x000000000001f65d       0x89 ./Core/Src/freertos.o
- .debug_macro   0x000000000001f6e6      0x8e6 ./Core/Src/freertos.o
- .debug_macro   0x000000000001ffcc       0x47 ./Core/Src/freertos.o
- .debug_macro   0x0000000000020013      0x295 ./Core/Src/freertos.o
- .debug_macro   0x00000000000202a8      0x12d ./Core/Src/freertos.o
- .debug_macro   0x00000000000203d5       0x1c ./Core/Src/freertos.o
- .debug_macro   0x00000000000203f1       0x91 ./Core/Src/freertos.o
- .debug_macro   0x0000000000020482       0x8d ./Core/Src/freertos.o
- .debug_macro   0x000000000002050f       0x7e ./Core/Src/freertos.o
- .debug_macro   0x000000000002058d       0x19 ./Core/Src/freertos.o
- .debug_macro   0x00000000000205a6       0xf2 ./Core/Src/freertos.o
- .debug_macro   0x0000000000020698       0x16 ./Core/Src/freertos.o
- .debug_macro   0x00000000000206ae      0x341 ./Core/Src/freertos.o
- .debug_macro   0x00000000000209ef       0x16 ./Core/Src/freertos.o
- .debug_macro   0x0000000000020a05       0x29 ./Core/Src/freertos.o
- .debug_macro   0x0000000000020a2e       0x16 ./Core/Src/freertos.o
- .debug_macro   0x0000000000020a44       0x20 ./Core/Src/freertos.o
- .debug_macro   0x0000000000020a64      0x1e7 ./Core/Src/gpio.o
- .debug_macro   0x0000000000020c4b      0x3a7 ./Core/Src/main.o
- .debug_macro   0x0000000000020ff2      0x10a ./Core/Src/main.o
- .debug_macro   0x00000000000210fc      0x1dd ./Core/Src/stm32f4xx_hal_msp.o
- .debug_macro   0x00000000000212d9      0x1ce ./Core/Src/stm32f4xx_hal_timebase_tim.o
- .debug_macro   0x00000000000214a7      0x1e7 ./Core/Src/stm32f4xx_it.o
- .debug_macro   0x000000000002168e       0xff ./Core/Src/sysmem.o
- .debug_macro   0x000000000002178d      0x23b ./Core/Src/sysmem.o
- .debug_macro   0x00000000000219c8      0x1ce ./Core/Src/system_stm32f4xx.o
- .debug_macro   0x0000000000021b96      0x37a ./Core/Src/usart.o
- .debug_macro   0x0000000000021f10       0x16 ./Core/Src/usart.o
- .debug_macro   0x0000000000021f26      0x22e ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal.o
- .debug_macro   0x0000000000022154      0x1ce ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_cortex.o
- .debug_macro   0x0000000000022322      0x1d4 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_gpio.o
- .debug_macro   0x00000000000224f6      0x1f2 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_rcc.o
- .debug_macro   0x00000000000226e8      0x1cf ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_tim.o
- .debug_macro   0x00000000000228b7      0x1ce ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_tim_ex.o
- .debug_macro   0x0000000000022a85      0x1cf ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_uart.o
- .debug_macro   0x0000000000022c54      0x272 ./Middlewares/FreeRTOS/cmsis_os.o
- .debug_macro   0x0000000000022ec6       0x10 ./Middlewares/FreeRTOS/cmsis_os.o
- .debug_macro   0x0000000000022ed6       0x16 ./Middlewares/FreeRTOS/cmsis_os.o
- .debug_macro   0x0000000000022eec       0xc7 ./Middlewares/FreeRTOS/cmsis_os.o
- .debug_macro   0x0000000000022fb3      0x222 ./Middlewares/FreeRTOS/heap_4.o
- .debug_macro   0x00000000000231d5      0x1fb ./Middlewares/FreeRTOS/list.o
- .debug_macro   0x00000000000233d0      0x295 ./Middlewares/FreeRTOS/port.o
- .debug_macro   0x0000000000023665      0x28a ./Middlewares/FreeRTOS/queue.o
- .debug_macro   0x00000000000238ef       0x87 ./Middlewares/FreeRTOS/queue.o
- .debug_macro   0x0000000000023976      0x2fb ./Middlewares/FreeRTOS/tasks.o
- .debug_macro   0x0000000000023c71       0x10 ./Middlewares/FreeRTOS/tasks.o
- .debug_macro   0x0000000000023c81      0x250 ./Middlewares/FreeRTOS/timers.o
- .debug_macro   0x0000000000023ed1       0x97 ./Middlewares/FreeRTOS/timers.o
- .debug_macro   0x0000000000023f68      0x1d5 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_macro   0x000000000002413d      0x1bd ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x00000000000242fa       0x34 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x000000000002432e      0x138 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_macro   0x0000000000024466      0x213 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x0000000000024679      0x204 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x000000000002487d      0x16e ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_macro   0x00000000000249eb      0x21c ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_macro   0x0000000000024c07      0x1eb ./Modules/Src/module_led.o
- .debug_macro   0x0000000000024df2      0x2eb ./Modules/Src/module_uart.o
- .debug_macro   0x00000000000250dd       0x56 ./Modules/Src/module_uart.o
- .debug_macro   0x0000000000025133      0x2f9 ./Services/Src/service_uart.o
+ .debug_macro   0x0000000000002408      0x3d8 ./Core/Src/freertos.o
+ .debug_macro   0x00000000000027e0       0xb5 ./Core/Src/freertos.o
+ .debug_macro   0x0000000000002895       0xaa ./Core/Src/freertos.o
+ .debug_macro   0x000000000000293f      0x29b ./Core/Src/freertos.o
+ .debug_macro   0x0000000000002bda       0x2e ./Core/Src/freertos.o
+ .debug_macro   0x0000000000002c08       0x2f ./Core/Src/freertos.o
+ .debug_macro   0x0000000000002c37       0x1c ./Core/Src/freertos.o
+ .debug_macro   0x0000000000002c53       0x22 ./Core/Src/freertos.o
+ .debug_macro   0x0000000000002c75       0xd9 ./Core/Src/freertos.o
+ .debug_macro   0x0000000000002d4e     0x102d ./Core/Src/freertos.o
+ .debug_macro   0x0000000000003d7b      0x11f ./Core/Src/freertos.o
+ .debug_macro   0x0000000000003e9a    0x15e82 ./Core/Src/freertos.o
+ .debug_macro   0x0000000000019d1c       0x6d ./Core/Src/freertos.o
+ .debug_macro   0x0000000000019d89     0x367e ./Core/Src/freertos.o
+ .debug_macro   0x000000000001d407       0x5c ./Core/Src/freertos.o
+ .debug_macro   0x000000000001d463      0x96b ./Core/Src/freertos.o
+ .debug_macro   0x000000000001ddce      0x9fe ./Core/Src/freertos.o
+ .debug_macro   0x000000000001e7cc      0x115 ./Core/Src/freertos.o
+ .debug_macro   0x000000000001e8e1      0x13e ./Core/Src/freertos.o
+ .debug_macro   0x000000000001ea1f       0xa5 ./Core/Src/freertos.o
+ .debug_macro   0x000000000001eac4      0x174 ./Core/Src/freertos.o
+ .debug_macro   0x000000000001ec38      0x287 ./Core/Src/freertos.o
+ .debug_macro   0x000000000001eebf       0x5f ./Core/Src/freertos.o
+ .debug_macro   0x000000000001ef1e      0x236 ./Core/Src/freertos.o
+ .debug_macro   0x000000000001f154      0x12c ./Core/Src/freertos.o
+ .debug_macro   0x000000000001f280      0x21e ./Core/Src/freertos.o
+ .debug_macro   0x000000000001f49e       0x2e ./Core/Src/freertos.o
+ .debug_macro   0x000000000001f4cc      0x11a ./Core/Src/freertos.o
+ .debug_macro   0x000000000001f5e6       0x7e ./Core/Src/freertos.o
+ .debug_macro   0x000000000001f664       0x89 ./Core/Src/freertos.o
+ .debug_macro   0x000000000001f6ed      0x8e6 ./Core/Src/freertos.o
+ .debug_macro   0x000000000001ffd3       0x47 ./Core/Src/freertos.o
+ .debug_macro   0x000000000002001a      0x295 ./Core/Src/freertos.o
+ .debug_macro   0x00000000000202af      0x12d ./Core/Src/freertos.o
+ .debug_macro   0x00000000000203dc       0x1c ./Core/Src/freertos.o
+ .debug_macro   0x00000000000203f8       0x91 ./Core/Src/freertos.o
+ .debug_macro   0x0000000000020489       0x8d ./Core/Src/freertos.o
+ .debug_macro   0x0000000000020516       0x7e ./Core/Src/freertos.o
+ .debug_macro   0x0000000000020594       0x19 ./Core/Src/freertos.o
+ .debug_macro   0x00000000000205ad       0xf2 ./Core/Src/freertos.o
+ .debug_macro   0x000000000002069f       0x16 ./Core/Src/freertos.o
+ .debug_macro   0x00000000000206b5      0x341 ./Core/Src/freertos.o
+ .debug_macro   0x00000000000209f6       0x16 ./Core/Src/freertos.o
+ .debug_macro   0x0000000000020a0c       0x29 ./Core/Src/freertos.o
+ .debug_macro   0x0000000000020a35       0x16 ./Core/Src/freertos.o
+ .debug_macro   0x0000000000020a4b       0x20 ./Core/Src/freertos.o
+ .debug_macro   0x0000000000020a6b      0x1e7 ./Core/Src/gpio.o
+ .debug_macro   0x0000000000020c52      0x3a7 ./Core/Src/main.o
+ .debug_macro   0x0000000000020ff9      0x10a ./Core/Src/main.o
+ .debug_macro   0x0000000000021103      0x1dd ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_macro   0x00000000000212e0      0x1ce ./Core/Src/stm32f4xx_hal_timebase_tim.o
+ .debug_macro   0x00000000000214ae      0x1e7 ./Core/Src/stm32f4xx_it.o
+ .debug_macro   0x0000000000021695       0xff ./Core/Src/sysmem.o
+ .debug_macro   0x0000000000021794      0x23b ./Core/Src/sysmem.o
+ .debug_macro   0x00000000000219cf      0x1ce ./Core/Src/system_stm32f4xx.o
+ .debug_macro   0x0000000000021b9d      0x37a ./Core/Src/usart.o
+ .debug_macro   0x0000000000021f17       0x16 ./Core/Src/usart.o
+ .debug_macro   0x0000000000021f2d      0x22e ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal.o
+ .debug_macro   0x000000000002215b      0x1ce ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_cortex.o
+ .debug_macro   0x0000000000022329      0x1d4 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_gpio.o
+ .debug_macro   0x00000000000224fd      0x1f2 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_rcc.o
+ .debug_macro   0x00000000000226ef      0x1cf ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_tim.o
+ .debug_macro   0x00000000000228be      0x1ce ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_tim_ex.o
+ .debug_macro   0x0000000000022a8c      0x1cf ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_uart.o
+ .debug_macro   0x0000000000022c5b      0x272 ./Middlewares/FreeRTOS/cmsis_os.o
+ .debug_macro   0x0000000000022ecd       0x10 ./Middlewares/FreeRTOS/cmsis_os.o
+ .debug_macro   0x0000000000022edd       0x16 ./Middlewares/FreeRTOS/cmsis_os.o
+ .debug_macro   0x0000000000022ef3       0xc7 ./Middlewares/FreeRTOS/cmsis_os.o
+ .debug_macro   0x0000000000022fba      0x222 ./Middlewares/FreeRTOS/heap_4.o
+ .debug_macro   0x00000000000231dc      0x1fb ./Middlewares/FreeRTOS/list.o
+ .debug_macro   0x00000000000233d7      0x295 ./Middlewares/FreeRTOS/port.o
+ .debug_macro   0x000000000002366c      0x28a ./Middlewares/FreeRTOS/queue.o
+ .debug_macro   0x00000000000238f6       0x87 ./Middlewares/FreeRTOS/queue.o
+ .debug_macro   0x000000000002397d      0x309 ./Middlewares/FreeRTOS/tasks.o
+ .debug_macro   0x0000000000023c86       0x10 ./Middlewares/FreeRTOS/tasks.o
+ .debug_macro   0x0000000000023c96      0x250 ./Middlewares/FreeRTOS/timers.o
+ .debug_macro   0x0000000000023ee6       0x97 ./Middlewares/FreeRTOS/timers.o
+ .debug_macro   0x0000000000023f7d      0x1eb ./Modules/Src/module_led.o
+ .debug_macro   0x0000000000024168      0x2eb ./Modules/Src/module_uart.o
+ .debug_macro   0x0000000000024453       0x56 ./Modules/Src/module_uart.o
+ .debug_macro   0x00000000000244a9      0x1d5 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_macro   0x000000000002467e      0x21c ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_macro   0x000000000002489a      0x1bd ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000024a57       0x34 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000024a8b      0x138 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_macro   0x0000000000024bc3      0x213 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000024dd6      0x204 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000024fda      0x16e ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_macro   0x0000000000025148      0x2f9 ./Services/Src/service_uart.o
 
-.debug_line     0x0000000000000000    0x1d815
- .debug_line    0x0000000000000000      0xe84 ./Core/Src/freertos.o
- .debug_line    0x0000000000000e84      0x7a9 ./Core/Src/gpio.o
- .debug_line    0x000000000000162d      0xd64 ./Core/Src/main.o
- .debug_line    0x0000000000002391      0x79c ./Core/Src/stm32f4xx_hal_msp.o
- .debug_line    0x0000000000002b2d      0x7fb ./Core/Src/stm32f4xx_hal_timebase_tim.o
- .debug_line    0x0000000000003328      0x838 ./Core/Src/stm32f4xx_it.o
- .debug_line    0x0000000000003b60      0x4e5 ./Core/Src/sysmem.o
- .debug_line    0x0000000000004045      0x81d ./Core/Src/system_stm32f4xx.o
- .debug_line    0x0000000000004862      0xa06 ./Core/Src/usart.o
- .debug_line    0x0000000000005268       0x88 ./Core/Startup/startup_stm32f407zgtx.o
- .debug_line    0x00000000000052f0      0xabc ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal.o
- .debug_line    0x0000000000005dac      0xd6b ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_cortex.o
- .debug_line    0x0000000000006b17      0xc30 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_gpio.o
- .debug_line    0x0000000000007747      0xe36 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_rcc.o
- .debug_line    0x000000000000857d     0x37b0 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_tim.o
- .debug_line    0x000000000000bd2d     0x1ab9 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_tim_ex.o
- .debug_line    0x000000000000d7e6     0x2b61 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_uart.o
- .debug_line    0x0000000000010347     0x1557 ./Middlewares/FreeRTOS/cmsis_os.o
- .debug_line    0x000000000001189e      0xba8 ./Middlewares/FreeRTOS/heap_4.o
- .debug_line    0x0000000000012446      0x97e ./Middlewares/FreeRTOS/list.o
- .debug_line    0x0000000000012dc4      0xb13 ./Middlewares/FreeRTOS/port.o
- .debug_line    0x00000000000138d7     0x1776 ./Middlewares/FreeRTOS/queue.o
- .debug_line    0x000000000001504d     0x1c58 ./Middlewares/FreeRTOS/tasks.o
- .debug_line    0x0000000000016ca5      0xf21 ./Middlewares/FreeRTOS/timers.o
- .debug_line    0x0000000000017bc6      0x833 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_line    0x00000000000183f9      0xe8e ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_line    0x0000000000019287     0x1f7b ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_line    0x000000000001b202      0xa30 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_line    0x000000000001bc32      0x802 ./Modules/Src/module_led.o
- .debug_line    0x000000000001c434      0xa2d ./Modules/Src/module_uart.o
- .debug_line    0x000000000001ce61      0x9b4 ./Services/Src/service_uart.o
+.debug_line     0x0000000000000000    0x1d62b
+ .debug_line    0x0000000000000000      0xe56 ./Core/Src/freertos.o
+ .debug_line    0x0000000000000e56      0x7a9 ./Core/Src/gpio.o
+ .debug_line    0x00000000000015ff      0xd36 ./Core/Src/main.o
+ .debug_line    0x0000000000002335      0x79c ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_line    0x0000000000002ad1      0x7fb ./Core/Src/stm32f4xx_hal_timebase_tim.o
+ .debug_line    0x00000000000032cc      0x838 ./Core/Src/stm32f4xx_it.o
+ .debug_line    0x0000000000003b04      0x4e5 ./Core/Src/sysmem.o
+ .debug_line    0x0000000000003fe9      0x81d ./Core/Src/system_stm32f4xx.o
+ .debug_line    0x0000000000004806      0xa06 ./Core/Src/usart.o
+ .debug_line    0x000000000000520c       0x88 ./Core/Startup/startup_stm32f407zgtx.o
+ .debug_line    0x0000000000005294      0xabc ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal.o
+ .debug_line    0x0000000000005d50      0xd6b ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_cortex.o
+ .debug_line    0x0000000000006abb      0xc30 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_gpio.o
+ .debug_line    0x00000000000076eb      0xe36 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_rcc.o
+ .debug_line    0x0000000000008521     0x37b0 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_tim.o
+ .debug_line    0x000000000000bcd1     0x1ab9 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_tim_ex.o
+ .debug_line    0x000000000000d78a     0x2b61 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_uart.o
+ .debug_line    0x00000000000102eb     0x1527 ./Middlewares/FreeRTOS/cmsis_os.o
+ .debug_line    0x0000000000011812      0xb78 ./Middlewares/FreeRTOS/heap_4.o
+ .debug_line    0x000000000001238a      0x94e ./Middlewares/FreeRTOS/list.o
+ .debug_line    0x0000000000012cd8      0xb5d ./Middlewares/FreeRTOS/port.o
+ .debug_line    0x0000000000013835     0x1746 ./Middlewares/FreeRTOS/queue.o
+ .debug_line    0x0000000000014f7b     0x1c28 ./Middlewares/FreeRTOS/tasks.o
+ .debug_line    0x0000000000016ba3      0xef1 ./Middlewares/FreeRTOS/timers.o
+ .debug_line    0x0000000000017a94      0x802 ./Modules/Src/module_led.o
+ .debug_line    0x0000000000018296      0xa2d ./Modules/Src/module_uart.o
+ .debug_line    0x0000000000018cc3      0x7f7 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_line    0x00000000000194ba      0x9e4 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_line    0x0000000000019e9e      0xe76 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_line    0x000000000001ad14     0x1f63 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+ .debug_line    0x000000000001cc77      0x9b4 ./Services/Src/service_uart.o
 
-.debug_str      0x0000000000000000    0xdb03a
- .debug_str     0x0000000000000000    0xd097c ./Core/Src/freertos.o
-                                      0xd0cf4 (size before relaxing)
- .debug_str     0x00000000000d097c      0x1dc ./Core/Src/gpio.o
+.debug_str      0x0000000000000000    0xdb018
+ .debug_str     0x0000000000000000    0xd099a ./Core/Src/freertos.o
+                                      0xd0d12 (size before relaxing)
+ .debug_str     0x00000000000d099a      0x1dc ./Core/Src/gpio.o
                                       0xc38b2 (size before relaxing)
- .debug_str     0x00000000000d0b58      0x7b3 ./Core/Src/main.o
-                                      0xcf980 (size before relaxing)
- .debug_str     0x00000000000d130b      0x51c ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_str     0x00000000000d0b76      0x7b3 ./Core/Src/main.o
+                                      0xcf99e (size before relaxing)
+ .debug_str     0x00000000000d1329      0x51c ./Core/Src/stm32f4xx_hal_msp.o
                                       0xc3cf4 (size before relaxing)
- .debug_str     0x00000000000d1827       0xff ./Core/Src/stm32f4xx_hal_timebase_tim.o
+ .debug_str     0x00000000000d1845       0xff ./Core/Src/stm32f4xx_hal_timebase_tim.o
                                       0xc4319 (size before relaxing)
- .debug_str     0x00000000000d1926       0xbe ./Core/Src/stm32f4xx_it.o
+ .debug_str     0x00000000000d1944       0xbe ./Core/Src/stm32f4xx_it.o
                                       0xc3c9d (size before relaxing)
- .debug_str     0x00000000000d19e4      0x35a ./Core/Src/sysmem.o
+ .debug_str     0x00000000000d1a02      0x35a ./Core/Src/sysmem.o
                                        0x5dc0 (size before relaxing)
- .debug_str     0x00000000000d1d3e       0xdb ./Core/Src/system_stm32f4xx.o
+ .debug_str     0x00000000000d1d5c       0xdb ./Core/Src/system_stm32f4xx.o
                                       0xc3844 (size before relaxing)
- .debug_str     0x00000000000d1e19     0x119c ./Core/Src/usart.o
+ .debug_str     0x00000000000d1e37     0x119c ./Core/Src/usart.o
                                       0xc7b83 (size before relaxing)
- .debug_str     0x00000000000d2fb5       0x36 ./Core/Startup/startup_stm32f407zgtx.o
+ .debug_str     0x00000000000d2fd3       0x36 ./Core/Startup/startup_stm32f407zgtx.o
                                          0x82 (size before relaxing)
- .debug_str     0x00000000000d2feb      0x617 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal.o
+ .debug_str     0x00000000000d3009      0x617 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal.o
                                       0xc4401 (size before relaxing)
- .debug_str     0x00000000000d3602      0x36a ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_cortex.o
+ .debug_str     0x00000000000d3620      0x36a ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_cortex.o
                                       0xc4134 (size before relaxing)
- .debug_str     0x00000000000d396c      0x15a ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_gpio.o
+ .debug_str     0x00000000000d398a      0x15a ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_gpio.o
                                       0xc39f8 (size before relaxing)
- .debug_str     0x00000000000d3ac6      0x236 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_rcc.o
+ .debug_str     0x00000000000d3ae4      0x236 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_rcc.o
                                       0xc3cb1 (size before relaxing)
- .debug_str     0x00000000000d3cfc      0xea2 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_tim.o
+ .debug_str     0x00000000000d3d1a      0xea2 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_tim.o
                                       0xc4bf7 (size before relaxing)
- .debug_str     0x00000000000d4b9e      0x53c ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_tim_ex.o
+ .debug_str     0x00000000000d4bbc      0x53c ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_tim_ex.o
                                       0xc4413 (size before relaxing)
- .debug_str     0x00000000000d50da      0x654 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_uart.o
+ .debug_str     0x00000000000d50f8      0x654 ./Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_uart.o
                                       0xc4250 (size before relaxing)
- .debug_str     0x00000000000d572e      0xb44 ./Middlewares/FreeRTOS/cmsis_os.o
-                                      0x127d2 (size before relaxing)
- .debug_str     0x00000000000d6272      0x3cc ./Middlewares/FreeRTOS/heap_4.o
-                                       0xf027 (size before relaxing)
- .debug_str     0x00000000000d663e      0x15b ./Middlewares/FreeRTOS/list.o
-                                       0xe6e5 (size before relaxing)
- .debug_str     0x00000000000d6799      0x875 ./Middlewares/FreeRTOS/port.o
-                                       0xe062 (size before relaxing)
- .debug_str     0x00000000000d700e      0x87f ./Middlewares/FreeRTOS/queue.o
-                                      0x1014b (size before relaxing)
- .debug_str     0x00000000000d788d     0x1182 ./Middlewares/FreeRTOS/tasks.o
-                                      0x110dc (size before relaxing)
- .debug_str     0x00000000000d8a0f      0x512 ./Middlewares/FreeRTOS/timers.o
-                                      0x1099d (size before relaxing)
- .debug_str     0x00000000000d8f21      0x1bb ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
-                                       0xca76 (size before relaxing)
- .debug_str     0x00000000000d90dc     0x105b ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
-                                       0x779f (size before relaxing)
- .debug_str     0x00000000000da137      0xd93 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
-                                       0x97a3 (size before relaxing)
- .debug_str     0x00000000000daeca       0xb3 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
-                                       0xed63 (size before relaxing)
- .debug_str     0x00000000000daf7d       0x1c ./Modules/Src/module_led.o
+ .debug_str     0x00000000000d574c      0xb44 ./Middlewares/FreeRTOS/cmsis_os.o
+                                      0x127f0 (size before relaxing)
+ .debug_str     0x00000000000d6290      0x3cc ./Middlewares/FreeRTOS/heap_4.o
+                                       0xf045 (size before relaxing)
+ .debug_str     0x00000000000d665c      0x15b ./Middlewares/FreeRTOS/list.o
+                                       0xe703 (size before relaxing)
+ .debug_str     0x00000000000d67b7      0x875 ./Middlewares/FreeRTOS/port.o
+                                       0xe080 (size before relaxing)
+ .debug_str     0x00000000000d702c      0x87f ./Middlewares/FreeRTOS/queue.o
+                                      0x10169 (size before relaxing)
+ .debug_str     0x00000000000d78ab     0x1182 ./Middlewares/FreeRTOS/tasks.o
+                                      0x110fa (size before relaxing)
+ .debug_str     0x00000000000d8a2d      0x512 ./Middlewares/FreeRTOS/timers.o
+                                      0x109bb (size before relaxing)
+ .debug_str     0x00000000000d8f3f       0x1c ./Modules/Src/module_led.o
                                       0xc3745 (size before relaxing)
- .debug_str     0x00000000000daf99       0x58 ./Modules/Src/module_uart.o
+ .debug_str     0x00000000000d8f5b       0x58 ./Modules/Src/module_uart.o
                                       0xc6673 (size before relaxing)
- .debug_str     0x00000000000daff1       0x49 ./Services/Src/service_uart.o
+ .debug_str     0x00000000000d8fb3      0x1af ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+                                       0xca88 (size before relaxing)
+ .debug_str     0x00000000000d9162       0xf6 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+                                       0xed65 (size before relaxing)
+ .debug_str     0x00000000000d9258     0x1049 ./SEGGER/SEGGER/SEGGER_RTT.o
+                                       0x7793 (size before relaxing)
+ .debug_str     0x00000000000da2a1      0xd2e ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
+                                       0x9797 (size before relaxing)
+ .debug_str     0x00000000000dafcf       0x49 ./Services/Src/service_uart.o
                                       0xc6b0c (size before relaxing)
 
 .comment        0x0000000000000000       0x50
@@ -7032,12 +6920,12 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .comment       0x0000000000000050       0x51 ./Middlewares/FreeRTOS/queue.o
  .comment       0x0000000000000050       0x51 ./Middlewares/FreeRTOS/tasks.o
  .comment       0x0000000000000050       0x51 ./Middlewares/FreeRTOS/timers.o
- .comment       0x0000000000000050       0x51 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .comment       0x0000000000000050       0x51 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .comment       0x0000000000000050       0x51 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .comment       0x0000000000000050       0x51 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
  .comment       0x0000000000000050       0x51 ./Modules/Src/module_led.o
  .comment       0x0000000000000050       0x51 ./Modules/Src/module_uart.o
+ .comment       0x0000000000000050       0x51 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .comment       0x0000000000000050       0x51 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .comment       0x0000000000000050       0x51 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .comment       0x0000000000000050       0x51 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
  .comment       0x0000000000000050       0x51 ./Services/Src/service_uart.o
 
 .debug_frame    0x0000000000000000     0x6360
@@ -7064,12 +6952,12 @@ LOAD c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .debug_frame   0x0000000000003c14      0x4a0 ./Middlewares/FreeRTOS/queue.o
  .debug_frame   0x00000000000040b4      0x7b4 ./Middlewares/FreeRTOS/tasks.o
  .debug_frame   0x0000000000004868      0x368 ./Middlewares/FreeRTOS/timers.o
- .debug_frame   0x0000000000004bd0       0x48 ./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
- .debug_frame   0x0000000000004c18      0x530 ./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o
- .debug_frame   0x0000000000005148      0xbc4 ./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o
- .debug_frame   0x0000000000005d0c      0x104 ./Middlewares/SEGGER/Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.o
- .debug_frame   0x0000000000005e10       0x2c ./Modules/Src/module_led.o
- .debug_frame   0x0000000000005e3c       0x4c ./Modules/Src/module_uart.o
+ .debug_frame   0x0000000000004bd0       0x2c ./Modules/Src/module_led.o
+ .debug_frame   0x0000000000004bfc       0x4c ./Modules/Src/module_uart.o
+ .debug_frame   0x0000000000004c48       0x48 ./SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o
+ .debug_frame   0x0000000000004c90      0x104 ./SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.o
+ .debug_frame   0x0000000000004d94      0x530 ./SEGGER/SEGGER/SEGGER_RTT.o
+ .debug_frame   0x00000000000052c4      0xbc4 ./SEGGER/SEGGER/SEGGER_SYSVIEW.o
  .debug_frame   0x0000000000005e88       0x34 ./Services/Src/service_uart.o
  .debug_frame   0x0000000000005ebc       0x20 c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-errno.o)
  .debug_frame   0x0000000000005edc      0x14c c:/st/stm32cubeide_1.5.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-findfp.o)

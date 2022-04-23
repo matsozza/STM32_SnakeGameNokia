@@ -10,11 +10,10 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include Services/Src/subdir.mk
+-include SEGGER/SEGGER/subdir.mk
+-include SEGGER/OS/subdir.mk
+-include SEGGER/Config/subdir.mk
 -include Modules/Src/subdir.mk
--include Middlewares/SEGGER/Sample/FreeRTOSV10/subdir.mk
--include Middlewares/SEGGER/SEGGER/Syscalls/subdir.mk
--include Middlewares/SEGGER/SEGGER/subdir.mk
--include Middlewares/SEGGER/Config/subdir.mk
 -include Middlewares/FreeRTOS/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/subdir.mk
 -include Core/Startup/subdir.mk
