@@ -37,6 +37,8 @@
 "./Middlewares/FreeRTOS/timers.o"
 "./Middlewares/SEGGER/Config/SEGGER_SYSVIEW_Config_FreeRTOS.o"
 "./Middlewares/SEGGER/SEGGER/SEGGER_RTT.o"
+"./Middlewares/SEGGER/SEGGER/SEGGER_RTT_ASM_ARMv7M.o"
+"./Middlewares/SEGGER/SEGGER/SEGGER_RTT_printf.o"
 "./Middlewares/SEGGER/SEGGER/SEGGER_SYSVIEW.o"
 "./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_GCC.o"
 "./Middlewares/SEGGER/SEGGER/Syscalls/SEGGER_RTT_Syscalls_IAR.o"
