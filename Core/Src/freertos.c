@@ -47,24 +47,21 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 /* USER CODE END Variables */
-osThreadId task_100msHandle;
-osThreadId task_500msHandle;
+osThreadId task100msHandle;
+osThreadId task500msHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
 /* USER CODE END FunctionPrototypes */
 
-void StartTask100ms(void const * argument);
-void StartTask500ms(void const * argument);
+void startTask100ms(void const * argument);
+void startTask500ms(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
-
-/* GetTimerTaskMemory prototype (linked to static allocation support) */
-void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize );
 
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
 static StaticTask_t xIdleTaskTCBBuffer;
@@ -78,19 +75,6 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
   /* place for user code */
 }
 /* USER CODE END GET_IDLE_TASK_MEMORY */
-
-/* USER CODE BEGIN GET_TIMER_TASK_MEMORY */
-static StaticTask_t xTimerTaskTCBBuffer;
-static StackType_t xTimerStack[configTIMER_TASK_STACK_DEPTH];
-
-void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize )
-{
-  *ppxTimerTaskTCBBuffer = &xTimerTaskTCBBuffer;
-  *ppxTimerTaskStackBuffer = &xTimerStack[0];
-  *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
-  /* place for user code */
-}
-/* USER CODE END GET_TIMER_TASK_MEMORY */
 
 /**
   * @brief  FreeRTOS initialization
@@ -120,13 +104,13 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* definition and creation of task_100ms */
-  osThreadDef(task_100ms, StartTask100ms, osPriorityNormal, 0, 128);
-  task_100msHandle = osThreadCreate(osThread(task_100ms), NULL);
+  /* definition and creation of task100ms */
+  osThreadDef(task100ms, startTask100ms, osPriorityNormal, 0, 128);
+  task100msHandle = osThreadCreate(osThread(task100ms), NULL);
 
-  /* definition and creation of task_500ms */
-  osThreadDef(task_500ms, StartTask500ms, osPriorityAboveNormal, 0, 128);
-  task_500msHandle = osThreadCreate(osThread(task_500ms), NULL);
+  /* definition and creation of task500ms */
+  osThreadDef(task500ms, startTask500ms, osPriorityAboveNormal, 0, 128);
+  task500msHandle = osThreadCreate(osThread(task500ms), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -134,42 +118,43 @@ void MX_FREERTOS_Init(void) {
 
 }
 
-/* USER CODE BEGIN Header_StartTask100ms */
+/* USER CODE BEGIN Header_startTask100ms */
 /**
-  * @brief  Function implementing the task_100ms thread.
+  * @brief  Function implementing the task100ms thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_StartTask100ms */
-void StartTask100ms(void const * argument)
+/* USER CODE END Header_startTask100ms */
+void startTask100ms(void const * argument)
 {
-  /* USER CODE BEGIN StartTask100ms */
-	/* Infinite loop */
-	for(;;){
-		toggle_LED1();
-		UART_printLEDString();
-		vTaskDelay(100);
-	}
-
-  /* USER CODE END StartTask100ms */
+  /* USER CODE BEGIN startTask100ms */
+  /* Infinite loop */
+  for(;;)
+  {
+	  LED1_toggle();
+	  UART_printLEDString();
+	  vTaskDelay(100);
+  }
+  /* USER CODE END startTask100ms */
 }
 
-/* USER CODE BEGIN Header_StartTask500ms */
+/* USER CODE BEGIN Header_startTask500ms */
 /**
-* @brief Function implementing the task_500ms thread.
+* @brief Function implementing the task500ms thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartTask500ms */
-void StartTask500ms(void const * argument)
+/* USER CODE END Header_startTask500ms */
+void startTask500ms(void const * argument)
 {
-  /* USER CODE BEGIN StartTask500ms */
-	/* Infinite loop */
-	for(;;){
+  /* USER CODE BEGIN startTask500ms */
+  /* Infinite loop */
+	for(;;)
+	{
 		UART_printTestString();
 		vTaskDelay(500);
 	}
-  /* USER CODE END StartTask500ms */
+  /* USER CODE END startTask500ms */
 }
 
 /* Private application code --------------------------------------------------*/

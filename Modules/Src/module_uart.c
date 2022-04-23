@@ -20,7 +20,7 @@ void UART_printTestString()
 	  testStrCat = malloc(sizeof(char)*32);
 	  numberStr = malloc(sizeof(char)*32);
 
-	  strcpy(testStr,"TestStr ");
+	  strcpy(testStr,"TestStr - 500ms");
 	  USART2_sendString(testStr);
 
 
@@ -35,7 +35,7 @@ void UART_printLEDString()
 	  testStrCat = malloc(sizeof(char)*32);
 	  numberStr = malloc(sizeof(char)*32);
 
-	  strcpy(testStr,"-->LedString ");
+	  strcpy(testStr,"-->LedString - 100ms ");
 	  USART2_sendString(testStr);
 
 

@@ -9,7 +9,7 @@
 #include "gpio.h"
 #include "module_led.h"
 
-void toggle_LED1()
+void LED1_toggle()
 {
 	HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
 }

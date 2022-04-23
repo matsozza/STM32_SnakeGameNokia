@@ -21,7 +21,6 @@
 #include "cmsis_os.h"
 #include "usart.h"
 #include "gpio.h"
-#include "SEGGER_SYSVIEW.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
