@@ -14,7 +14,10 @@ RM := rm -rf
 -include SEGGER/OS/subdir.mk
 -include SEGGER/Config/subdir.mk
 -include Modules/Src/subdir.mk
--include Middlewares/FreeRTOS/subdir.mk
+-include Middlewares/FreeRTOS/org/Source/portable/MemMang/subdir.mk
+-include Middlewares/FreeRTOS/org/Source/portable/GCC/ARM_CM4F/subdir.mk
+-include Middlewares/FreeRTOS/org/Source/CMSIS_RTOS/subdir.mk
+-include Middlewares/FreeRTOS/org/Source/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
