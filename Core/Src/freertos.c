@@ -132,7 +132,7 @@ void startTask100ms(void const * argument)
   for(;;)
   {
     toggle_LED1();
-	  osDelay(10);
+	osDelay(100);
   }
   /* USER CODE END startTask100ms */
 }
@@ -150,8 +150,8 @@ void startTask500ms(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	  toggle_LED1();
-    osDelay(5);
+	toggle_LED1();
+    osDelay(500);
   }
   /* USER CODE END startTask500ms */
 }

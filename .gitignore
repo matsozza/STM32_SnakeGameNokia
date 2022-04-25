@@ -1,4 +1,7 @@
 Debug/*
+Debug/
+/Debug
+/Debug/
 *.o
 *.elf
 *.elf
