@@ -1,8 +1,9 @@
 #MicroXplorer Configuration settings - do not modify
 FREERTOS.FootprintOK=true
-FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT,FootprintOK,configMAX_TASK_NAME_LEN
+FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT,FootprintOK,configMAX_TASK_NAME_LEN,configTICK_RATE_HZ
 FREERTOS.Tasks01=task100ms,0,128,startTask100ms,Default,NULL,Dynamic,NULL,NULL;task500ms,1,128,startTask500ms,Default,NULL,Dynamic,NULL,NULL
 FREERTOS.configMAX_TASK_NAME_LEN=16
+FREERTOS.configTICK_RATE_HZ=100
 FREERTOS.configUSE_NEWLIB_REENTRANT=1
 File.Version=6
 GPIO.groupedBy=Group By Peripherals
