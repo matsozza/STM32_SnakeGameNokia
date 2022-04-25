@@ -490,9 +490,9 @@ void xPortSysTickHandler( void )
 	/* The SysTick runs at the lowest interrupt priority, so when this interrupt
 	executes all interrupts must be unmasked.  There is therefore no need to
 	save and then restore the interrupt mask value as its value is already
-	known. (SEGGER PATCHED) */
+	known. */
 	portDISABLE_INTERRUPTS();
-	traceISR_ENTER();
+  traceISR_ENTER();
 	{
 		/* Increment the RTOS tick. */
 		if( xTaskIncrementTick() != pdFALSE )
@@ -775,75 +775,6 @@ static void vPortEnableVFP( void )
 		of zero will result in unpredictable behaviour. */
 		configASSERT( ( portAIRCR_REG & portPRIORITY_GROUP_MASK ) <= ulMaxPRIGROUPValue );
 	}
-
-	//SEGGER Manually patched - Sozza
-
-#if( configASSERT_DEFINED == 1)
-	void vSetVarulMaxPRIGROUPValue( void ){
-#if( configASSERT_DEFINED == 1 )
-	{
-		volatile uint32_t ulOriginalPriority;
-		volatile uint8_t * const pucFirstUserPriorityRegister = ( volatile uint8_t * const ) ( portNVIC_IP_REGISTERS_OFFSET_16 + portFIRST_USER_INTERRUPT_NUMBER );
-		volatile uint8_t ucMaxPriorityValue;
-
-		/* Determine the maximum priority from which ISR safe FreeRTOS API
-		functions can be called.  ISR safe functions are those that end in
-		"FromISR".  FreeRTOS maintains separate thread and ISR API functions to
-		ensure interrupt entry is as fast and simple as possible.
-
-		Save the interrupt priority value that is about to be clobbered. */
-		ulOriginalPriority = *pucFirstUserPriorityRegister;
-
-		/* Determine the number of priority bits available.  First write to all
-		possible bits. */
-		*pucFirstUserPriorityRegister = portMAX_8_BIT_VALUE;
-
-		/* Read the value back to see how many bits stuck. */
-		ucMaxPriorityValue = *pucFirstUserPriorityRegister;
-
-		/* Use the same mask on the maximum system call priority. */
-		ucMaxSysCallPriority = configMAX_SYSCALL_INTERRUPT_PRIORITY & ucMaxPriorityValue;
-
-		/* Calculate the maximum acceptable priority group value for the number
-		of bits read back. */
-		ulMaxPRIGROUPValue = portMAX_PRIGROUP_BITS;
-		while( ( ucMaxPriorityValue & portTOP_BIT_OF_BYTE ) == portTOP_BIT_OF_BYTE )
-		{
-			ulMaxPRIGROUPValue--;
-			ucMaxPriorityValue <<= ( uint8_t ) 0x01;
-		}
-
-		#ifdef __NVIC_PRIO_BITS
-		{
-			/* Check the CMSIS configuration that defines the number of
-			priority bits matches the number of priority bits actually queried
-			from the hardware. */
-			configASSERT( ( portMAX_PRIGROUP_BITS - ulMaxPRIGROUPValue ) == __NVIC_PRIO_BITS );
-		}
-		#endif
-
-		#ifdef configPRIO_BITS
-		{
-			/* Check the FreeRTOS configuration that defines the number of
-			priority bits matches the number of priority bits actually queried
-			from the hardware. */
-			configASSERT( ( portMAX_PRIGROUP_BITS - ulMaxPRIGROUPValue ) == configPRIO_BITS );
-		}
-		#endif
-
-		/* Shift the priority group value back to its position within the AIRCR
-		register. */
-		ulMaxPRIGROUPValue <<= portPRIGROUP_SHIFT;
-		ulMaxPRIGROUPValue &= portPRIORITY_GROUP_MASK;
-
-		/* Restore the clobbered interrupt priority register to its original
-		value. */
-		*pucFirstUserPriorityRegister = ulOriginalPriority;
-	}
-	#endif /* conifgASSERT_DEFINED */
-
-	}
-#endif
 
 #endif /* configASSERT_DEFINED */
 
