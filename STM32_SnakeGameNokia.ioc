@@ -1,10 +1,9 @@
 #MicroXplorer Configuration settings - do not modify
 FREERTOS.FootprintOK=true
-FREERTOS.IPParameters=Tasks01,configUSE_TIMERS,configTIMER_TASK_PRIORITY,configUSE_NEWLIB_REENTRANT,FootprintOK
-FREERTOS.Tasks01=task_100ms,0,128,StartTask100ms,Default,NULL,Dynamic,NULL,NULL;task_500ms,1,128,StartTask500ms,Default,NULL,Dynamic,NULL,NULL
-FREERTOS.configTIMER_TASK_PRIORITY=6
+FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT,FootprintOK,configMAX_TASK_NAME_LEN
+FREERTOS.Tasks01=task100ms,0,128,startTask100ms,Default,NULL,Dynamic,NULL,NULL;task500ms,1,128,startTask500ms,Default,NULL,Dynamic,NULL,NULL
+FREERTOS.configMAX_TASK_NAME_LEN=16
 FREERTOS.configUSE_NEWLIB_REENTRANT=1
-FREERTOS.configUSE_TIMERS=1
 File.Version=6
 GPIO.groupedBy=Group By Peripherals
 KeepUserPlacement=false
@@ -80,7 +79,7 @@ ProjectManager.HalAssertFull=false
 ProjectManager.HeapSize=0x200
 ProjectManager.KeepUserCode=true
 ProjectManager.LastFirmware=true
-ProjectManager.LibraryCopy=2
+ProjectManager.LibraryCopy=1
 ProjectManager.MainLocation=Core/Src
 ProjectManager.NoMain=false
 ProjectManager.PreviousToolchain=
