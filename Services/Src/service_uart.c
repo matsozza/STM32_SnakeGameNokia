@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define UART_USE_IT 0
+#define UART_USE_IT 1
 
 int USART2_sendString(char *msg)
 {
