@@ -184,8 +184,14 @@ void USART2_IRQHandler(void)
 {
 	/* USER CODE BEGIN USART2_IRQn 0 */
 
-	//SEGGER Trace
+	//SEGGER Trace ISR
 	SEGGER_SYSVIEW_RecordEnterISR();
+
+	//SEGGER Trace Character sent
+	char USART_TX_SEGGER[2];
+    USART_TX_SEGGER[0]= *(huart2.pTxBuffPtr);
+    USART_TX_SEGGER[1]= 0;
+ 	SEGGER_SYSVIEW_Print((char*)&USART_TX_SEGGER);
 
 	// Disable other FreeRTOS interruptions while communicating to USART2
 	UBaseType_t uxSavedInterruptStatus;
