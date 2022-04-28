@@ -24,6 +24,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "SEGGER_SYSVIEW.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "croutine.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -168,11 +171,9 @@ void DebugMon_Handler(void)
 void TIM1_UP_TIM10_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 0 */
-
   /* USER CODE END TIM1_UP_TIM10_IRQn 0 */
   HAL_TIM_IRQHandler(&htim1);
   /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 1 */
-
   /* USER CODE END TIM1_UP_TIM10_IRQn 1 */
 }
 
@@ -181,15 +182,22 @@ void TIM1_UP_TIM10_IRQHandler(void)
   */
 void USART2_IRQHandler(void)
 {
-  /* USER CODE BEGIN USART2_IRQn 0 */
-  SEGGER_SYSVIEW_RecordEnterISR();
+	/* USER CODE BEGIN USART2_IRQn 0 */
 
-  /* USER CODE END USART2_IRQn 0 */
-  HAL_UART_IRQHandler(&huart2);
-  /* USER CODE BEGIN USART2_IRQn 1 */
-  SEGGER_SYSVIEW_RecordExitISR();
+	//SEGGER Trace
+	SEGGER_SYSVIEW_RecordEnterISR();
 
-  /* USER CODE END USART2_IRQn 1 */
+	// Disable other FreeRTOS interruptions while communicating to USART2
+	UBaseType_t uxSavedInterruptStatus;
+	uxSavedInterruptStatus = taskENTER_CRITICAL_FROM_ISR();
+	/* USER CODE END USART2_IRQn 0 */
+
+	HAL_UART_IRQHandler(&huart2);
+
+	/* USER CODE BEGIN USART2_IRQn 1 */
+	SEGGER_SYSVIEW_RecordExitISR(); //SEGGER Trace
+	taskEXIT_CRITICAL_FROM_ISR(uxSavedInterruptStatus);
+	/* USER CODE END USART2_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
