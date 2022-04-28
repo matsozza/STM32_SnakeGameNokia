@@ -3524,7 +3524,9 @@ static HAL_StatusTypeDef UART_Transmit_IT(UART_HandleTypeDef *huart)
     }
     else
     {
-      huart->Instance->DR = (uint8_t)(*huart->pTxBuffPtr++ & (uint8_t)0x00FF);
+        char USART_TX_SEGGER = *huart->pTxBuffPtr;
+    	SEGGER_SYSVIEW_Print( &USART_TX_SEGGER ); //SEGGER Trace USART Char
+    	huart->Instance->DR = (uint8_t)(*huart->pTxBuffPtr++ & (uint8_t)0x00FF);
     }
 
     if (--huart->TxXferCount == 0U)
