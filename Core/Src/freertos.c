@@ -49,6 +49,7 @@
 /* USER CODE END Variables */
 osThreadId task100msHandle;
 osThreadId task500msHandle;
+osMessageQId queueUSART2Handle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -98,6 +99,11 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
+
+  /* Create the queue(s) */
+  /* definition and creation of queueUSART2 */
+  osMessageQDef(queueUSART2, 100, USART_message_t);
+  queueUSART2Handle = osMessageCreate(osMessageQ(queueUSART2), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */

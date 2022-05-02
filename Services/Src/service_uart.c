@@ -8,39 +8,50 @@
 
 #include "service_uart.h"
 #include "usart.h"
+#include "freertos.h"
 #include <string.h>
 #include <stdlib.h>
 
 #define UART_USE_IT 1
 
+extern osMessageQId queueUSART2Handle;
+USART_message_t USART2_queue;
+
 int USART2_sendString(char *msg)
 {
-	//Check for busy state
-	if(huart2.gState == HAL_UART_STATE_READY){
-		//Allocate memory for string preparation
-		char *preparedStr = malloc(sizeof(char)* (strlen(msg) + 32));
 
-		//Prepare a string with a line break + carriage return
-		strcpy(preparedStr, msg);
-		strcat(preparedStr, "\n\r");
+	//Allocate memory for string preparation
+	char *preparedStr = malloc(sizeof(char)* (strlen(msg) + 32));
 
-		// Transmit prepared message to USART2
+	//Prepare a string with a line break + carriage return
+	strcpy(preparedStr, msg);
+	strcat(preparedStr, "\n\r");
+
+	//char *a;
+	//a = malloc(sizeof(char));
+	//*a = 42;
+
+	USART_message_t *a;
+	a = malloc(sizeof(USART_message_t));
+	strcpy(a->message, "test123");
+	//*a->message= "test123";
+
+	osMessagePut(queueUSART2Handle, (uint32_t) a, 0);
+
+	// Transmit prepared message to USART2
 #if(UART_USE_IT == 0)
-		HAL_StatusTypeDef txStatus = HAL_UART_Transmit( &huart2,
-														(uint8_t*) preparedStr,
-														strlen(preparedStr),
-														5000);
+	//Do not use UART interruption to send data (blocking)
+	HAL_UART_Transmit( &huart2,
+								(uint8_t*) preparedStr,
+								strlen(preparedStr),
+								5000);
 #else
-		HAL_StatusTypeDef txStatus = HAL_UART_Transmit_IT( &huart2,
-												(uint8_t*) preparedStr,
-														strlen(preparedStr));
+	//Use UART interruption to send data (not blocking)
+	HAL_UART_Transmit_IT( &huart2,
+								(uint8_t*) preparedStr,
+								strlen(preparedStr));
 #endif
+	free(preparedStr);
 
-		free(preparedStr);
-		if(txStatus == HAL_OK) { return 0; }
-		else{ return -1; }
-	}
-	else{
-		return -1;
-	}
+	return 0;
 }

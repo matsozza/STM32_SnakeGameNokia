@@ -20,7 +20,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f4xx_it.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "SEGGER_SYSVIEW.h"
@@ -182,7 +181,7 @@ void TIM1_UP_TIM10_IRQHandler(void)
   */
 void USART2_IRQHandler(void)
 {
-	/* USER CODE BEGIN USART2_IRQn 0 */
+  /* USER CODE BEGIN USART2_IRQn 0 */
 
 	//SEGGER Trace ISR
 	SEGGER_SYSVIEW_RecordEnterISR();
@@ -196,14 +195,12 @@ void USART2_IRQHandler(void)
 	// Disable other FreeRTOS interruptions while communicating to USART2
 	UBaseType_t uxSavedInterruptStatus;
 	uxSavedInterruptStatus = taskENTER_CRITICAL_FROM_ISR();
-	/* USER CODE END USART2_IRQn 0 */
-
-	HAL_UART_IRQHandler(&huart2);
-
-	/* USER CODE BEGIN USART2_IRQn 1 */
+  /* USER CODE END USART2_IRQn 0 */
+  HAL_UART_IRQHandler(&huart2);
+  /* USER CODE BEGIN USART2_IRQn 1 */
 	SEGGER_SYSVIEW_RecordExitISR(); //SEGGER Trace
 	taskEXIT_CRITICAL_FROM_ISR(uxSavedInterruptStatus);
-	/* USER CODE END USART2_IRQn 1 */
+  /* USER CODE END USART2_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
