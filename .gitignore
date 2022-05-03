@@ -69,3 +69,15 @@ Debug/sources.mk
 Debug/STM32_SnakeGameNokia.elf
 Debug/STM32_SnakeGameNokia.list
 Debug/STM32_SnakeGameNokia.map
+Debug/Core/Src/stm32f4xx_it.o
+Debug/STM32_SnakeGameNokia.elf
+Debug/STM32_SnakeGameNokia.list
+Debug/STM32_SnakeGameNokia.map
+Debug/Core/Src/usart.o
+Debug/Core/Src/main.o
+Debug/Core/Src/main.su
+Debug/Core/Src/stm32f4xx_it.o
+Debug/Core/Src/usart.o
+Debug/STM32_SnakeGameNokia.elf
+Debug/STM32_SnakeGameNokia.list
+Debug/STM32_SnakeGameNokia.map

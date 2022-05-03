@@ -1,10 +1,11 @@
 #MicroXplorer Configuration settings - do not modify
 FREERTOS.FootprintOK=true
-FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT,FootprintOK,configMAX_TASK_NAME_LEN,configTICK_RATE_HZ,Queues01
-FREERTOS.Queues01=queueUSART2,100,char,0,Dynamic,NULL,NULL
-FREERTOS.Tasks01=task100ms,0,128,startTask100ms,Default,NULL,Dynamic,NULL,NULL;task500ms,1,128,startTask500ms,Default,NULL,Dynamic,NULL,NULL
+FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT,FootprintOK,configMAX_TASK_NAME_LEN,configTICK_RATE_HZ,Queues01,configUSE_IDLE_HOOK
+FREERTOS.Queues01=queueUSART2,5,USART_message_t,0,Dynamic,NULL,NULL
+FREERTOS.Tasks01=task100ms,0,128,startTask100ms,Default,NULL,Dynamic,NULL,NULL;task500ms,0,128,startTask500ms,Default,NULL,Dynamic,NULL,NULL
 FREERTOS.configMAX_TASK_NAME_LEN=16
 FREERTOS.configTICK_RATE_HZ=100
+FREERTOS.configUSE_IDLE_HOOK=1
 FREERTOS.configUSE_NEWLIB_REENTRANT=1
 File.Version=6
 GPIO.groupedBy=Group By Peripherals
@@ -137,4 +138,4 @@ VP_FREERTOS_VS_CMSIS_V1.Signal=FREERTOS_VS_CMSIS_V1
 VP_SYS_VS_tim1.Mode=TIM1
 VP_SYS_VS_tim1.Signal=SYS_VS_tim1
 board=custom
-isbadioc=false
+isbadioc=true

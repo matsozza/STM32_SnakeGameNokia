@@ -119,9 +119,8 @@ void MX_FREERTOS_Init(void) {
   task100msHandle = osThreadCreate(osThread(task100ms), NULL);
 
   /* definition and creation of task500ms */
-  osThreadDef(task500ms, startTask500ms, osPriorityAboveNormal, 0, 128);
+  osThreadDef(task500ms, startTask500ms, osPriorityBelowNormal, 0, 128);
   task500msHandle = osThreadCreate(osThread(task500ms), NULL);
-
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -139,14 +138,25 @@ void startTask100ms(void const * argument)
 {
   /* USER CODE BEGIN startTask100ms */
   /* Infinite loop */
-  for(;;)
-  {
-	//UART_printTestString();
-	UART_printMsg("100ms Task!\n\r");
-	USART2_printFromQueue();
-	LED2_toggle();
-	osDelay(100);
-  }
+	volatile uint8_t taskCounts = 0;
+	for(;;)
+	{
+		taskDISABLE_INTERRUPTS();
+
+		UART_printMsg("100ms Task!\n\r");
+		LED2_toggle();
+
+		//task100ms must run 5x before task500ms
+		taskCounts++;
+		if(taskCounts>5)
+		{
+			osThreadSetPriority(task500msHandle, osPriorityAboveNormal);
+			taskCounts=0;
+		}
+
+		taskENABLE_INTERRUPTS();
+		osDelay(100);
+	}
   /* USER CODE END startTask100ms */
 }
 
@@ -163,9 +173,11 @@ void startTask500ms(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+	taskDISABLE_INTERRUPTS();
 	LED1_toggle();
-	//UART_printLEDString();
 	UART_printMsg("500ms Task!\n\r");
+	osThreadSetPriority(task500msHandle, osPriorityBelowNormal);
+	taskENABLE_INTERRUPTS();
     osDelay(500);
   }
   /* USER CODE END startTask500ms */
@@ -173,5 +185,14 @@ void startTask500ms(void const * argument)
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
+void vApplicationIdleHook(void){
+	volatile uint32_t queueUSART2_msgWaiting=0;
+	for(;;){
+		// ** Check and consume USART2 queue
+		queueUSART2_msgWaiting = osMessageWaiting(queueUSART2Handle);
+		if(queueUSART2_msgWaiting>0) USART2_printFromQueue(); //Consume USART 2 Queue items
 
+		//taskYIELD();
+	}
+}
 /* USER CODE END Application */

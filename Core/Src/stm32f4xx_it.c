@@ -196,7 +196,7 @@ void USART2_IRQHandler(void)
 	UBaseType_t uxSavedInterruptStatus;
 	uxSavedInterruptStatus = taskENTER_CRITICAL_FROM_ISR();
   /* USER CODE END USART2_IRQn 0 */
-  HAL_UART_IRQHandler(&huart2);
+	HAL_UART_IRQHandler(&huart2);
   /* USER CODE BEGIN USART2_IRQn 1 */
 	SEGGER_SYSVIEW_RecordExitISR(); //SEGGER Trace
 	taskEXIT_CRITICAL_FROM_ISR(uxSavedInterruptStatus);

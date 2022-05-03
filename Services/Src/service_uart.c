@@ -61,7 +61,7 @@ int USART2_printFromQueue(){
 
 			#endif
 
+	}
 
-		}
 	return 0;
 }
