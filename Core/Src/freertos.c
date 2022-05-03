@@ -30,6 +30,7 @@
 #include "service_uart.h"
 #include "module_led.h"
 #include "module_uart.h"
+#include "service_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -103,12 +104,12 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the queue(s) */
   /* definition and creation of queueUSART2 */
-  osMessageQDef(queueUSART2, 10, USART_message_t);
+  osMessageQDef(queueUSART2, 5, USART_message_t);
   queueUSART2Handle = osMessageCreate(osMessageQ(queueUSART2), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
-  osPoolDef(mpool, 10, USART_message_t);
+  osPoolDef(mpool, 5, USART_message_t);
   mpool = osPoolCreate(osPool(mpool));
   /* USER CODE END RTOS_QUEUES */
 
@@ -141,7 +142,8 @@ void startTask100ms(void const * argument)
   for(;;)
   {
 	//UART_printTestString();
-	UART_printMsg("100ms Task!");
+	UART_printMsg("100ms Task!\n\r");
+	USART2_printFromQueue();
 	LED2_toggle();
 	osDelay(100);
   }
@@ -163,7 +165,7 @@ void startTask500ms(void const * argument)
   {
 	LED1_toggle();
 	//UART_printLEDString();
-	UART_printMsg("500ms Task!");
+	UART_printMsg("500ms Task!\n\r");
     osDelay(500);
   }
   /* USER CODE END startTask500ms */

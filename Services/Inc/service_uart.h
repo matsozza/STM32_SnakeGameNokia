@@ -19,14 +19,14 @@
 
 /* Typedef declare -----------------------------------------------------------*/
 typedef struct{
-	char message[10];
+	char message[16];
 } USART_message_t;
 
 
 /* Function prototypes -------------------------------------------------------*/
 extern int USART2_sendString(char *msg);
 extern int USART2_addToQueue(char *msg);
-extern int USART2_printFromQueue(char *msg);
+extern int USART2_printFromQueue();
 
 #endif /* INC_CORE_HL_SERVICES_UART_HL_SERVICES_H_ */
 
