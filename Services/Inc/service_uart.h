@@ -25,6 +25,8 @@ typedef struct{
 
 /* Function prototypes -------------------------------------------------------*/
 extern int USART2_sendString(char *msg);
+extern int USART2_addToQueue(char *msg);
+extern int USART2_printFromQueue(char *msg);
 
 #endif /* INC_CORE_HL_SERVICES_UART_HL_SERVICES_H_ */
 

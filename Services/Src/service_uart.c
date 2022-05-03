@@ -18,7 +18,7 @@ extern osMessageQId queueUSART2Handle;
 extern osPoolId  mpool;
 
 /* Internal variables includes -----------------------------------------------*/
-USART_message_t USART2_msg2Queue;
+USART_message_t *USART2_msg2Queue;
 
 /* Functions implementation --------------------------------------------------*/
 int USART2_sendString(char *msg)
@@ -54,5 +54,19 @@ int USART2_sendString(char *msg)
 								strlen(preparedStr));
 								*/
 #endif
+	return 0;
+}
+
+int USART2_addToQueue(char *msg){
+	//Add to queue
+	USART2_msg2Queue = (USART_message_t*) osPoolAlloc(mpool);
+	strcpy(USART2_msg2Queue->message, msg); // Random str
+	osMessagePut(queueUSART2Handle, (uint32_t) USART2_msg2Queue, 0);
+
+	return 0;
+}
+
+int USART2_printFromQueue(char *msg){
+
 	return 0;
 }

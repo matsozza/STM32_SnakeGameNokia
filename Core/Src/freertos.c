@@ -140,7 +140,8 @@ void startTask100ms(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	UART_printTestString();
+	//UART_printTestString();
+	UART_printMsg("100ms Task!");
 	LED2_toggle();
 	osDelay(100);
   }
@@ -161,7 +162,8 @@ void startTask500ms(void const * argument)
   for(;;)
   {
 	LED1_toggle();
-	UART_printLEDString();
+	//UART_printLEDString();
+	UART_printMsg("500ms Task!");
     osDelay(500);
   }
   /* USER CODE END startTask500ms */
