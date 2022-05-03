@@ -50,6 +50,7 @@
 osThreadId task100msHandle;
 osThreadId task500msHandle;
 osMessageQId queueUSART2Handle;
+osPoolId  mpool;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -102,11 +103,13 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the queue(s) */
   /* definition and creation of queueUSART2 */
-  osMessageQDef(queueUSART2, 100, USART_message_t);
+  osMessageQDef(queueUSART2, 10, USART_message_t);
   queueUSART2Handle = osMessageCreate(osMessageQ(queueUSART2), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
+  osPoolDef(mpool, 10, USART_message_t);
+  mpool = osPoolCreate(osPool(mpool));
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
