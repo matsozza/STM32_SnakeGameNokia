@@ -104,12 +104,12 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the queue(s) */
   /* definition and creation of queueUSART2 */
-  osMessageQDef(queueUSART2, 5, USART_message_t);
+  osMessageQDef(queueUSART2, 15, USART_message_t);
   queueUSART2Handle = osMessageCreate(osMessageQ(queueUSART2), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
-  osPoolDef(mpool, 5, USART_message_t);
+  osPoolDef(mpool, 15, USART_message_t);
   mpool = osPoolCreate(osPool(mpool));
   /* USER CODE END RTOS_QUEUES */
 
@@ -119,7 +119,7 @@ void MX_FREERTOS_Init(void) {
   task100msHandle = osThreadCreate(osThread(task100ms), NULL);
 
   /* definition and creation of task500ms */
-  osThreadDef(task500ms, startTask500ms, osPriorityBelowNormal, 0, 128);
+  osThreadDef(task500ms, startTask500ms, osPriorityAboveNormal, 0, 128);
   task500msHandle = osThreadCreate(osThread(task500ms), NULL);
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -148,12 +148,11 @@ void startTask100ms(void const * argument)
 
 		//task100ms must run 5x before task500ms
 		taskCounts++;
-		if(taskCounts>5)
+		if(taskCounts>4)
 		{
-			osThreadSetPriority(task500msHandle, osPriorityAboveNormal);
+			osThreadResume(task500msHandle);
 			taskCounts=0;
 		}
-
 		taskENABLE_INTERRUPTS();
 		osDelay(100);
 	}
@@ -176,9 +175,9 @@ void startTask500ms(void const * argument)
 	taskDISABLE_INTERRUPTS();
 	LED1_toggle();
 	UART_printMsg("500ms Task!\n\r");
-	osThreadSetPriority(task500msHandle, osPriorityBelowNormal);
 	taskENABLE_INTERRUPTS();
-    osDelay(500);
+	osThreadSuspend(task500msHandle);
+    //osDelay(500);
   }
   /* USER CODE END startTask500ms */
 }
