@@ -6,52 +6,52 @@
  *      Author: Matheus Sozza
  */
 
+/* Private includes ----------------------------------------------------------*/
 #include "service_uart.h"
 #include "usart.h"
 #include "freertos.h"
 #include <string.h>
 #include <stdlib.h>
 
-#define UART_USE_IT 1
-
+/* External variables includes -----------------------------------------------*/
 extern osMessageQId queueUSART2Handle;
-USART_message_t USART2_queue;
+extern osPoolId  mPoolUSART2Handle;
 
-int USART2_sendString(char *msg)
-{
+/* Internal variables includes -----------------------------------------------*/
+USART_message_t *USART2_msg2Queue;
+int poolCount = 0;
 
-	//Allocate memory for string preparation
-	char *preparedStr = malloc(sizeof(char)* (strlen(msg) + 32));
+/* Functions implementation --------------------------------------------------*/
+int USART2_addToQueue(char *msg){
+	//Add to queue
+	USART2_msg2Queue = (USART_message_t*) osPoolAlloc(mPoolUSART2Handle);
 
-	//Prepare a string with a line break + carriage return
-	strcpy(preparedStr, msg);
-	strcat(preparedStr, "\n\r");
+	strcpy(USART2_msg2Queue->message, msg);
+	osMessagePut(queueUSART2Handle, (uint32_t) USART2_msg2Queue, 0);
 
-	//char *a;
-	//a = malloc(sizeof(char));
-	//*a = 42;
+	return 0;
+}
 
-	USART_message_t *a;
-	a = malloc(sizeof(USART_message_t));
-	strcpy(a->message, "test123");
-	//*a->message= "test123";
+int USART2_consumeFromQueue(){
+	//Check if USART is not busy before attempt to consume from queue
+	if(huart2.gState != HAL_UART_STATE_BUSY_TX && huart2.gState != HAL_UART_STATE_BUSY_TX_RX ){
+		//Check queue and consume if available
+		osEvent evt = osMessageGet(queueUSART2Handle, osWaitForever);
 
-	osMessagePut(queueUSART2Handle, (uint32_t) a, 0);
+		//If there's data to consume, proceed
+		if (evt.status == osEventMessage)
+		{
+			USART_message_t *msgFromQueue = (USART_message_t*) evt.value.p;
+			osPoolFree(mPoolUSART2Handle, msgFromQueue);
 
-	// Transmit prepared message to USART2
-#if(UART_USE_IT == 0)
-	//Do not use UART interruption to send data (blocking)
-	HAL_UART_Transmit( &huart2,
-								(uint8_t*) preparedStr,
-								strlen(preparedStr),
-								5000);
-#else
-	//Use UART interruption to send data (not blocking)
-	HAL_UART_Transmit_IT( &huart2,
-								(uint8_t*) preparedStr,
-								strlen(preparedStr));
-#endif
-	free(preparedStr);
+			// Transmit prepared message to USART2
+			#if(UART_USE_IT == 0)	//Blocking mode (no interruption)
+				HAL_UART_Transmit( &huart2,	(uint8_t*) msgFromQueue, strlen((char*)msgFromQueue), 5000);
+			#else 					//Non-blocking mode (Interuption)
+				HAL_UART_Transmit_IT(&huart2,(uint8_t*) msgFromQueue, strlen((char*)msgFromQueue));
+			#endif
+		}
+	}
 
 	return 0;
 }

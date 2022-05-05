@@ -30,6 +30,7 @@
 #include "service_uart.h"
 #include "module_led.h"
 #include "module_uart.h"
+#include "service_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,6 +47,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
+osPoolId mPoolUSART2Handle;
 /* USER CODE END Variables */
 osThreadId task100msHandle;
 osThreadId task500msHandle;
@@ -63,6 +65,21 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
+
+/* Hook prototypes */
+void vApplicationIdleHook(void);
+
+/* USER CODE BEGIN 2 */
+__weak void vApplicationIdleHook( void )
+{
+	volatile uint32_t queueUSART2_msgWaiting=0;
+	for(;;){
+		// ** Check and consume USART2 queue
+		queueUSART2_msgWaiting = osMessageWaiting(queueUSART2Handle);
+		if(queueUSART2_msgWaiting>0) USART2_consumeFromQueue(); //Consume USART 2 Queue items
+	}
+}
+/* USER CODE END 2 */
 
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
 static StaticTask_t xIdleTaskTCBBuffer;
@@ -102,11 +119,13 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the queue(s) */
   /* definition and creation of queueUSART2 */
-  osMessageQDef(queueUSART2, 100, USART_message_t);
+  osMessageQDef(queueUSART2, 5, USART_message_t);
   queueUSART2Handle = osMessageCreate(osMessageQ(queueUSART2), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
+  osPoolDef(mPoolUSART2Handle, 15, USART_message_t);
+  mPoolUSART2Handle = osPoolCreate(osPool(mPoolUSART2Handle));
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
@@ -135,12 +154,18 @@ void startTask100ms(void const * argument)
 {
   /* USER CODE BEGIN startTask100ms */
   /* Infinite loop */
-  for(;;)
-  {
-	UART_printTestString();
-	LED2_toggle();
-	osDelay(100);
-  }
+	volatile uint8_t taskCounts = 0;
+	for(;;)
+	{
+		//Task activities
+		UART_printMsg("100ms Task!\n\r");
+		LED2_toggle();
+
+		//Caller for task500ms
+		taskCounts = (uint8_t)((taskCounts+1) % 5);
+		if(taskCounts==4) osThreadResume(task500msHandle);
+		osDelay(100);
+	}
   /* USER CODE END startTask100ms */
 }
 
@@ -157,14 +182,15 @@ void startTask500ms(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+	//Task activities
 	LED1_toggle();
-	UART_printLEDString();
-    osDelay(500);
+	UART_printMsg("500ms Task!\n\r");
+
+	osThreadSuspend(task500msHandle);
   }
   /* USER CODE END startTask500ms */
 }
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-
 /* USER CODE END Application */

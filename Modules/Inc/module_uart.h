@@ -8,3 +8,5 @@
 
 void UART_printTestString();
 void UART_printLEDString();
+void UART_printMsg();
+

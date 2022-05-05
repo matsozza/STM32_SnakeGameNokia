@@ -44,3 +44,9 @@ void UART_printLEDString()
 	  free(numberStr);
 }
 
+void UART_printMsg(char *msg)
+{
+	  USART2_addToQueue(msg);
+}
+
+
