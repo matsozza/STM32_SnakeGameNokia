@@ -26,8 +26,9 @@ typedef struct{
 
 
 /* Function prototypes -------------------------------------------------------*/
-extern int LCD_sendData(byte* data);
-extern int LCD_sendCommand(byte* command);
+extern int LCD_sendData(uint8_t data);
+extern int LCD_sendCommand(uint8_t command);
+extern int LCD_initializeConfigs();
 #endif /* INC_CORE_HL_SERVICES_UART_HL_SERVICES_H_ */
 
 

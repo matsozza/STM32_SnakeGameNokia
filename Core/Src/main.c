@@ -52,7 +52,6 @@
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -94,6 +93,8 @@ int main(void)
   SEGGER_SYSVIEW_Conf();
   SEGGER_SYSVIEW_Start();
 
+  // ***** LCD Start-up routine *****
+  LCD_initializeConfigs();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */
