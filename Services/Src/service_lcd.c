@@ -30,7 +30,7 @@ extern osPoolId  mPoolUSART2Handle;
 
 static uint8_t grap[]=
 {
-0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -75,10 +75,10 @@ int LCD_sendCommand(uint8_t command)
 	HAL_GPIO_WritePin(LCD_CE_GPIO_Port, LCD_CE_Pin, GPIO_PIN_RESET);
 
 	// Prepare and transmit command
-	uint8_t* cmd = malloc(sizeof(uint8_t));
-	*cmd = command;
-	HAL_SPI_Transmit(&hspi1, cmd, 1, osWaitForever);
-	free(cmd);
+	uint8_t* pCommand = malloc(sizeof(uint8_t));
+	*pCommand = command;
+	HAL_SPI_Transmit(&hspi1, pCommand, 1, osWaitForever);
+	free(pCommand);
 
 	//Chip enable LCD -> Disable
 	HAL_GPIO_WritePin(LCD_CE_GPIO_Port, LCD_CE_Pin, GPIO_PIN_SET);
@@ -88,7 +88,7 @@ int LCD_sendCommand(uint8_t command)
 
 int LCD_sendData(uint8_t data){
 	// D/C -> Data mode
-	HAL_GPIO_WritePin(LCD_DC_GPIO_Port, LCD_DC_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LCD_DC_GPIO_Port, LCD_DC_Pin, GPIO_PIN_SET);
 	// Chip enable LCD -> Enable
 	HAL_GPIO_WritePin(LCD_CE_GPIO_Port, LCD_CE_Pin, GPIO_PIN_RESET);
 
@@ -110,19 +110,23 @@ int LCD_initializeConfigs()
 	HAL_GPIO_WritePin(LCD_RST_GPIO_Port, LCD_RST_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(LCD_RST_GPIO_Port, LCD_RST_Pin, GPIO_PIN_SET);
 
-	LCD_sendCommand(0x21);
-	LCD_sendCommand(0xB1);
-	LCD_sendCommand(0x04);
-	LCD_sendCommand(0x14);
-	LCD_sendCommand(0x20);
-	LCD_sendCommand(0x0C);
+	LCD_sendCommand(0x21); // Function set - Extended
+	LCD_sendCommand(0xB9); // VOP - Contrast set
+	LCD_sendCommand(0x04); // Temp. coefficient
+	LCD_sendCommand(0x14); // Bias system
+
+	LCD_sendCommand(0x20); // Function set - Basic
+	LCD_sendCommand(0x0C); // Display config. - Normal Mode
+	LCD_sendCommand(0x40); // Addressing - Y = 0
+	LCD_sendCommand(0x80); // Addressing - X = 0
 
 
 	//Test - write 2 squares
-	    for (int index = 0; index < (84*48) / 8; index++)
-	    {
-	      LCD_sendData(grap[index]);
-	    }
+	for (int index = 0; index < (84*48) / 8; index++)
+	{
+		//LCD_sendData(grap[index]);
+		LCD_sendData(0xF0);
+	}
 
-		return 0;
+	return 0;
 }
