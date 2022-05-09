@@ -13,6 +13,7 @@
 #define INC_CORE_SERVICES_LCD_SERVICES_FONTS_H_
 
 /* Includes ------------------------------------------------------------------*/
+#include "cmsis_os.h"
 
 /* Defines -------------------------------------------------------------------*/
 
@@ -21,7 +22,7 @@ typedef struct  {
     char ASCII_Char;
     uint8_t ASCII_Code;
     uint8_t bitmap[6];
-    unsigned short int bitmap_total_bytes;
+	uint8_t bitmap_total_bytes;
 } LCD_Char_t;
 
 /* Constants Declare ---------------------------------------------------------*/
@@ -128,9 +129,9 @@ LCD_Char_t findCorrespondingByte(uint8_t ASCII_Code);
 LCD_Char_t findCorrespondingChar(char ASCII_Char);
 
 LCD_Char_t findCorrespondingByte(uint8_t ASCII_Code){
-	unsigned short int total_characters = sizeof(ASCII_Library) / sizeof(*ASCII_Library);
+	uint8_t total_characters = sizeof(ASCII_Library) / sizeof(*ASCII_Library);
 
-	for (unsigned short int i = 0; i < total_characters; i++) {
+	for (uint8_t i = 0; i < total_characters; i++) {
         if (ASCII_Library[i].ASCII_Code == ASCII_Code) return ASCII_Library[i];
 	}
 
@@ -138,9 +139,9 @@ LCD_Char_t findCorrespondingByte(uint8_t ASCII_Code){
 }
 
 LCD_Char_t findCorrespondingChar(char ASCII_Char){
-	unsigned short int total_characters = sizeof(ASCII_Library) / sizeof(*ASCII_Library);
+	uint8_t total_characters = sizeof(ASCII_Library) / sizeof(*ASCII_Library);
 
-	for (unsigned short int i = 0; i < total_characters; i++) {
+	for (uint8_t i = 0; i < total_characters; i++) {
         if (ASCII_Library[i].ASCII_Char == ASCII_Char) return ASCII_Library[i];
 	}
 
