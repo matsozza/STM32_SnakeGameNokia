@@ -88,5 +88,6 @@ int LCD_writeASCIIChar(char ASCII_char){
 		LCD_sendData(LCD_vertArray); // Send vertical byte
 	}
 	LCD_sendData(0x00); // Send 1 strip of space
+	return 0;
 }
 

@@ -8,8 +8,8 @@
  *      Author: Matheus Sozza
  */
 
-#ifndef INC_CORE_SERVICES_LCD_SERVICES_H_
-#define INC_CORE_SERVICES_LCD_SERVICES_H_
+#ifndef INC_CORE_SERVICES_LCD_H_
+#define INC_CORE_SERVICES_LCD_H_
 
 /* Includes ------------------------------------------------------------------*/
 #include "cmsis_os.h"
@@ -33,7 +33,7 @@ extern int LCD_initializeConfigs();
 //Level 1 - Graph manipulation & ASCII Chars
 extern int LCD_writeASCIIChar(char ASCII_char);
 
-#endif /* INC_CORE_SERVICES_LCD_SERVICES_H_ */
+#endif /* INC_CORE_SERVICES_LCD_H_ */
 
 
 

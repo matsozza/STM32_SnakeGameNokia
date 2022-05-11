@@ -9,8 +9,8 @@
  *      Author: Matheus Sozza (based on GitHub @baghayi/Nokia_5110)
  */
 
-#ifndef INC_CORE_SERVICES_LCD_SERVICES_FONTS_H_
-#define INC_CORE_SERVICES_LCD_SERVICES_FONTS_H_
+#ifndef INC_CORE_SERVICES_LCD_FONTS_H_
+#define INC_CORE_SERVICES_LCD_FONTS_H_
 
 /* Includes ------------------------------------------------------------------*/
 #include "cmsis_os.h"
@@ -128,27 +128,7 @@ const LCD_Char_t ASCII_Library[] = {
 LCD_Char_t findCorrespondingByte(uint8_t ASCII_Code);
 LCD_Char_t findCorrespondingChar(char ASCII_Char);
 
-LCD_Char_t findCorrespondingByte(uint8_t ASCII_Code){
-	uint8_t total_characters = sizeof(ASCII_Library) / sizeof(*ASCII_Library);
-
-	for (uint8_t i = 0; i < total_characters; i++) {
-        if (ASCII_Library[i].ASCII_Code == ASCII_Code) return ASCII_Library[i];
-	}
-
-	return ASCII_Library[0]; 
-}
-
-LCD_Char_t findCorrespondingChar(char ASCII_Char){
-	uint8_t total_characters = sizeof(ASCII_Library) / sizeof(*ASCII_Library);
-
-	for (uint8_t i = 0; i < total_characters; i++) {
-        if (ASCII_Library[i].ASCII_Char == ASCII_Char) return ASCII_Library[i];
-	}
-
-	return ASCII_Library[0]; 
-}
-
-#endif /* INC_CORE_SERVICES_LCD_SERVICES_H_ */
+#endif /* INC_CORE_SERVICES_LCD_FONTS_H_ */
 
 
 
