@@ -9,6 +9,7 @@
  */
 
 /* Private includes ----------------------------------------------------------*/
+#include "service_lcd_fonts.h"
 #include "service_lcd.h"
 #include "spi.h"
 #include "freertos.h"
@@ -20,7 +21,7 @@ extern osMessageQId queueUSART2Handle;
 extern osPoolId  mPoolUSART2Handle;
 
 /* Internal variables includes -----------------------------------------------*/
-//USART_message_t *USART2_msg2Queue;
+//add LCD queue
 
 /* Functions implementation --------------------------------------------------*/
 int LCD_sendByteSPI(uint8_t data, uint8_t DC){

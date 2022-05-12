@@ -14,11 +14,11 @@
 
 /* External variables includes -----------------------------------------------*/
 
-
 /* Internal variables includes -----------------------------------------------*/
-
+const LCD_Char_t ASCII_Library[] = LCD_ASCII_DICTIONARY
 
 /* Functions implementation --------------------------------------------------*/
+
 LCD_Char_t findCorrespondingByte(uint8_t ASCII_Code){
 	uint8_t total_characters = sizeof(ASCII_Library) / sizeof(*ASCII_Library);
 	for (uint8_t i = 0; i < total_characters; i++) {

@@ -13,7 +13,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "cmsis_os.h"
-#include "service_lcd_fonts.h"
 
 /* Defines -------------------------------------------------------------------*/
 #define SPI_USE_IT 1
@@ -27,11 +26,11 @@ typedef struct{
 
 /* Function prototypes -------------------------------------------------------*/
 //Level 0 - SPI communication & startup
-extern int LCD_sendByteSPI(uint8_t data, uint8_t DC);
-extern int LCD_initializeConfigs();
+int LCD_sendByteSPI(uint8_t data, uint8_t DC);
+int LCD_initializeConfigs();
 
 //Level 1 - Graph manipulation & ASCII Chars
-extern int LCD_writeASCIIChar(char ASCII_char);
+int LCD_writeASCIIChar(char ASCII_char);
 
 #endif /* INC_CORE_SERVICES_LCD_H_ */
 

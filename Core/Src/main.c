@@ -22,7 +22,7 @@
 #include "spi.h"
 #include "usart.h"
 #include "gpio.h"
-//#include "service_lcd.h"
+#include "service_lcd.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
