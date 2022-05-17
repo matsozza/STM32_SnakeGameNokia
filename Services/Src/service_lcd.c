@@ -62,10 +62,9 @@ int LCD_initializeConfigs()
 	//Test - write 2 squares
 	for (int index = 0; index < (84*48) / 8; index++)
 	{
-		//LCD_sendData(grap[index]);
-		//LCD_sendData(0xF0);
+		LCD_sendData(0xF0);
 	}
-
+/*
 	LCD_writeASCIIChar('O');
 	LCD_writeASCIIChar('i');
 	LCD_writeASCIIChar(' ');
@@ -75,6 +74,22 @@ int LCD_initializeConfigs()
 	LCD_writeASCIIChar('n');
 	LCD_writeASCIIChar('y');
 	LCD_writeASCIIChar('!');
+*/
+	LCD_writeASCIIChar('H');
+	LCD_writeASCIIChar('e');
+	LCD_writeASCIIChar('l');
+	LCD_writeASCIIChar('l');
+	LCD_writeASCIIChar('o');
+	LCD_writeASCIIChar('W');
+	LCD_writeASCIIChar('o');
+	LCD_writeASCIIChar('r');
+	LCD_writeASCIIChar('l');
+	LCD_writeASCIIChar('d');
+
+	LCD_setCursorY(4);
+	LCD_writeASCIIChar('X');
+	LCD_setCursorY(12);
+	LCD_writeASCIIChar('X');
 
 	return 0;
 }

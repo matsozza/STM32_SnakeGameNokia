@@ -22,11 +22,11 @@
 #include "spi.h"
 #include "usart.h"
 #include "gpio.h"
-#include "service_lcd.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "SEGGER_SYSVIEW.h"
+#include "service_lcd.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

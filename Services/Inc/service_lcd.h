@@ -16,8 +16,18 @@
 
 /* Defines -------------------------------------------------------------------*/
 #define SPI_USE_IT 1
-#define LCD_sendCommand(cmd)	 LCD_sendByteSPI(cmd,GPIO_PIN_RESET);
-#define LCD_sendData(cmd)		 LCD_sendByteSPI(cmd,GPIO_PIN_SET);
+
+#define LCD_sendCommand(cmd)	LCD_sendByteSPI(cmd,GPIO_PIN_RESET);
+#define LCD_sendData(cmd)		LCD_sendByteSPI(cmd,GPIO_PIN_SET);
+
+#define LCD_setCursorX(pos) \
+	{LCD_sendCommand(0x20);  \
+	LCD_sendCommand(0x80 + pos); }
+
+#define LCD_setCursorY(pos)    \
+	{                          \
+		LCD_sendCommand(0x20); \
+		LCD_sendCommand(0x40 + pos);}
 
 /* Typedef declare -----------------------------------------------------------*/
 typedef struct{
