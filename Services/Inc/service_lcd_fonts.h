@@ -16,6 +16,12 @@
 #include "cmsis_os.h"
 
 /* Defines -------------------------------------------------------------------*/
+
+/**
+ * @brief The LCD dictionary define ASCII graphic characters to 
+ * work with a matrix / bitmap monochromatic display. The characters
+ * are 0~6 pixels of width per 8 pixels of height.
+ */
 #define LCD_ASCII_DICTIONARY { \
 	{'?', 0x3f, {0x2, 0x1, 0x51, 0x9, 0x6}, 5}, \
 	{'A', 0x41, {0x7c, 0x12, 0x11, 0x12, 0x7c}, 5}, \
