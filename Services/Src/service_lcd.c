@@ -24,7 +24,7 @@
 LCD_displayBuffer_t *LCD_displayCtrl;
 
 /* Functions implementation --------------------------------------------------*/
-// Level 0
+
 int LCD_SPI_sendByte(uint8_t data, uint8_t DC){
 	// D/C -> Data mode
 	HAL_GPIO_WritePin(LCD_DC_GPIO_Port, LCD_DC_Pin, DC);
@@ -43,17 +43,20 @@ int LCD_SPI_sendByte(uint8_t data, uint8_t DC){
 	return 0;
 }
 
-/*
-uint8_t LCD_getBufferValue(posX, posY)
-{
-	return LCD_displayCtrl->displayMatrix[posX][posY];
+int LCD_Command_setRowIdx(uint8_t rowIdx)           
+{                                    
+	LCD_SPI_sendCommand(0x20);       
+	LCD_SPI_sendCommand(0x80 + rowIdx);
+	return 0;
 }
 
-uint8_t LCD_setBufferValue(posX,posY,val)
-{
-	LCD_displayCtrl->displayMatrix[posX][posY] = val;
-}*/
-
+int LCD_Command_setColIdx(uint8_t colIdx)           
+{                                    
+	LCD_SPI_sendCommand(0x20);       
+	LCD_SPI_sendCommand(0x40 + colIdx);
+	return 0;
+}
+	
 int LCD_initializeConfigs()
 {
 	//Toggle RESET Pin - Clear LCD memory
@@ -79,31 +82,70 @@ int LCD_initializeConfigs()
 		LCD_SPI_sendData(0xF0);
 	}
 
-	/*
-	LCD_writeBufferASCIIChar('H');
-	LCD_writeBufferASCIIChar('e');
-	LCD_writeBufferASCIIChar('l');
-	LCD_writeBufferASCIIChar('l');
-	LCD_writeBufferASCIIChar('o');
-	LCD_writeBufferASCIIChar('W');
-	LCD_writeBufferASCIIChar('o');
-	LCD_writeBufferASCIIChar('r');
-	LCD_writeBufferASCIIChar('l');
-	LCD_writeBufferASCIIChar('d');
-*/
-
-	LCD_writeBufferASCIIChar('A');
-	LCD_sendBufferToDisplay();
-
-	//LCD_SPI_setCursorY(4);
-	//LCD_writeBufferASCIIChar('X');
-	//LCD_SPI_setCursorY(12);
-	//LCD_writeBufferASCIIChar('X');
+	LCD_Buffer_writeASCIIChar(LCD_displayCtrl ,'h');
+	LCD_Buffer_setCursor(LCD_displayCtrl, 0, 7);
+	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'e');
+	LCD_Buffer_setCursor(LCD_displayCtrl, 0, 14);
+	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'l');
+	LCD_Buffer_setCursor(LCD_displayCtrl, 0, 21);
+	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'l');
+	LCD_Buffer_setCursor(LCD_displayCtrl, 0, 28);
+	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'o');
+	LCD_Buffer_sendToDisplay(LCD_displayCtrl);
 
 	return 0;
 }
 
-// Level 1
+int LCD_Buffer_setValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t val)
+{
+	uint8_t rowDisplayIdx = (uint8_t)rowIdx / 8;
+	uint8_t rowByteIdx = (uint8_t)rowIdx % 8;
+
+	if(val)
+	{
+		LCD_displayBuffer->displayMatrix[rowDisplayIdx][colIdx] |= (1 << (7 - rowByteIdx));
+	}
+	else
+	{
+		LCD_displayBuffer->displayMatrix[rowDisplayIdx][colIdx] &= ~((uint8_t)(1 << (7 - rowByteIdx)));
+	}
+
+	return 0;
+}
+
+int LCD_Buffer_setCursor(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx)
+{
+	LCD_displayBuffer->rowIdx = rowIdx;
+	LCD_displayBuffer->colIdx = colIdx;
+}
+
+int LCD_Buffer_getCursorRow(LCD_displayBuffer_t *LCD_displayBuffer)
+{
+	return LCD_displayBuffer->rowIdx;
+}
+
+int LCD_Buffer_getCursorCol(LCD_displayBuffer_t *LCD_displayBuffer)
+{
+	return LCD_displayBuffer->colIdx;
+}
+
+int LCD_Buffer_sendToDisplay(LCD_displayBuffer_t *LCD_displayBuffer)
+{
+	// Set display cursors to initial position
+	LCD_Command_setRowIdx(0);
+	LCD_Command_setColIdx(0);
+
+	// Send bytes to LCD - 6x84 sets of 1byte
+	for (uint8_t rowIdx = 0; rowIdx < 6; rowIdx++) // LCD Rows: 6*8(byte)= 48 pixels
+	{
+		for (uint8_t colIdx = 0; colIdx < 84; colIdx++) // LCD Cols: 84 pixels
+		{
+			LCD_SPI_sendData(LCD_displayBuffer->displayMatrix[rowIdx][colIdx]);
+		}
+	}
+
+	return 0;
+}
 
 /**
  * @brief Write an ASCII char to a pre-defined position of the
@@ -114,55 +156,29 @@ int LCD_initializeConfigs()
  * @param posY 
  * @return int 
  */
-int LCD_writeBufferASCIIChar(char ASCII_char){
+int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII_char)
+{
 	//Get char from library
 	LCD_Char_t LCD_CharSel = findCorrespondingChar(ASCII_char); // Find ASCII in library
 
+	//Get current buffer cursor to start the char
+	uint8_t currRow = LCD_Buffer_getCursorRow(LCD_displayBuffer);
+	uint8_t currCol = LCD_Buffer_getCursorCol(LCD_displayBuffer);
+
 	// Write ASCII to LCD Buffer
 	// ASCII char width is 'bitmap_total_bytes'
-	uint8_t bitmapWidth =  LCD_CharSel.bitmap_total_bytes;
+	uint8_t bitmapWidth = LCD_CharSel.bitmap_total_bytes;
 	for (int colIdx = 0; colIdx < bitmapWidth; colIdx++)
 	{
 		// ASCII lib. char height is 8
 		for (int rowIdx = 0; rowIdx < 8; rowIdx++)
 		{
 			uint8_t bitValue = (uint8_t) ((LCD_CharSel.bitmap[colIdx] >> (7-rowIdx)) & 0b1);
-			LCD_setBufferValue(rowIdx, colIdx, bitValue);
+			LCD_Buffer_setValue(LCD_displayBuffer, currRow + rowIdx, currCol + colIdx, bitValue);
 		}
 	}
 
 	return 0;
 }
 
-int LCD_sendBufferToDisplay(){
 
-	LCD_SPI_setCursorX(0);
-	LCD_SPI_setCursorY(0);
-
-	/**
-	 * @brief The LCD contains 48 rows per 84 columns
-	 * To write in it, we send data in groups of 8bits / 1byte.
-	 *
-	 * When we send a byte (byte2Send), we manipulate a vertical strip (8x1).
-	 * For example, the first byte sent will write in column '1', rows '1 to 8';
-	 * The seond byte sent will write in column '2', rows '1 to 8'.
-	 *
-	 * To refresh the entire display, we follow the loop below, sweeping the display
-	 * horizontaly (left to right, 0 to 83) and when reaching the rightmost position,
-	 * repeating in the line below (up to down, 0 to 5).
-	 *
-	 */
-	for (uint8_t rowIdx = 0; rowIdx < 6; rowIdx++) //LCD Rows: 6*8(byte)= 48 pixels
-	{
-		for (uint8_t colIdx = 0; colIdx < 84; colIdx++) //LCD Cols: 84 pixels
-		{
-			
-			uint8_t byte2Send = 0;
-			for (uint8_t vertBytePos = 0; vertBytePos < 8; vertBytePos++)
-			{
-				byte2Send = LCD_displayCtrl->displayMatrix[8 * rowIdx + vertBytePos][colIdx] == 1 ?	byte2Send | (1 << (7 - vertBytePos)) :	byte2Send | (0 << (7 - vertBytePos));
-			}
-			LCD_SPI_sendData(byte2Send);
-		}
-	}
-}
