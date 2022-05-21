@@ -19,7 +19,6 @@ extern osPoolId  mPoolUSART2Handle;
 
 /* Internal variables includes -----------------------------------------------*/
 USART_message_t *USART2_msg2Queue;
-int poolCount = 0;
 
 /* Functions implementation --------------------------------------------------*/
 int USART2_addToQueue(char *msg){

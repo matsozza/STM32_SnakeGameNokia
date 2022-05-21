@@ -21,7 +21,7 @@ void UART_printTestString()
 	  numberStr = malloc(sizeof(char)*32);
 
 	  strcpy(testStr,"TestStr ");
-	  USART2_sendString(testStr);
+	  //USART2_sendString(testStr);
 
 
 	  free(testStr);

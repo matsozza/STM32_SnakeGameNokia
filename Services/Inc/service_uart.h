@@ -6,8 +6,8 @@
  *      Author: Matheus Sozza
  */
 
-#ifndef INC_CORE_HL_SERVICES_UART_HL_SERVICES_H_
-#define INC_CORE_HL_SERVICES_UART_HL_SERVICES_H_
+#ifndef INC_CORE_SERVICES_UART_H_
+#define INC_CORE_SERVICES_UART_H_
 
 /* Includes ------------------------------------------------------------------*/
 #include "cmsis_os.h"
@@ -27,7 +27,7 @@ typedef struct{
 extern int USART2_addToQueue(char *msg);
 extern int USART2_consumeFromQueue();
 
-#endif /* INC_CORE_HL_SERVICES_UART_HL_SERVICES_H_ */
+#endif /* INC_CORE_SERVICES_UART_H_ */
 
 
 

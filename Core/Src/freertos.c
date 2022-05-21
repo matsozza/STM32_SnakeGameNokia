@@ -75,8 +75,8 @@ __weak void vApplicationIdleHook( void )
 	volatile uint32_t queueUSART2_msgWaiting=0;
 	for(;;){
 		// ** Check and consume USART2 queue
-		queueUSART2_msgWaiting = osMessageWaiting(queueUSART2Handle);
-		if(queueUSART2_msgWaiting>0) USART2_consumeFromQueue(); //Consume USART 2 Queue items
+		queueUSART2_msgWaiting = osMessageWaiting(queueUSART2Handle); //Check items on USART2 queue
+		if(queueUSART2_msgWaiting>0) USART2_consumeFromQueue(); //Consume USART2 Queue items
 	}
 }
 /* USER CODE END 2 */
