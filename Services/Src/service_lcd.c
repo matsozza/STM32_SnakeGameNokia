@@ -17,11 +17,13 @@
 #include <stdlib.h>
 
 /* External variables includes -----------------------------------------------*/
-
+extern osMessageQId queueLCDHandle;
+extern osPoolId mPoolLCDHandle;
 
 /* Internal variables includes -----------------------------------------------*/
 //add LCD queue
 LCD_displayBuffer_t *LCD_displayCtrl;
+
 
 /* Functions implementation --------------------------------------------------*/
 
@@ -31,15 +33,49 @@ int LCD_SPI_sendByte(uint8_t data, uint8_t DC){
 	// Chip enable LCD -> Enable
 	HAL_GPIO_WritePin(LCD_CE_GPIO_Port, LCD_CE_Pin, GPIO_PIN_RESET);
 
-	// Prepare and transmit command
+	// Prepare command
 	uint8_t* pData = malloc(sizeof(uint8_t));
 	*pData = data;
-	HAL_SPI_Transmit(&hspi1, pData, 1, osWaitForever);
+	
+	// Transmit command to SPI
+	#if(SPI_USE_IT == 0)
+		HAL_SPI_Transmit(&hspi1, pData, 1, osWaitForever);
+	#else
+		HAL_SPI_Transmit_IT(&hspi1, pData, 1);
+	#endif
+
 	free(pData);
 
 	//Chip enable LCD -> Disable
 	HAL_GPIO_WritePin(LCD_CE_GPIO_Port, LCD_CE_Pin, GPIO_PIN_SET);
 
+	return 0;
+}
+
+int LCD_SPI_addToQueue(LCD_dataPackage_t LCD_dataPackage)
+{
+	//Add to queue
+	LCD_dataPackage_t *LCD_dataPack2Queue;
+	LCD_dataPack2Queue = osPoolAlloc(mPoolLCDHandle);
+	osMessagePut(queueLCDHandle, (uint32_t) LCD_dataPack2Queue, 0);
+	return 0;
+}
+
+int LCD_SPI_consumeFromQueue()
+{
+	//Check if SPI is not busy before attempt to consume from queue
+	if(hspi1.State != HAL_SPI_STATE_BUSY_TX || hspi1.State != HAL_SPI_STATE_BUSY_TX_RX)
+	{
+		// Check queue and consume if available
+		osEvent evt = osMessageGet(queueLCDHandle, osWaitForever);
+
+		//If data was found in queue, proceed sending to SPI
+		if(evt.status == osEventMessage){
+			LCD_dataPackage_t *LCD_dataPackage = evt.value.p;
+			osPoolFree(mPoolLCDHandle, LCD_dataPackage);
+			LCD_SPI_sendByte(LCD_dataPackage->dataByte, LCD_dataPackage->DC);
+		}
+	}
 	return 0;
 }
 
@@ -81,7 +117,7 @@ int LCD_initializeConfigs()
 	{
 		LCD_SPI_sendData(0xF0);
 	}
-
+/*
 	LCD_Buffer_writeASCIIChar(LCD_displayCtrl ,'h');
 	LCD_Buffer_setCursor(LCD_displayCtrl, 0, 7);
 	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'e');
@@ -91,8 +127,21 @@ int LCD_initializeConfigs()
 	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'l');
 	LCD_Buffer_setCursor(LCD_displayCtrl, 0, 28);
 	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'o');
-	LCD_Buffer_sendToDisplay(LCD_displayCtrl);
 
+
+	LCD_Buffer_setCursor(LCD_displayCtrl, 15, 0);
+	LCD_Buffer_writeASCIIChar(LCD_displayCtrl ,'j');
+	LCD_Buffer_setCursor(LCD_displayCtrl, 15, 7);
+	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'e');
+	LCD_Buffer_setCursor(LCD_displayCtrl, 15, 14);
+	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'n');
+	LCD_Buffer_setCursor(LCD_displayCtrl, 15, 21);
+	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'n');
+	LCD_Buffer_setCursor(LCD_displayCtrl, 15, 28);
+	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'y');
+
+	LCD_Buffer_sendToDisplay(LCD_displayCtrl);
+*/
 	return 0;
 }
 
@@ -117,6 +166,7 @@ int LCD_Buffer_setCursor(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx,
 {
 	LCD_displayBuffer->rowIdx = rowIdx;
 	LCD_displayBuffer->colIdx = colIdx;
+	return 0;
 }
 
 int LCD_Buffer_getCursorRow(LCD_displayBuffer_t *LCD_displayBuffer)
@@ -149,11 +199,10 @@ int LCD_Buffer_sendToDisplay(LCD_displayBuffer_t *LCD_displayBuffer)
 
 /**
  * @brief Write an ASCII char to a pre-defined position of the
- * LCD display, and increments automatically the position and line breaks
+ * LCD display.
  * 
- * @param ASCII_char 
- * @param posX 
- * @param posY 
+ * @param LCD_displayBuffer
+ * @param ASCII_char
  * @return int 
  */
 int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII_char)

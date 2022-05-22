@@ -1,7 +1,7 @@
 #MicroXplorer Configuration settings - do not modify
 FREERTOS.FootprintOK=true
 FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT,FootprintOK,configMAX_TASK_NAME_LEN,configTICK_RATE_HZ,Queues01,configUSE_IDLE_HOOK
-FREERTOS.Queues01=queueUSART2,5,USART_message_t,0,Dynamic,NULL,NULL
+FREERTOS.Queues01=queueUSART2,5,USART_message_t,0,Dynamic,NULL,NULL;queueLCD,512,LCD_dataPackage_t,0,Dynamic,NULL,NULL
 FREERTOS.Tasks01=task100ms,0,128,startTask100ms,Default,NULL,Dynamic,NULL,NULL;task500ms,1,128,startTask500ms,Default,NULL,Dynamic,NULL,NULL
 FREERTOS.configMAX_TASK_NAME_LEN=16
 FREERTOS.configTICK_RATE_HZ=100
@@ -84,7 +84,7 @@ PA6.PinState=GPIO_PIN_SET
 PA6.Signal=GPIO_Output
 PA7.GPIOParameters=GPIO_Speed,GPIO_PuPd,GPIO_Label
 PA7.GPIO_Label=LCD_DIN
-PA7.GPIO_PuPd=GPIO_PULLDOWN
+PA7.GPIO_PuPd=GPIO_PULLUP
 PA7.GPIO_Speed=GPIO_SPEED_FREQ_MEDIUM
 PA7.Mode=TX_Only_Simplex_Unidirect_Master
 PA7.Signal=SPI1_MOSI
@@ -186,4 +186,4 @@ VP_FREERTOS_VS_CMSIS_V1.Signal=FREERTOS_VS_CMSIS_V1
 VP_SYS_VS_tim1.Mode=TIM1
 VP_SYS_VS_tim1.Signal=SYS_VS_tim1
 board=custom
-isbadioc=true
+isbadioc=false

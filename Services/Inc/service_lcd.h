@@ -24,15 +24,23 @@ typedef struct{
 	uint8_t displayMatrix[6][84];
 } LCD_displayBuffer_t;
 
+typedef struct{
+	uint8_t DC;
+	uint8_t dataByte;
+} LCD_dataPackage_t;
+
 /* Function prototypes -------------------------------------------------------*/
 
 // ***** LCD_SPI - SPI to LCD communication + macros *****
 int LCD_SPI_sendByte(uint8_t data, uint8_t DC);
+int LCD_SPI_addToQueue(LCD_dataPackage_t LCD_dataPackage);
+int LCD_SPI_consumeFromQueue();
 #define LCD_SPI_sendCommand(cmd) LCD_SPI_sendByte(cmd, GPIO_PIN_RESET);
 #define LCD_SPI_sendData(cmd) LCD_SPI_sendByte(cmd, GPIO_PIN_SET);
 
-// ***** LCD_Command - LCD controller commands and start routine *****
-int LCD_Command_setRowIdx(uint8_t rowIdx);
+	// ***** LCD_Command - LCD controller commands and start routine *****
+	int
+	LCD_Command_setRowIdx(uint8_t rowIdx);
 int LCD_Command_setColIdx(uint8_t colIdx);
 int LCD_Command_initializeConfigs();
 
