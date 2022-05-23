@@ -42,7 +42,7 @@ int LCD_DirCmd_setColIdx(uint8_t colIdx);
 int LCD_DirCmd_initDisplay();
 
 // ***** LCD_Queue - MCU to LCD Queue (indirect communication)
-int LCD_Queue_addByte(uint8_t data, uint8_t DC)
+int LCD_Queue_addByte(uint8_t data, uint8_t DC);
 #define LCD_Queue_addCommand(cmd) LCD_Queue_addByte(cmd, 0);
 #define LCD_Queue_addData(cmd) LCD_Queue_addByte(cmd, 1);
 int LCD_Queue_consumeBytes();

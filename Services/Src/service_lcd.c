@@ -109,7 +109,8 @@ int LCD_Queue_consumeBytes()
 		osEvent evt = osMessageGet(queueLCDHandle, osWaitForever);
 
 		//If data was found in queue, proceed sending to SPI
-		if(evt.status == osEventMessage){
+		if(evt.status == osEventMessage)
+		{
 			LCD_dataPackage_t *LCD_dataPackage =  evt.value.p;
 			osPoolFree(mPoolLCDHandle, LCD_dataPackage);
 			LCD_SPI_sendByte(LCD_dataPackage->dataByte, LCD_dataPackage->DC);
@@ -177,7 +178,6 @@ int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 	{
 		for (uint8_t colIdx = 0; colIdx < 84; colIdx++) // LCD Cols: 84 pixels
 		{
-			//LCD_SPI_sendData(LCD_displayBuffer->displayMatrix[rowIdx][colIdx]);
 			LCD_Queue_addData(LCD_displayBuffer->displayMatrix[rowIdx][colIdx]);
 		}
 	}
