@@ -81,9 +81,9 @@ __weak void vApplicationIdleHook( void )
 		queueUSART2_msgWaiting = osMessageWaiting(queueUSART2Handle); //Check items on USART2 queue
 		if(queueUSART2_msgWaiting>0) USART2_consumeFromQueue(); //Consume USART2 Queue items
 
-    // ** Check and consume LCD queue
-    queueLCD_msgWaiting = osMessageWaiting(queueLCDHandle); // Check items on LCD queue
-    if (queueLCD_msgWaiting > 0) LCD_SPI_consumeFromQueue(); // Consume LCD Queue items
+		// ** Check and consume LCD queue
+		queueLCD_msgWaiting = osMessageWaiting(queueLCDHandle); // Check items on LCD queue
+		if (queueLCD_msgWaiting > 0) LCD_Queue_consumeBytes(); // Consume LCD Queue items
   }
 }
 /* USER CODE END 2 */
@@ -126,11 +126,11 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the queue(s) */
   /* definition and creation of queueUSART2 */
-  osMessageQDef(queueUSART2, 5, USART_message_t);
+  osMessageQDef(queueUSART2, 5, uint32_t);//USART_message_t);
   queueUSART2Handle = osMessageCreate(osMessageQ(queueUSART2), NULL);
 
   /* definition and creation of queueLCD */
-  osMessageQDef(queueLCD, 512, LCD_dataPackage_t);
+  osMessageQDef(queueLCD, 512, uint32_t); //LCD_dataPackage_t);
   queueLCDHandle = osMessageCreate(osMessageQ(queueLCD), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -138,7 +138,7 @@ void MX_FREERTOS_Init(void) {
   osPoolDef(mPoolUSART2Handle, 15, USART_message_t);
   mPoolUSART2Handle = osPoolCreate(osPool(mPoolUSART2Handle));
 
-  osPoolDef(mPoolLCDHandle, 512, uint8_t);
+  osPoolDef(mPoolLCDHandle, 512, LCD_dataPackage_t);
   mPoolLCDHandle = osPoolCreate(osPool(mPoolLCDHandle));
   /* USER CODE END RTOS_QUEUES */
 
@@ -201,9 +201,17 @@ void startTask500ms(void const * argument)
 	LED1_toggle();
 	UART_printMsg("500ms Task!\n\r");
 
+  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'h');
+  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 7);
+  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'e');
+  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 14);
+  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'l');
+  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 21);
+  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'l');
+  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 28);
+  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'o');
 
-
-	LCD_Buffer_sendToDisplay(LCD_displayCtrl);
+  LCD_Buffer_sendToQueue(LCD_displayCtrl);
 
 	osThreadSuspend(task500msHandle);
   }

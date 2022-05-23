@@ -91,11 +91,11 @@ int main(void)
 
   // ***** SEGGER SystemView configuration *****
   DWT->CTRL |= (1<<0); //Start CYCCNT for timestamp counting (Sozza)
-  SEGGER_SYSVIEW_Conf();
-  SEGGER_SYSVIEW_Start();
+  //SEGGER_SYSVIEW_Conf();
+  //SEGGER_SYSVIEW_Start();
 
   // ***** LCD Start-up routine *****
-  LCD_initializeConfigs();
+  LCD_DirCmd_initDisplay();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

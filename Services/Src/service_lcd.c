@@ -23,11 +23,12 @@ extern osPoolId mPoolLCDHandle;
 /* Internal variables includes -----------------------------------------------*/
 //add LCD queue
 LCD_displayBuffer_t *LCD_displayCtrl;
-
+LCD_dataPackage_t *LCD_dataPack2Queue;
 
 /* Functions implementation --------------------------------------------------*/
 
-int LCD_SPI_sendByte(uint8_t data, uint8_t DC){
+int LCD_SPI_sendByte(uint8_t data, uint8_t DC)
+{
 	// D/C -> Data mode
 	HAL_GPIO_WritePin(LCD_DC_GPIO_Port, LCD_DC_Pin, DC);
 	// Chip enable LCD -> Enable
@@ -52,50 +53,23 @@ int LCD_SPI_sendByte(uint8_t data, uint8_t DC){
 	return 0;
 }
 
-int LCD_SPI_addToQueue(LCD_dataPackage_t LCD_dataPackage)
+int LCD_DirCmd_setRowIdx(uint8_t rowIdx)
 {
-	//Add to queue
-	LCD_dataPackage_t *LCD_dataPack2Queue;
-	LCD_dataPack2Queue = osPoolAlloc(mPoolLCDHandle);
-	osMessagePut(queueLCDHandle, (uint32_t) LCD_dataPack2Queue, 0);
-	return 0;
-}
-
-int LCD_SPI_consumeFromQueue()
-{
-	//Check if SPI is not busy before attempt to consume from queue
-	if(hspi1.State != HAL_SPI_STATE_BUSY_TX || hspi1.State != HAL_SPI_STATE_BUSY_TX_RX)
-	{
-		// Check queue and consume if available
-		osEvent evt = osMessageGet(queueLCDHandle, osWaitForever);
-
-		//If data was found in queue, proceed sending to SPI
-		if(evt.status == osEventMessage){
-			LCD_dataPackage_t *LCD_dataPackage = evt.value.p;
-			osPoolFree(mPoolLCDHandle, LCD_dataPackage);
-			LCD_SPI_sendByte(LCD_dataPackage->dataByte, LCD_dataPackage->DC);
-		}
-	}
-	return 0;
-}
-
-int LCD_Command_setRowIdx(uint8_t rowIdx)           
-{                                    
-	LCD_SPI_sendCommand(0x20);       
+	LCD_SPI_sendCommand(0x20);
 	LCD_SPI_sendCommand(0x80 + rowIdx);
 	return 0;
 }
 
-int LCD_Command_setColIdx(uint8_t colIdx)           
-{                                    
-	LCD_SPI_sendCommand(0x20);       
+int LCD_DirCmd_setColIdx(uint8_t colIdx)
+{
+	LCD_SPI_sendCommand(0x20);
 	LCD_SPI_sendCommand(0x40 + colIdx);
 	return 0;
 }
-	
-int LCD_initializeConfigs()
+
+int LCD_DirCmd_initDisplay()
 {
-	//Toggle RESET Pin - Clear LCD memory
+	// Toggle RESET Pin - Clear LCD memory
 	HAL_GPIO_WritePin(LCD_RST_GPIO_Port, LCD_RST_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(LCD_RST_GPIO_Port, LCD_RST_Pin, GPIO_PIN_SET);
 
@@ -109,39 +83,52 @@ int LCD_initializeConfigs()
 	LCD_SPI_sendCommand(0x40); // Addressing - Y = 0
 	LCD_SPI_sendCommand(0x80); // Addressing - X = 0
 
-	//Memory allocation for display buffer (@TODO - optimize using boolean)
-	LCD_displayCtrl = calloc(1,sizeof(LCD_displayBuffer_t));
+	// Memory allocation for display buffer
+	LCD_displayCtrl = calloc(1, sizeof(LCD_displayBuffer_t));
 
-	//Test - write 2 squares
-	for (int index = 0; index < (84*48) / 8; index++)
+	return 0;
+}
+
+int LCD_Queue_addByte(uint8_t data, uint8_t DC)
+{
+	// Add to queue
+	LCD_dataPack2Queue = osPoolAlloc(mPoolLCDHandle);		 // alloc mempos
+	LCD_dataPack2Queue->dataByte = data; // set value
+	LCD_dataPack2Queue->DC = DC;			 // set value
+	osMessagePut(queueLCDHandle, (uint32_t)LCD_dataPack2Queue, 0);
+	
+	return 0;
+}
+
+int LCD_Queue_consumeBytes()
+{
+	//Check if SPI is not busy before attempt to consume from queue
+	if(hspi1.State != HAL_SPI_STATE_BUSY_TX || hspi1.State != HAL_SPI_STATE_BUSY_TX_RX)
 	{
-		LCD_SPI_sendData(0xF0);
+		// Check queue and consume if available
+		osEvent evt = osMessageGet(queueLCDHandle, osWaitForever);
+
+		//If data was found in queue, proceed sending to SPI
+		if(evt.status == osEventMessage){
+			LCD_dataPackage_t *LCD_dataPackage =  evt.value.p;
+			osPoolFree(mPoolLCDHandle, LCD_dataPackage);
+			LCD_SPI_sendByte(LCD_dataPackage->dataByte, LCD_dataPackage->DC);
+		}
 	}
-/*
-	LCD_Buffer_writeASCIIChar(LCD_displayCtrl ,'h');
-	LCD_Buffer_setCursor(LCD_displayCtrl, 0, 7);
-	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'e');
-	LCD_Buffer_setCursor(LCD_displayCtrl, 0, 14);
-	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'l');
-	LCD_Buffer_setCursor(LCD_displayCtrl, 0, 21);
-	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'l');
-	LCD_Buffer_setCursor(LCD_displayCtrl, 0, 28);
-	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'o');
+	return 0;
+}
 
+int LCD_IndCmd_setRowIdx(uint8_t rowIdx)
+{
+	LCD_Queue_addCommand(0x20);
+	LCD_Queue_addCommand(0x80 + rowIdx);
+	return 0;
+}
 
-	LCD_Buffer_setCursor(LCD_displayCtrl, 15, 0);
-	LCD_Buffer_writeASCIIChar(LCD_displayCtrl ,'j');
-	LCD_Buffer_setCursor(LCD_displayCtrl, 15, 7);
-	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'e');
-	LCD_Buffer_setCursor(LCD_displayCtrl, 15, 14);
-	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'n');
-	LCD_Buffer_setCursor(LCD_displayCtrl, 15, 21);
-	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'n');
-	LCD_Buffer_setCursor(LCD_displayCtrl, 15, 28);
-	LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'y');
-
-	LCD_Buffer_sendToDisplay(LCD_displayCtrl);
-*/
+int LCD_IndCmd_setColIdx(uint8_t colIdx)
+{
+	LCD_Queue_addCommand(0x20);
+	LCD_Queue_addCommand(0x40 + colIdx);
 	return 0;
 }
 
@@ -179,18 +166,19 @@ int LCD_Buffer_getCursorCol(LCD_displayBuffer_t *LCD_displayBuffer)
 	return LCD_displayBuffer->colIdx;
 }
 
-int LCD_Buffer_sendToDisplay(LCD_displayBuffer_t *LCD_displayBuffer)
+int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 {
 	// Set display cursors to initial position
-	LCD_Command_setRowIdx(0);
-	LCD_Command_setColIdx(0);
+	LCD_IndCmd_setRowIdx(0);
+	LCD_IndCmd_setColIdx(0);
 
-	// Send bytes to LCD - 6x84 sets of 1byte
+	// Send buffer bytes to LCD - 6x84 sets of 1 byte of type 'D - data'
 	for (uint8_t rowIdx = 0; rowIdx < 6; rowIdx++) // LCD Rows: 6*8(byte)= 48 pixels
 	{
 		for (uint8_t colIdx = 0; colIdx < 84; colIdx++) // LCD Cols: 84 pixels
 		{
-			LCD_SPI_sendData(LCD_displayBuffer->displayMatrix[rowIdx][colIdx]);
+			//LCD_SPI_sendData(LCD_displayBuffer->displayMatrix[rowIdx][colIdx]);
+			LCD_Queue_addData(LCD_displayBuffer->displayMatrix[rowIdx][colIdx]);
 		}
 	}
 
@@ -229,5 +217,3 @@ int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII
 
 	return 0;
 }
-
-

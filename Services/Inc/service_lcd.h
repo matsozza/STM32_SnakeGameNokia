@@ -15,7 +15,7 @@
 #include "cmsis_os.h"
 
 /* Defines -------------------------------------------------------------------*/
-#define SPI_USE_IT 1
+#define SPI_USE_IT 0
 
 /* Typedef declare -----------------------------------------------------------*/
 typedef struct{
@@ -31,18 +31,25 @@ typedef struct{
 
 /* Function prototypes -------------------------------------------------------*/
 
-// ***** LCD_SPI - SPI to LCD communication + macros *****
+// ***** LCD_SPI - SPI to LCD (direct communication) + macros *****
 int LCD_SPI_sendByte(uint8_t data, uint8_t DC);
-int LCD_SPI_addToQueue(LCD_dataPackage_t LCD_dataPackage);
-int LCD_SPI_consumeFromQueue();
-#define LCD_SPI_sendCommand(cmd) LCD_SPI_sendByte(cmd, GPIO_PIN_RESET);
-#define LCD_SPI_sendData(cmd) LCD_SPI_sendByte(cmd, GPIO_PIN_SET);
+#define LCD_SPI_sendCommand(cmd) LCD_SPI_sendByte(cmd, 0);
+#define LCD_SPI_sendData(cmd) LCD_SPI_sendByte(cmd, 1);
 
-	// ***** LCD_Command - LCD controller commands and start routine *****
-	int
-	LCD_Command_setRowIdx(uint8_t rowIdx);
-int LCD_Command_setColIdx(uint8_t colIdx);
-int LCD_Command_initializeConfigs();
+// ***** LCD_DirCmd - LCD controller commands (direct communicaiton) and start routine *****
+int LCD_DirCmd_setRowIdx(uint8_t rowIdx);
+int LCD_DirCmd_setColIdx(uint8_t colIdx);
+int LCD_DirCmd_initDisplay();
+
+// ***** LCD_Queue - MCU to LCD Queue (indirect communication)
+int LCD_Queue_addByte(uint8_t data, uint8_t DC)
+#define LCD_Queue_addCommand(cmd) LCD_Queue_addByte(cmd, 0);
+#define LCD_Queue_addData(cmd) LCD_Queue_addByte(cmd, 1);
+int LCD_Queue_consumeBytes();
+
+// ***** LCD_IndCmd = MCU to Queue commands (indirect communication)
+int LCD_IndCmd_setRowIdx(uint8_t rowIdx);
+int LCD_IndCmd_setColIdx(uint8_t colIdx);
 
 // ***** LCD_Buffer - Buffer manipulation and high level interface with LCD  *****
 int LCD_Buffer_setValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t val);
@@ -53,7 +60,7 @@ int LCD_Buffer_setCursor(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx,
 int LCD_Buffer_getCursorRow(LCD_displayBuffer_t *LCD_displayBuffer);
 int LCD_Buffer_getCursorCol(LCD_displayBuffer_t *LCD_displayBuffer);
 
-int LCD_Buffer_sendToDisplay(LCD_displayBuffer_t *LCD_displayBuffer);
+int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer);
 
 int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII_char);
 
