@@ -20,7 +20,7 @@
 #define SPI_LCD_HANDLE		hspi1
 #define SPI_LCD_DC_PIN 		LCD_DC_Pin
 #define SPI_LCD_CE_PIN 		LCD_CE_Pin
-#define SPI_LCD_DC_PORT		LCD_CE_GPIO_Port
+#define SPI_LCD_DC_PORT		LCD_DC_GPIO_Port
 #define SPI_LCD_CE_PORT		LCD_CE_GPIO_Port
 
 
