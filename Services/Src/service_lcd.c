@@ -136,24 +136,50 @@ int LCD_IndCmd_setColIdx(uint8_t colIdx)
 
 int LCD_Buffer_setValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t val)
 {
-	uint8_t rowDisplayIdx = (uint8_t)rowIdx / 8;
-	uint8_t rowByteIdx = (uint8_t)rowIdx % 8;
+	uint8_t rowGroupIdx = (uint8_t)rowIdx / 8; // 'major' row
+	uint8_t rowPixelIdx = (uint8_t)rowIdx % 8; // 'minor' row
 
+	// Set or clear value in the 'displayMatrix' LCD Buffer
 	if(val)
 	{
-		LCD_displayBuffer->displayMatrix[rowDisplayIdx][colIdx] |= (1 << (7 - rowByteIdx));
+		LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] |= (1 << (7 - rowPixelIdx));
 	}
 	else
 	{
-		LCD_displayBuffer->displayMatrix[rowDisplayIdx][colIdx] &= ~((uint8_t)(1 << (7 - rowByteIdx)));
+		LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] &= ~((uint8_t)(1 << (7 - rowPixelIdx)));
 	}
+
+	// Set the 'updateStatus' position
+	LCD_displayBuffer->updateStatus[colIdx] |= (1 << (7 - rowGroupIdx)); // Set updt Flg
 
 	return 0;
 }
 
-int LCD_Buffer_getValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx)
+int LCD_Buffer_getValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t clearUpdtFlg)
 {
-	return LCD_displayBuffer->displayMatrix[rowIdx][colIdx];
+	uint8_t rowGroupIdx = (uint8_t)rowIdx / 8; // 'major' row
+	uint8_t rowPixelIdx = (uint8_t)rowIdx % 8; // 'minor' row
+
+	// If 'clearUpdtFlg' is true, clear the read/update flag + return value
+	if (clearUpdtFlg)
+	{
+		uint8_t rowGroupIdx = rowIdx / 8;
+		// If there's updated data since last reading, return this data
+		if((LCD_displayBuffer->updateStatus[colIdx] >> (7 - rowGroupIdx)) && 0b1)
+		{
+			LCD_displayBuffer->updateStatus[colIdx] &= ~((uint8_t)(1 << (7 - rowGroupIdx))); //Clear updt Flg
+			return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1<<(7-rowPixelIdx));	// Return value
+		}
+		else
+		{
+			//return -1; // No new data present in this position, return -1;
+			return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx)); // Return value
+		}
+	}
+	else
+	{
+		return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx)); // Just return data at the req. position ('peek')
+	}
 }
 
 int LCD_Buffer_setCursor(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx)
@@ -217,7 +243,8 @@ int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 	{
 		for (uint8_t colIdx = 0; colIdx < 84; colIdx++) // LCD Cols: 84 pixels
 		{
-			LCD_Queue_addData(LCD_Buffer_getValue(LCD_displayBuffer,rowIdx,colIdx));
+			//LCD_Queue_addData(LCD_Buffer_getValue(LCD_displayBuffer,rowIdx,colIdx,1));
+			LCD_Queue_addData(LCD_displayBuffer->displayMatrix[rowIdx][colIdx]);
 		}
 	}
 

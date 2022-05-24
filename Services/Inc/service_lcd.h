@@ -29,6 +29,7 @@ typedef struct{
 	uint8_t rowIdx;
 	uint8_t colIdx;
 	uint8_t displayMatrix[6][84];
+	uint8_t updateStatus[84];
 } LCD_displayBuffer_t;
 
 typedef struct{
@@ -60,7 +61,7 @@ int LCD_IndCmd_setColIdx(uint8_t colIdx);
 
 // ***** LCD_Buffer - Buffer manipulation and high level interface with LCD  *****
 int LCD_Buffer_setValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t val);
-int LCD_Buffer_getValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx);
+int LCD_Buffer_getValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t clearUpdtFlg);
 
 int LCD_Buffer_setCursor(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx);
 
