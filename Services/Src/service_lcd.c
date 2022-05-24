@@ -23,16 +23,16 @@ extern osPoolId mPoolLCDHandle;
 /* Internal variables includes -----------------------------------------------*/
 //add LCD queue
 LCD_displayBuffer_t *LCD_displayCtrl;
-LCD_dataPackage_t *LCD_dataPack2Queue;
+
 
 /* Functions implementation --------------------------------------------------*/
 
 int LCD_SPI_sendByte(uint8_t data, uint8_t DC)
 {
 	// D/C -> Data mode
-	HAL_GPIO_WritePin(LCD_DC_GPIO_Port, LCD_DC_Pin, DC);
+	HAL_GPIO_WritePin(SPI_LCD_DC_PORT, SPI_LCD_DC_PIN, DC);
 	// Chip enable LCD -> Enable
-	HAL_GPIO_WritePin(LCD_CE_GPIO_Port, LCD_CE_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(SPI_LCD_CE_PORT, SPI_LCD_CE_PIN, GPIO_PIN_RESET);
 
 	// Prepare command
 	uint8_t* pData = malloc(sizeof(uint8_t));
@@ -40,15 +40,15 @@ int LCD_SPI_sendByte(uint8_t data, uint8_t DC)
 	
 	// Transmit command to SPI
 	#if(SPI_USE_IT == 0)
-		HAL_SPI_Transmit(&hspi1, pData, 1, osWaitForever);
+		HAL_SPI_Transmit(&SPI_LCD_HANDLE, pData, 1, osWaitForever);
 	#else
-		HAL_SPI_Transmit_IT(&hspi1, pData, 1);
+		HAL_SPI_Transmit_IT(&SPI_LCD_HANDLE, pData, 1);
 	#endif
 
 	free(pData);
 
 	//Chip enable LCD -> Disable
-	HAL_GPIO_WritePin(LCD_CE_GPIO_Port, LCD_CE_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(SPI_LCD_CE_PORT, SPI_LCD_CE_PIN, GPIO_PIN_SET);
 
 	return 0;
 }
@@ -92,10 +92,11 @@ int LCD_DirCmd_initDisplay()
 int LCD_Queue_addByte(uint8_t data, uint8_t DC)
 {
 	// Add to queue
-	LCD_dataPack2Queue = osPoolAlloc(mPoolLCDHandle);		 // alloc mempos
-	LCD_dataPack2Queue->dataByte = data; // set value
-	LCD_dataPack2Queue->DC = DC;			 // set value
-	osMessagePut(queueLCDHandle, (uint32_t)LCD_dataPack2Queue, 0);
+	LCD_dataPackage_t *LCD_dataPackage;
+	LCD_dataPackage = osPoolAlloc(mPoolLCDHandle);		 // alloc mempos
+	LCD_dataPackage->dataByte = data; // set value
+	LCD_dataPackage->DC = DC;			 // set value
+	osMessagePut(queueLCDHandle, (uint32_t)LCD_dataPackage, 0);
 	
 	return 0;
 }
@@ -150,6 +151,11 @@ int LCD_Buffer_setValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, 
 	return 0;
 }
 
+int LCD_Buffer_getValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx)
+{
+	return LCD_displayBuffer->displayMatrix[rowIdx][colIdx];
+}
+
 int LCD_Buffer_setCursor(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx)
 {
 	LCD_displayBuffer->rowIdx = rowIdx;
@@ -167,38 +173,20 @@ int LCD_Buffer_getCursorCol(LCD_displayBuffer_t *LCD_displayBuffer)
 	return LCD_displayBuffer->colIdx;
 }
 
-int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
-{
-	// Set display cursors to initial position
-	LCD_IndCmd_setRowIdx(0);
-	LCD_IndCmd_setColIdx(0);
-
-	// Send buffer bytes to LCD - 6x84 sets of 1 byte of type 'D - data'
-	for (uint8_t rowIdx = 0; rowIdx < 6; rowIdx++) // LCD Rows: 6*8(byte)= 48 pixels
-	{
-		for (uint8_t colIdx = 0; colIdx < 84; colIdx++) // LCD Cols: 84 pixels
-		{
-			LCD_Queue_addData(LCD_displayBuffer->displayMatrix[rowIdx][colIdx]);
-		}
-	}
-
-	return 0;
-}
-
 /**
  * @brief Write an ASCII char to a pre-defined position of the
  * LCD display.
- * 
+ *
  * @param LCD_displayBuffer
  * @param ASCII_char
- * @return int 
+ * @return int
  */
 int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII_char)
 {
-	//Get char from library
+	// Get char from library
 	LCD_Char_t LCD_CharSel = findCorrespondingChar(ASCII_char); // Find ASCII in library
 
-	//Get current buffer cursor to start the char
+	// Get current buffer cursor to start the char
 	uint8_t currRow = LCD_Buffer_getCursorRow(LCD_displayBuffer);
 	uint8_t currCol = LCD_Buffer_getCursorCol(LCD_displayBuffer);
 
@@ -210,10 +198,30 @@ int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII
 		// ASCII lib. char height is 8
 		for (int rowIdx = 0; rowIdx < 8; rowIdx++)
 		{
-			uint8_t bitValue = (uint8_t) ((LCD_CharSel.bitmap[colIdx] >> (7-rowIdx)) & 0b1);
+			uint8_t bitValue = (uint8_t)((LCD_CharSel.bitmap[colIdx] >> (7 - rowIdx)) & 0b1);
 			LCD_Buffer_setValue(LCD_displayBuffer, currRow + rowIdx, currCol + colIdx, bitValue);
 		}
 	}
 
 	return 0;
 }
+
+int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
+{
+	// Set display cursors to initial position
+	LCD_IndCmd_setRowIdx(0);
+	LCD_IndCmd_setColIdx(0);
+
+	// Send buffer bytes to LCD - 6x84 sets of 1 byte of type 'D - data'
+	for (uint8_t rowIdx = 0; rowIdx < 6; rowIdx++) // LCD Rows: 6*8(byte)= 48 pixels
+	{
+		for (uint8_t colIdx = 0; colIdx < 84; colIdx++) // LCD Cols: 84 pixels
+		{
+			LCD_Queue_addData(LCD_Buffer_getValue(LCD_displayBuffer,rowIdx,colIdx));
+		}
+	}
+
+	return 0;
+}
+
+

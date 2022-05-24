@@ -15,7 +15,14 @@
 #include "cmsis_os.h"
 
 /* Defines -------------------------------------------------------------------*/
-#define SPI_USE_IT 0
+#define SPI_USE_IT 			0 //Define to use interruptions or not in SPI interf.
+
+#define SPI_LCD_HANDLE		hspi1
+#define SPI_LCD_DC_PIN 		LCD_DC_Pin
+#define SPI_LCD_CE_PIN 		LCD_CE_Pin
+#define SPI_LCD_DC_PORT		LCD_CE_GPIO_Port
+#define SPI_LCD_CE_PORT		LCD_CE_GPIO_Port
+
 
 /* Typedef declare -----------------------------------------------------------*/
 typedef struct{
@@ -60,9 +67,9 @@ int LCD_Buffer_setCursor(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx,
 int LCD_Buffer_getCursorRow(LCD_displayBuffer_t *LCD_displayBuffer);
 int LCD_Buffer_getCursorCol(LCD_displayBuffer_t *LCD_displayBuffer);
 
-int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer);
-
 int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII_char);
+
+int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer);
 
 #endif /* INC_CORE_SERVICES_LCD_H_ */
 
