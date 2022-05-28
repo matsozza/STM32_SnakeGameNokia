@@ -86,6 +86,12 @@ int LCD_DirCmd_initDisplay()
 	// Memory allocation for display buffer
 	LCD_displayCtrl = calloc(1, sizeof(LCD_displayBuffer_t));
 
+	// Set all update flagsto perform a first clear of the display
+	for (uint8_t idx = 0; idx < 84;idx++)
+	{
+		LCD_displayCtrl->updateStatus[idx] = 0xFF;
+	}
+
 	return 0;
 }
 
@@ -151,7 +157,6 @@ int LCD_Buffer_setValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, 
 
 	// Set the 'updateStatus' position
 	LCD_displayBuffer->updateStatus[colIdx] |= (1 << (7 - rowGroupIdx)); // Set updt Flg
-
 	return 0;
 }
 
@@ -172,13 +177,36 @@ int LCD_Buffer_getValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, 
 		}
 		else
 		{
-			//return -1; // No new data present in this position, return -1;
-			return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx)); // Return value
+			return -1; // No new data present in this position, return -1;
+			//return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx)); // Return value
 		}
 	}
 	else
 	{
 		return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx)); // Just return data at the req. position ('peek')
+	}
+}
+
+int LCD_Buffer_getByte(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx, uint8_t clearUpdtFlg)
+{
+	// If 'clearUpdtFlg' is true, clear the read/update flag + return value
+	if (clearUpdtFlg)
+	{
+		// If there's updated data since last reading, return this data
+		if ((LCD_displayBuffer->updateStatus[colIdx] >> (7 - rowGroupIdx)) && 0b1)
+		{
+			LCD_displayBuffer->updateStatus[colIdx] &= ~((uint8_t)(1 << (7 - rowGroupIdx)));		 // Clear updt Flg
+			return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx]; // Return value
+		}
+		else
+		{
+			return -1; // No new data present in this position, return -1;
+					   // return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx)); // Return value
+		}
+	}
+	else
+	{
+		return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx]; // Just return data at the req. position ('peek')
 	}
 }
 
@@ -234,17 +262,64 @@ int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII
 
 int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 {
-	// Set display cursors to initial position
-	LCD_IndCmd_setRowIdx(0);
-	LCD_IndCmd_setColIdx(0);
-
-	// Send buffer bytes to LCD - 6x84 sets of 1 byte of type 'D - data'
-	for (uint8_t rowIdx = 0; rowIdx < 6; rowIdx++) // LCD Rows: 6*8(byte)= 48 pixels
+	// Count the number of bytes in the LCD that need to be updated
+	uint16_t updateCounter = 0;
+	for (uint8_t colIdx = 0; colIdx < 84; colIdx++)
 	{
-		for (uint8_t colIdx = 0; colIdx < 84; colIdx++) // LCD Cols: 84 pixels
+		for (uint8_t rowGroupIdx = 0; rowGroupIdx < 8; rowGroupIdx++)
 		{
-			//LCD_Queue_addData(LCD_Buffer_getValue(LCD_displayBuffer,rowIdx,colIdx,1));
-			LCD_Queue_addData(LCD_displayBuffer->displayMatrix[rowIdx][colIdx]);
+			if ((LCD_displayBuffer->updateStatus[colIdx] >> rowGroupIdx) & 0b01)
+			{
+				updateCounter++;
+			}
+		}
+	}
+
+	//updateCounter = 84*5; // BYPASS _ DELETE AFTER
+
+	// If less than 50% of the LCD needs to be update, perform specific refreshes.
+	// Otherwise, perform complete refresh.
+	if(updateCounter < 84*6/2)
+	{
+		uint8_t updateConsecutive = 0;
+		// Send buffer bytes to LCD - 6x84 sets of 1 byte of type 'D - data'
+		for (uint8_t rowGroupIdx = 0; rowGroupIdx < 6; rowGroupIdx++) // LCD Rows: 6*8(byte)= 48 pixels
+		{
+			for (uint8_t colIdx = 0; colIdx < 84; colIdx++) // LCD Cols: 84 pixels
+			{
+				int16_t bufferByte = LCD_Buffer_getByte(LCD_displayBuffer, rowGroupIdx, colIdx, 1);
+				
+				if(bufferByte == -1) // If new data IS NOT AVAILABLE at this position
+				{
+					updateConsecutive = 0;
+				}
+				else // If new data IS AVAILABLE in this position
+				{
+					if(!updateConsecutive)
+					{
+						LCD_IndCmd_setRowIdx(rowGroupIdx);
+						LCD_IndCmd_setColIdx(colIdx);
+					}
+					LCD_Queue_addData((uint8_t) 0x00FF & bufferByte);
+					updateConsecutive = 1;
+				}
+			}
+		}
+	}
+	else
+	{
+		// Set display cursors to initial position - complete refresh
+		LCD_IndCmd_setRowIdx(0);
+		LCD_IndCmd_setColIdx(0);
+
+		// Send buffer bytes to LCD - 6x84 sets of 1 byte of type 'D - data'
+		for (uint8_t rowGroupIdx = 0; rowGroupIdx < 6; rowGroupIdx++) // LCD Rows: 6*8(byte)= 48 pixels
+		{
+			for (uint8_t colIdx = 0; colIdx < 84; colIdx++) // LCD Cols: 84 pixels
+			{
+				uint8_t bufferByte = LCD_Buffer_getByte(LCD_displayBuffer, rowGroupIdx, colIdx, 0);
+				LCD_Queue_addData(bufferByte);
+			}
 		}
 	}
 
