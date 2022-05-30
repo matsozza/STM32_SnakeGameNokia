@@ -95,7 +95,8 @@ int main(void)
   SEGGER_SYSVIEW_Start();
 
   // ***** LCD Start-up routine *****
-  LCD_SPI_Cmd_initDisplay();
+  extern LCD_displayBuffer_t *LCD_displayBuffer;
+  LCD_SPI_Cmd_initDisplay(LCD_displayBuffer); // Use default buffer
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

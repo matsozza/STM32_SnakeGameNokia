@@ -22,8 +22,7 @@ extern osPoolId mPoolLCDHandle;
 
 /* Internal variables includes -----------------------------------------------*/
 //add LCD queue
-LCD_displayBuffer_t *LCD_displayCtrl;
-
+LCD_displayBuffer_t *LCD_displayBuffer;
 
 /* Functions implementation --------------------------------------------------*/
 
@@ -67,7 +66,7 @@ int LCD_SPI_Cmd_setColIdx(uint8_t colIdx)
 	return 0;
 }
 
-int LCD_SPI_Cmd_initDisplay()
+int LCD_SPI_Cmd_initDisplay(LCD_displayBuffer_t *LCD_displayBuffer)
 {
 	// Toggle RESET Pin - Clear LCD memory
 	HAL_GPIO_WritePin(LCD_RST_GPIO_Port, LCD_RST_Pin, GPIO_PIN_RESET);
@@ -84,12 +83,12 @@ int LCD_SPI_Cmd_initDisplay()
 	LCD_SPI_sendCommand(0x80); // Addressing - X = 0
 
 	// Memory allocation for display buffer
-	LCD_displayCtrl = calloc(1, sizeof(LCD_displayBuffer_t));
+	LCD_displayBuffer = calloc(1, sizeof(LCD_displayBuffer_t));
 
 	// Set all update flagsto perform a first clear of the display
 	for (uint8_t idx = 0; idx < 84;idx++)
 	{
-		LCD_displayCtrl->updateStatus[idx] = 0xFC;
+		LCD_displayBuffer->updateStatus[idx] = 0xFC;
 	}
 
 	return 0;
