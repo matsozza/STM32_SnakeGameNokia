@@ -191,50 +191,50 @@ void startTask100ms(void const * argument)
 void startTask500ms(void const * argument)
 {
   /* USER CODE BEGIN startTask500ms */
-  extern LCD_displayBuffer_t *LCD_displayBuffer;
+  extern LCD_displayBuffer_t *LCD_displayBuffer01;
   int a = 0;
   /* Infinite loop */
   for(;;)
   {
-	//Task activities
-	LED1_toggle();
-	UART_printMsg("500ms Task!\n\r");
+    //Task activities
+    LED1_toggle();
+    UART_printMsg("500ms Task!\n\r");
 
-	  LCD_Buffer_setCursor(LCD_displayBuffer, 0, 0);
-	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer, 'h');
-	  LCD_Buffer_setCursor(LCD_displayBuffer, 0, 7);
-	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer, 'e');
-	  LCD_Buffer_setCursor(LCD_displayBuffer, 0, 14);
-	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer, 'l');
-	  LCD_Buffer_setCursor(LCD_displayBuffer, 0, 21);
-	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer, 'l');
-	  LCD_Buffer_setCursor(LCD_displayBuffer, 0, 28);
-	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer, 'o');
+	  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 0);
+	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'h');
+	  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 7);
+	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e');
+	  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 14);
+	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'l');
+	  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 21);
+	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'l');
+	  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 28);
+	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'o');
 
 	  if(a==0){
 		  a=1;
-		  LCD_Buffer_setCursor(LCD_displayBuffer, 0, 35);
-		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer, '!');
-		  LCD_Buffer_setCursor(LCD_displayBuffer, 8, 35);
-		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer, 'W');
-		  LCD_Buffer_setCursor(LCD_displayBuffer, 16, 35);
-		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer, 'Z');
+		  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, '!');
+		  LCD_Buffer_setCursor(LCD_displayBuffer01, 8, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'W');
+		  LCD_Buffer_setCursor(LCD_displayBuffer01, 16, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'Z');
 
 	  }
 	  else
 	  {
-		  LCD_Buffer_setCursor(LCD_displayBuffer, 0, 35);
-		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer, '?');
-		  LCD_Buffer_setCursor(LCD_displayBuffer, 8, 35);
-		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer, 'X');
-		  LCD_Buffer_setCursor(LCD_displayBuffer, 16, 35);
-		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer, 'Y');
+		  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, '?');
+		  LCD_Buffer_setCursor(LCD_displayBuffer01, 8, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'X');
+		  LCD_Buffer_setCursor(LCD_displayBuffer01, 16, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'Y');
 		  a=0;
 	  }
 
-    LCD_Buffer_sendToQueue(LCD_displayBuffer);
+    LCD_Buffer_sendToQueue(LCD_displayBuffer01);
 
-	osThreadSuspend(task500msHandle);
+	  osThreadSuspend(task500msHandle);
   }
   /* USER CODE END startTask500ms */
 }
