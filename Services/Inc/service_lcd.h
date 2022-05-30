@@ -45,7 +45,7 @@ int LCD_SPI_sendByte(uint8_t data, uint8_t DC);
 #define LCD_SPI_sendData(cmd) LCD_SPI_sendByte(cmd, 1);
 int LCD_SPI_Cmd_setRowGroupIdx(uint8_t rowGroupIdx);
 int LCD_SPI_Cmd_setColIdx(uint8_t colIdx);
-int LCD_SPI_Cmd_initDisplay(LCD_displayBuffer_t LCD_displayBuffer);
+int LCD_SPI_Cmd_initDisplay(LCD_displayBuffer_t *LCD_displayBuffer);
 
 // ***** LCD_Queue - MCU to LCD Queue (indirect communication)
 int LCD_Queue_addByte(uint8_t data, uint8_t DC);
