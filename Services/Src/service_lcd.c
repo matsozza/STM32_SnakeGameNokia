@@ -146,7 +146,9 @@ int LCD_Buffer_setValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, 
 	uint8_t rowPixelIdx = (uint8_t)rowIdx % 8; // 'minor' row
 
 	// Check if there's any change in the value before setting / clearing
-	uint8_t	currVal = LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx));
+	//uint8_t	currVal = (LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx)) >> 7);
+	uint8_t currVal = (LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] >> (7-rowPixelIdx)) & (0b1);
+
 	if (currVal != val)
 	{
 		// Set or clear value in the 'displayMatrix' LCD Buffer
@@ -281,7 +283,7 @@ int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 		}
 	}
 
-	// If less than 50% of the LCD needs to be update, perform specific refreshes.
+	// If less than 50% of the LCD needs to be updated, perform specific refreshes.
 	// Otherwise, perform complete refresh.
 	if(updateCounter < 84*6/2)
 	{

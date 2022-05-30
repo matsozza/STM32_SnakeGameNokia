@@ -66,11 +66,9 @@ int LCD_Buffer_getValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, 
 int LCD_Buffer_getByte(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx, uint8_t clearUpdtFlg);
 
 int LCD_Buffer_setUpdateStatus(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx, uint8_t val);
-
 int LCD_Buffer_getUpdateStatus(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx);
 
 int LCD_Buffer_setCursor(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx);
-
 int LCD_Buffer_getCursorRow(LCD_displayBuffer_t *LCD_displayBuffer);
 int LCD_Buffer_getCursorCol(LCD_displayBuffer_t *LCD_displayBuffer);
 
