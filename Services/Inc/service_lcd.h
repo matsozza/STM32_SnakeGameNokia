@@ -56,9 +56,10 @@ int LCD_Queue_Cmd_setRowGroupIdx(uint8_t rowGroupIdx);
 int LCD_Queue_Cmd_setColIdx(uint8_t colIdx);
 
 // ***** LCD_Buffer - Buffer manipulation and high level interface with LCD  *****
-int LCD_Buffer_setValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t val);
-int LCD_Buffer_getValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t clearUpdtFlg);
+int LCD_Buffer_setPixel(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t val);
+int LCD_Buffer_getPixel(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t clearUpdtFlg);
 
+int LCD_Buffer_setByte(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx, uint8_t val);
 int LCD_Buffer_getByte(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx, uint8_t clearUpdtFlg);
 
 int LCD_Buffer_setUpdateStatus(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx, uint8_t val);

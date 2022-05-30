@@ -140,7 +140,7 @@ int LCD_Queue_Cmd_setColIdx(uint8_t colIdx)
 	return 0;
 }
 
-int LCD_Buffer_setValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t val)
+int LCD_Buffer_setPixel(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t val)
 {
 	uint8_t rowGroupIdx = (uint8_t)rowIdx / 8; // 'major' row
 	uint8_t rowPixelIdx = (uint8_t)rowIdx % 8; // 'minor' row
@@ -168,7 +168,7 @@ int LCD_Buffer_setValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, 
 	return 0;
 }
 
-int LCD_Buffer_getValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t clearUpdtFlg)
+int LCD_Buffer_getPixel(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t clearUpdtFlg)
 {
 	uint8_t rowGroupIdx = (uint8_t)rowIdx / 8; // 'major' row
 	uint8_t rowPixelIdx = (uint8_t)rowIdx % 8; // 'minor' row
@@ -184,6 +184,22 @@ int LCD_Buffer_getValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, 
 	{
 		return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx)); // Just return data at the req. position ('peek')
 	}
+}
+
+int LCD_Buffer_setByte(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx, uint8_t val)
+{
+	// Check if there's any change in the value before copying new value
+	uint8_t currVal = LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx];
+	if (currVal != val)
+	{
+		// Copy byte to the 'displayMatrix' LCD Buffer
+		LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] = val;
+
+		// Set the 'updateStatus' position
+		LCD_Buffer_setUpdateStatus(LCD_displayBuffer, rowGroupIdx, colIdx, 1);
+	}
+
+	return 0;
 }
 
 int LCD_Buffer_getByte(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx, uint8_t clearUpdtFlg)
@@ -261,7 +277,7 @@ int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII
 		for (int rowIdx = 0; rowIdx < 8; rowIdx++)
 		{
 			uint8_t bitValue = (uint8_t)((LCD_CharSel.bitmap[colIdx] >> (7 - rowIdx)) & 0b1);
-			LCD_Buffer_setValue(LCD_displayBuffer, currRow + rowIdx, currCol + colIdx, bitValue);
+			LCD_Buffer_setPixel(LCD_displayBuffer, currRow + rowIdx, currCol + colIdx, bitValue);
 		}
 	}
 
