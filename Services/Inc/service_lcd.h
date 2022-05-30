@@ -45,7 +45,7 @@ int LCD_SPI_sendByte(uint8_t data, uint8_t DC);
 #define LCD_SPI_sendData(cmd) LCD_SPI_sendByte(cmd, 1);
 
 // ***** LCD_DirCmd - LCD controller commands (direct communicaiton) and start routine *****
-int LCD_DirCmd_setRowIdx(uint8_t rowIdx);
+int LCD_DirCmd_setRowGroupIdx(uint8_t rowGroupIdx);
 int LCD_DirCmd_setColIdx(uint8_t colIdx);
 int LCD_DirCmd_initDisplay();
 
@@ -56,12 +56,13 @@ int LCD_Queue_addByte(uint8_t data, uint8_t DC);
 int LCD_Queue_consumeBytes();
 
 // ***** LCD_IndCmd = MCU to Queue commands (indirect communication)
-int LCD_IndCmd_setRowIdx(uint8_t rowIdx);
+int LCD_IndCmd_setRowGroupIdx(uint8_t rowGroupIdx);
 int LCD_IndCmd_setColIdx(uint8_t colIdx);
 
 // ***** LCD_Buffer - Buffer manipulation and high level interface with LCD  *****
 int LCD_Buffer_setValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t val);
 int LCD_Buffer_getValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t clearUpdtFlg);
+
 int LCD_Buffer_getByte(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx, uint8_t clearUpdtFlg);
 
 int LCD_Buffer_setUpdateStatus(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx, uint8_t val);

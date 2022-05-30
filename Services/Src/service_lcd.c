@@ -53,17 +53,17 @@ int LCD_SPI_sendByte(uint8_t data, uint8_t DC)
 	return 0;
 }
 
-int LCD_DirCmd_setRowIdx(uint8_t rowIdx)
+int LCD_DirCmd_setRowGroupIdx(uint8_t rowGroupIdx)
 {
 	LCD_SPI_sendCommand(0x20);
-	LCD_SPI_sendCommand(0x80 + rowIdx);
+	LCD_SPI_sendCommand(0x40 + rowGroupIdx);
 	return 0;
 }
 
 int LCD_DirCmd_setColIdx(uint8_t colIdx)
 {
 	LCD_SPI_sendCommand(0x20);
-	LCD_SPI_sendCommand(0x40 + colIdx);
+	LCD_SPI_sendCommand(0x80 + colIdx);
 	return 0;
 }
 
@@ -126,17 +126,17 @@ int LCD_Queue_consumeBytes()
 	return 0;
 }
 
-int LCD_IndCmd_setRowIdx(uint8_t rowIdx)
+int LCD_IndCmd_setRowGroupIdx(uint8_t rowGroupIdx)
 {
 	LCD_Queue_addCommand(0x20);
-	LCD_Queue_addCommand(0x80 + rowIdx);
+	LCD_Queue_addCommand(0x40 + rowGroupIdx);
 	return 0;
 }
 
 int LCD_IndCmd_setColIdx(uint8_t colIdx)
 {
 	LCD_Queue_addCommand(0x20);
-	LCD_Queue_addCommand(0x40 + colIdx);
+	LCD_Queue_addCommand(0x80 + colIdx);
 	return 0;
 }
 
@@ -300,7 +300,7 @@ int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 					uint8_t bufferByte = LCD_Buffer_getByte(LCD_displayBuffer, rowGroupIdx, colIdx, 1);
 					if(1)//(!updateConsecutive)
 					{
-						LCD_IndCmd_setRowIdx(rowGroupIdx);
+						LCD_IndCmd_setRowGroupIdx(rowGroupIdx);
 						LCD_IndCmd_setColIdx(colIdx);
 					}
 					LCD_Queue_addData(bufferByte);
@@ -312,7 +312,7 @@ int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 	else
 	{
 		// Set display cursors to initial position - complete refresh
-		LCD_IndCmd_setRowIdx(0);
+		LCD_IndCmd_setRowGroupIdx(0);
 		LCD_IndCmd_setColIdx(0);
 
 		// Send buffer bytes to LCD - 6x84 sets of 1 byte of type 'D - data'
