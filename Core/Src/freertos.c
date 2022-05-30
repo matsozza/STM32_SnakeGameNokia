@@ -194,6 +194,7 @@ void startTask500ms(void const * argument)
 {
   /* USER CODE BEGIN startTask500ms */
   extern LCD_displayBuffer_t *LCD_displayCtrl;
+  int a = 0;
   /* Infinite loop */
   for(;;)
   {
@@ -201,17 +202,39 @@ void startTask500ms(void const * argument)
 	LED1_toggle();
 	UART_printMsg("500ms Task!\n\r");
 
-  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'h');
-  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 7);
-  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'e');
-  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 14);
-  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'l');
-  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 21);
-  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'l');
-  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 28);
-  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'o');
+	  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 0);
+	  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'h');
+	  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 7);
+	  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'e');
+	  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 14);
+	  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'l');
+	  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 21);
+	  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'l');
+	  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 28);
+	  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'o');
 
-  LCD_Buffer_sendToQueue(LCD_displayCtrl);
+	  if(a==0){
+		  a=1;
+		  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, '!');
+		  LCD_Buffer_setCursor(LCD_displayCtrl, 8, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'W');
+		  LCD_Buffer_setCursor(LCD_displayCtrl, 16, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'Z');
+
+	  }
+	  else
+	  {
+		  LCD_Buffer_setCursor(LCD_displayCtrl, 0, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, '?');
+		  LCD_Buffer_setCursor(LCD_displayCtrl, 8, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'X');
+		  LCD_Buffer_setCursor(LCD_displayCtrl, 16, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayCtrl, 'Y');
+		  a=0;
+	  }
+
+    LCD_Buffer_sendToQueue(LCD_displayCtrl);
 
 	osThreadSuspend(task500msHandle);
   }
