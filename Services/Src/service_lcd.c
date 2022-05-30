@@ -53,21 +53,21 @@ int LCD_SPI_sendByte(uint8_t data, uint8_t DC)
 	return 0;
 }
 
-int LCD_DirCmd_setRowGroupIdx(uint8_t rowGroupIdx)
+int LCD_SPI_Cmd_setRowGroupIdx(uint8_t rowGroupIdx)
 {
 	LCD_SPI_sendCommand(0x20);
 	LCD_SPI_sendCommand(0x40 + rowGroupIdx);
 	return 0;
 }
 
-int LCD_DirCmd_setColIdx(uint8_t colIdx)
+int LCD_SPI_Cmd_setColIdx(uint8_t colIdx)
 {
 	LCD_SPI_sendCommand(0x20);
 	LCD_SPI_sendCommand(0x80 + colIdx);
 	return 0;
 }
 
-int LCD_DirCmd_initDisplay()
+int LCD_SPI_Cmd_initDisplay()
 {
 	// Toggle RESET Pin - Clear LCD memory
 	HAL_GPIO_WritePin(LCD_RST_GPIO_Port, LCD_RST_Pin, GPIO_PIN_RESET);
@@ -126,14 +126,14 @@ int LCD_Queue_consumeBytes()
 	return 0;
 }
 
-int LCD_IndCmd_setRowGroupIdx(uint8_t rowGroupIdx)
+int LCD_Queue_Cmd_setRowGroupIdx(uint8_t rowGroupIdx)
 {
 	LCD_Queue_addCommand(0x20);
 	LCD_Queue_addCommand(0x40 + rowGroupIdx);
 	return 0;
 }
 
-int LCD_IndCmd_setColIdx(uint8_t colIdx)
+int LCD_Queue_Cmd_setColIdx(uint8_t colIdx)
 {
 	LCD_Queue_addCommand(0x20);
 	LCD_Queue_addCommand(0x80 + colIdx);
@@ -302,8 +302,8 @@ int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 					uint8_t bufferByte = LCD_Buffer_getByte(LCD_displayBuffer, rowGroupIdx, colIdx, 1);
 					if(1)//(!updateConsecutive)
 					{
-						LCD_IndCmd_setRowGroupIdx(rowGroupIdx);
-						LCD_IndCmd_setColIdx(colIdx);
+						LCD_Queue_Cmd_setRowGroupIdx(rowGroupIdx);
+						LCD_Queue_Cmd_setColIdx(colIdx);
 					}
 					LCD_Queue_addData(bufferByte);
 					updateConsecutive = 1;
@@ -314,8 +314,8 @@ int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 	else
 	{
 		// Set display cursors to initial position - complete refresh
-		LCD_IndCmd_setRowGroupIdx(0);
-		LCD_IndCmd_setColIdx(0);
+		LCD_Queue_Cmd_setRowGroupIdx(0);
+		LCD_Queue_Cmd_setColIdx(0);
 
 		// Send buffer bytes to LCD - 6x84 sets of 1 byte of type 'D - data'
 		for (uint8_t rowGroupIdx = 0; rowGroupIdx < 6; rowGroupIdx++) // LCD Rows: 6*8(byte)= 48 pixels

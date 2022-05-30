@@ -95,7 +95,7 @@ int main(void)
   SEGGER_SYSVIEW_Start();
 
   // ***** LCD Start-up routine *****
-  LCD_DirCmd_initDisplay();
+  LCD_SPI_Cmd_initDisplay();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

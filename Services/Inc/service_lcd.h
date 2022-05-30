@@ -43,21 +43,17 @@ typedef struct{
 int LCD_SPI_sendByte(uint8_t data, uint8_t DC);
 #define LCD_SPI_sendCommand(cmd) LCD_SPI_sendByte(cmd, 0);
 #define LCD_SPI_sendData(cmd) LCD_SPI_sendByte(cmd, 1);
-
-// ***** LCD_DirCmd - LCD controller commands (direct communicaiton) and start routine *****
-int LCD_DirCmd_setRowGroupIdx(uint8_t rowGroupIdx);
-int LCD_DirCmd_setColIdx(uint8_t colIdx);
-int LCD_DirCmd_initDisplay();
+int LCD_SPI_Cmd_setRowGroupIdx(uint8_t rowGroupIdx);
+int LCD_SPI_Cmd_setColIdx(uint8_t colIdx);
+int LCD_SPI_Cmd_initDisplay();
 
 // ***** LCD_Queue - MCU to LCD Queue (indirect communication)
 int LCD_Queue_addByte(uint8_t data, uint8_t DC);
 #define LCD_Queue_addCommand(cmd) LCD_Queue_addByte(cmd, 0);
 #define LCD_Queue_addData(cmd) LCD_Queue_addByte(cmd, 1);
 int LCD_Queue_consumeBytes();
-
-// ***** LCD_IndCmd = MCU to Queue commands (indirect communication)
-int LCD_IndCmd_setRowGroupIdx(uint8_t rowGroupIdx);
-int LCD_IndCmd_setColIdx(uint8_t colIdx);
+int LCD_Queue_Cmd_setRowGroupIdx(uint8_t rowGroupIdx);
+int LCD_Queue_Cmd_setColIdx(uint8_t colIdx);
 
 // ***** LCD_Buffer - Buffer manipulation and high level interface with LCD  *****
 int LCD_Buffer_setValue(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx, uint8_t val);
