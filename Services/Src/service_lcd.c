@@ -52,16 +52,22 @@ int LCD_SPI_sendByte(uint8_t data, uint8_t DC)
 	return 0;
 }
 
-int LCD_SPI_Cmd_setRowGroupIdx(uint8_t rowGroupIdx)
+int LCD_SPI_Cmd_setRowGroupIdx(uint8_t rowGroupIdx, uint8_t skipBasicIS)
 {
-	LCD_SPI_sendCommand(0x20);
+	if (!skipBasicIS)
+	{
+		LCD_SPI_sendCommand(0x20); //Set basic instruction set (BasicIS)
+	}
 	LCD_SPI_sendCommand(0x40 + rowGroupIdx);
 	return 0;
 }
 
-int LCD_SPI_Cmd_setColIdx(uint8_t colIdx)
+int LCD_SPI_Cmd_setColIdx(uint8_t colIdx, uint8_t skipBasicIS)
 {
-	LCD_SPI_sendCommand(0x20);
+	if (!skipBasicIS)
+	{
+		LCD_SPI_sendCommand(0x20); // Set basic instruction set (BasicIS)
+	}
 	LCD_SPI_sendCommand(0x80 + colIdx);
 	return 0;
 }
@@ -125,16 +131,22 @@ int LCD_Queue_consumeBytes()
 	return 0;
 }
 
-int LCD_Queue_Cmd_setRowGroupIdx(uint8_t rowGroupIdx)
+int LCD_Queue_Cmd_setRowGroupIdx(uint8_t rowGroupIdx, uint8_t skipBasicIS)
 {
-	LCD_Queue_addCommand(0x20);
+	if (!skipBasicIS)
+	{
+		LCD_Queue_addCommand(0x20);
+	}
 	LCD_Queue_addCommand(0x40 + rowGroupIdx);
 	return 0;
 }
 
-int LCD_Queue_Cmd_setColIdx(uint8_t colIdx)
+int LCD_Queue_Cmd_setColIdx(uint8_t colIdx, uint8_t skipBasicIS)
 {
-	LCD_Queue_addCommand(0x20);
+	if (!skipBasicIS)
+	{
+		LCD_Queue_addCommand(0x20);
+	}
 	LCD_Queue_addCommand(0x80 + colIdx);
 	return 0;
 }
@@ -287,20 +299,26 @@ int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 {
 	// Count the number of bytes in the LCD that need to be updated
 	uint16_t updateCounter = 0;
+	uint16_t consecCounter = 0;
 	for (uint8_t colIdx = 0; colIdx < 84; colIdx++)
 	{
 		for (uint8_t rowGroupIdx = 0; rowGroupIdx < 8; rowGroupIdx++)
 		{
 			if ((LCD_displayBuffer->updateStatus[colIdx] >> rowGroupIdx) & 0b01)
 			{
-				updateCounter++;
+				updateCounter++; // Number of new values (bytes) to be updated
+				
+				if (colIdx<83 && (LCD_displayBuffer->updateStatus[colIdx+1] >> rowGroupIdx) & 0b01)
+				{
+					consecCounter++; //Consecutive columns (bytes) being updated
+				}
 			}
 		}
 	}
 
-	// If less than 50% of the LCD needs to be updated, perform specific refreshes.
+	// If less than 25% of the LCD needs to be updated, perform specific refreshes.
 	// Otherwise, perform complete refresh.
-	if(updateCounter < 84*6/2)
+	if(updateCounter - (3*consecCounter) < 84*6/3)
 	{
 		uint8_t updateConsecutive = 0;
 		// Send buffer bytes to LCD - 6x84 sets of 1 byte of type 'D - data'
@@ -315,10 +333,10 @@ int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 				else // If new data IS AVAILABLE in this position
 				{
 					uint8_t bufferByte = LCD_Buffer_getByte(LCD_displayBuffer, rowGroupIdx, colIdx, 1);
-					if(1)//(!updateConsecutive)
+					if(!updateConsecutive)
 					{
-						LCD_Queue_Cmd_setRowGroupIdx(rowGroupIdx);
-						LCD_Queue_Cmd_setColIdx(colIdx);
+						LCD_Queue_Cmd_setRowGroupIdx(rowGroupIdx,0);
+						LCD_Queue_Cmd_setColIdx(colIdx,1);
 					}
 					LCD_Queue_addData(bufferByte);
 					updateConsecutive = 1;
@@ -329,8 +347,8 @@ int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 	else
 	{
 		// Set display cursors to initial position - complete refresh
-		LCD_Queue_Cmd_setRowGroupIdx(0);
-		LCD_Queue_Cmd_setColIdx(0);
+		LCD_Queue_Cmd_setRowGroupIdx(0,0);
+		LCD_Queue_Cmd_setColIdx(0,1);
 
 		// Send buffer bytes to LCD - 6x84 sets of 1 byte of type 'D - data'
 		for (uint8_t rowGroupIdx = 0; rowGroupIdx < 6; rowGroupIdx++) // LCD Rows: 6*8(byte)= 48 pixels
