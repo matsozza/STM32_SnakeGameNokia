@@ -28,9 +28,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "service_uart.h"
+#include "service_lcd.h"
 #include "module_led.h"
 #include "module_uart.h"
-#include "service_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,10 +48,12 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 osPoolId mPoolUSART2Handle;
+osPoolId mPoolLCDHandle;
 /* USER CODE END Variables */
 osThreadId task100msHandle;
 osThreadId task500msHandle;
 osMessageQId queueUSART2Handle;
+osMessageQId queueLCDHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -73,11 +75,16 @@ void vApplicationIdleHook(void);
 __weak void vApplicationIdleHook( void )
 {
 	volatile uint32_t queueUSART2_msgWaiting=0;
+	volatile uint32_t queueLCD_msgWaiting=0;
 	for(;;){
 		// ** Check and consume USART2 queue
 		queueUSART2_msgWaiting = osMessageWaiting(queueUSART2Handle); //Check items on USART2 queue
 		if(queueUSART2_msgWaiting>0) USART2_consumeFromQueue(); //Consume USART2 Queue items
-	}
+
+		// ** Check and consume LCD queue
+		queueLCD_msgWaiting = osMessageWaiting(queueLCDHandle); // Check items on LCD queue
+		if (queueLCD_msgWaiting > 0) LCD_Queue_consumeBytes(); // Consume LCD Queue items
+  }
 }
 /* USER CODE END 2 */
 
@@ -101,8 +108,6 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-
-  //Variables initialization
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -119,13 +124,20 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the queue(s) */
   /* definition and creation of queueUSART2 */
-  osMessageQDef(queueUSART2, 5, USART_message_t);
+  osMessageQDef(queueUSART2, 5, uint32_t);//USART_message_t);
   queueUSART2Handle = osMessageCreate(osMessageQ(queueUSART2), NULL);
+
+  /* definition and creation of queueLCD */
+  osMessageQDef(queueLCD, 512, uint32_t); //LCD_dataPackage_t);
+  queueLCDHandle = osMessageCreate(osMessageQ(queueLCD), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   osPoolDef(mPoolUSART2Handle, 15, USART_message_t);
   mPoolUSART2Handle = osPoolCreate(osPool(mPoolUSART2Handle));
+
+  osPoolDef(mPoolLCDHandle, 512, LCD_dataPackage_t);
+  mPoolLCDHandle = osPoolCreate(osPool(mPoolLCDHandle));
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
@@ -179,14 +191,50 @@ void startTask100ms(void const * argument)
 void startTask500ms(void const * argument)
 {
   /* USER CODE BEGIN startTask500ms */
+  extern LCD_displayBuffer_t *LCD_displayBuffer01;
+  int a = 0;
   /* Infinite loop */
   for(;;)
   {
-	//Task activities
-	LED1_toggle();
-	UART_printMsg("500ms Task!\n\r");
+    //Task activities
+    LED1_toggle();
+    UART_printMsg("500ms Task!\n\r");
 
-	osThreadSuspend(task500msHandle);
+	  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 0);
+	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'h');
+	  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 7);
+	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e');
+	  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 14);
+	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'l');
+	  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 21);
+	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'l');
+	  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 28);
+	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'o');
+
+	  if(a==0){
+		  a=1;
+		  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, '!');
+		  LCD_Buffer_setCursor(LCD_displayBuffer01, 8, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'W');
+		  LCD_Buffer_setCursor(LCD_displayBuffer01, 16, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'Z');
+
+	  }
+	  else
+	  {
+		  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, '?');
+		  LCD_Buffer_setCursor(LCD_displayBuffer01, 8, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'X');
+		  LCD_Buffer_setCursor(LCD_displayBuffer01, 16, 35);
+		  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'Y');
+		  a=0;
+	  }
+
+    LCD_Buffer_sendToQueue(LCD_displayBuffer01);
+
+	  osThreadSuspend(task500msHandle);
   }
   /* USER CODE END startTask500ms */
 }
