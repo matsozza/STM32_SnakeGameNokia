@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+#include <module_snake.h>
 #include "FreeRTOS.h"
 #include "task.h"
 #include "main.h"
@@ -29,8 +30,6 @@
 #include <string.h>
 #include "service_uart.h"
 #include "service_lcd.h"
-#include "module_led.h"
-#include "module_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -170,8 +169,8 @@ void startTask100ms(void const * argument)
 	for(;;)
 	{
 		//Task activities
-		UART_printMsg("100ms Task!\n\r");
-		LED2_toggle();
+	    USART2_addToQueue("100ms Task!\n\r");
+		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
 
 		//Caller for task500ms
 		taskCounts = (uint8_t)((taskCounts+1) % 5);
@@ -197,8 +196,8 @@ void startTask500ms(void const * argument)
   for(;;)
   {
     //Task activities
-    LED1_toggle();
-    UART_printMsg("500ms Task!\n\r");
+	HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+    USART2_addToQueue("500ms Task!\n\r");
 
 	  LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 0);
 	  LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'h');
