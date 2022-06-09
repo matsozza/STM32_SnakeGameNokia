@@ -31,13 +31,15 @@ snakeObj_t snakeObj;
 uint8_t boardPixels[5][84][3];
 
 /* Functions implementation --------------------------------------------------*/
-void module_initGame()
+void moduleSnake_initGame()
 {
 	snake_initSnakeObj();
-	board_initBGLayer();
+	board_initLayers();
+
+	IO_sendToLCD();
 }
 
-void module_runGame()
+void moduleSnake_runGame()
 {
 	snake_updateSnakePos();
 	snake_printSnakeToBoard();
@@ -47,26 +49,28 @@ void module_runGame()
 
 void IO_sendToLCD()
 {
-	for (uint8_t rowIdx = 9; rowIdx < 48; rowIdx++)
+	// Print all the pixels related to the board
+	for (uint8_t rowIdx = 0; rowIdx < 40; rowIdx++)
 	{
 		for (uint8_t colIdx = 0; colIdx < 84; colIdx++)
 		{
 			// Print data according to layers hierarchy
-			uint8_t layer0 = board_getPixel(rowIdx,  colIdx,  0);
-			uint8_t layer1 = board_getPixel(rowIdx,  colIdx,  1);
-			uint8_t layer2 = board_getPixel(rowIdx,  colIdx,  2);
+			uint8_t layer0 = board_getPixel(rowIdx, colIdx, 0);
+			uint8_t layer1 = board_getPixel(rowIdx, colIdx, 1);
+			uint8_t layer2 = board_getPixel(rowIdx, colIdx, 2);
 
-			if (layer0 == 1 || layer1 == 1 || layer2 == 1)
+			if (layer0 || layer1 || layer2)
 			{
-				(void)LCD_Buffer_setPixel(LCD_displayBuffer01,rowIdx,colIdx,1);
+				(void)LCD_Buffer_setPixel(LCD_displayBuffer01, rowIdx+8, colIdx, 1);
 			}
-			else if (layer0 == 0 && layer1 == 0 && layer2 == 0)
+			else if (!layer0  && !layer1  && !layer2)
 			{
-				(void)LCD_Buffer_setPixel(LCD_displayBuffer01, rowIdx, colIdx, 1);
+				(void)LCD_Buffer_setPixel(LCD_displayBuffer01, rowIdx+8, colIdx, 0);
 			}
 		}
 	}
 
+	return;
 }
 
 void snake_initSnakeObj()
@@ -142,30 +146,33 @@ void snake_changeDirection(enum direction newDir)
 	snakeObj.movementDir = newDir;
 }
 
-void board_initBGLayer()
+void board_initLayers()
 {
-	// Clear all static / background layer data
-	for (int rowIdx = 0; rowIdx < 5; rowIdx++)
+	// Clear all layers data
+	for (uint8_t rowGroupIdx = 0; rowGroupIdx < 5; rowGroupIdx++)
 	{
-		for (int colIdx = 0; colIdx < 84; colIdx++)
+		for (uint8_t colIdx = 0; colIdx < 84; colIdx++)
 		{
-			boardPixels[rowIdx][colIdx][2] |= 0x80;
-			boardPixels[rowIdx][colIdx][2] |= 0x01;
+			for (uint8_t layerIdx = 0; layerIdx < 3; layerIdx++)
+			{
+				boardPixels[rowGroupIdx][colIdx][layerIdx] = 0x00;
+				boardPixels[rowGroupIdx][colIdx][layerIdx] = 0x00;
+			}
 		}
 	}
 
 	// Creates the boardPixels lines - vertical
-	for (int rowIdx = 0; rowIdx < 5; rowIdx++)
+	for (uint8_t rowGroupIdx = 0; rowGroupIdx < 5; rowGroupIdx++)
 	{
-		boardPixels[rowIdx][0][2] = 0xFF;
-		boardPixels[rowIdx][84][2] = 0xFF;
+		boardPixels[rowGroupIdx][0][2] = 0xFF;
+		boardPixels[rowGroupIdx][83][2] = 0xFF;
 	}
 
 	// Creates the boardPixels lines - horizontal
-	for (int colIdx = 0; colIdx < 84; colIdx++)
+	for (uint8_t colIdx = 0; colIdx < 84; colIdx++)
 	{
-		boardPixels[0][colIdx][2] |= 0x80;
-		boardPixels[5][colIdx][2] |= 0x01;
+		boardPixels[0][colIdx][2] |= 0x01;
+		boardPixels[4][colIdx][2] |= 0x80;
 	}
 }
 
@@ -189,7 +196,7 @@ uint8_t board_getPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer)
 {
 	uint8_t rowGroupIdx = (uint8_t)rowIdx / 8; // 'major' row
 	uint8_t rowPixelIdx = (uint8_t)rowIdx % 8; // 'minor' row
-	return boardPixels[rowGroupIdx][colIdx][boardLayer] & (1 << (7 - rowPixelIdx)); // Return value
+	return (uint8_t) ((boardPixels[rowGroupIdx][colIdx][boardLayer] & (1 << (7 - rowPixelIdx))) > 0); // Return value
 }
 
 

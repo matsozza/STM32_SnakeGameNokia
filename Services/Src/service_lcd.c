@@ -189,12 +189,9 @@ int LCD_Buffer_getPixel(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, 
 	{
 		uint8_t rowGroupIdx = rowIdx / 8;
 		LCD_Buffer_setUpdateStatus(LCD_displayBuffer, rowGroupIdx, colIdx, 0); //Clear updt Flg
-		return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1<<(7-rowPixelIdx)); // Return value
 	}
-	else
-	{
-		return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx)); // Just return data at the req. position ('peek')
-	}
+
+	return (int)((LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx)))>0); // Return value
 }
 
 int LCD_Buffer_setByte(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx, uint8_t val)

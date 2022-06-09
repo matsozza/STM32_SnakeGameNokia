@@ -39,14 +39,14 @@ typedef struct{
 
 
 /* Function prototypes -------------------------------------------------------*/
-void module_initGame();
-void module_runGame();
+void moduleSnake_initGame();
+void moduleSnake_runGame();
 void IO_sendToLCD();
 void snake_initSnakeObj();
 void snake_updateSnakePos();
 void snake_printSnakeToBoard();
 void snake_changeDirection(enum direction newDir);
-void board_initBGLayer();
+void board_initLayers();
 void board_setPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t pixelVal, uint8_t boardLayer);
 uint8_t board_getPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer);
 #endif /* INC_CORE_MODULE_SNAKE_H_ */
