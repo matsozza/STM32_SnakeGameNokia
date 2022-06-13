@@ -141,10 +141,15 @@ void snake_printSnakeToBoard()
 		board_setPixel(rowIdx, colIdx, 1, 0); 
 
 		// Layer 0 - Snake Layer - Snake "Thick Contours"
-		//board_setPixel(rowIdx+1, colIdx, 1, 0);
-		//board_setPixel(rowIdx-1, colIdx, 1, 0);
-		//board_setPixel(rowIdx, colIdx+1, 1, 0);
-		//board_setPixel(rowIdx, colIdx-1, 1, 0);
+		board_setPixel(rowIdx+1, colIdx, 1, 0);
+		board_setPixel(rowIdx-1, colIdx, 1, 0);
+		board_setPixel(rowIdx, colIdx+1, 1, 0);
+		board_setPixel(rowIdx, colIdx-1, 1, 0);
+		
+		board_setPixel(rowIdx-1, colIdx-1, 1, 0);
+		board_setPixel(rowIdx+1, colIdx-1, 1, 0);
+		board_setPixel(rowIdx-1, colIdx+1, 1, 0);
+		board_setPixel(rowIdx+1, colIdx+1, 1, 0);
 	}
 }
 

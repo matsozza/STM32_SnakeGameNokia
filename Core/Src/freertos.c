@@ -197,6 +197,24 @@ void startTask500ms(void const *argument)
 	extern LCD_displayBuffer_t *LCD_displayBuffer01;
 
 	moduleSnake_initGame();
+
+	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 0);
+	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'M');
+	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 6);
+	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, '.');
+	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 12);
+	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'S');
+	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 18);
+	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'o');
+	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 24);
+	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z');
+	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 30);
+	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z');
+	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 36);
+	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a');
+	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 42);
+	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, '!');
+
 	int a = 0;
 	/* Infinite loop */
 	for (;;)
