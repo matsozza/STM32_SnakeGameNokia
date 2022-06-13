@@ -197,7 +197,7 @@ void startTask500ms(void const *argument)
 	extern LCD_displayBuffer_t *LCD_displayBuffer01;
 
 	moduleSnake_initGame();
-
+	int a = 0;
 	/* Infinite loop */
 	for (;;)
 	{
@@ -205,7 +205,27 @@ void startTask500ms(void const *argument)
 		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
 		USART2_addToQueue("500ms Task!\n\r");
 
-		//moduleSnake_runGame();
+		moduleSnake_runGame();
+
+
+		a++;
+		if(a==10)
+		{
+			snake_changeDirection(RIGHT);
+		}
+		else if(a==20)
+		{
+			snake_changeDirection(UP);
+		}
+		else if (a == 30)
+		{
+			snake_changeDirection(LEFT);
+		}
+		else if (a == 40)
+		{
+			snake_changeDirection(DOWN);
+			a = 0;
+		}
 
 		LCD_Buffer_sendToQueue(LCD_displayBuffer01);
 		osThreadSuspend(task500msHandle);

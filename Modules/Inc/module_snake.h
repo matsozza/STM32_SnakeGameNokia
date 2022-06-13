@@ -26,8 +26,8 @@ enum direction
 
 typedef struct
 {
-    uint8_t posRow; // From 0 to 20
-    uint8_t posCol; // From 0 to 37
+    uint8_t posRow; // From 0 to 39 (40 rows)
+    uint8_t posCol; // From 0 to 83 (84 cols)
 } boardPos_t;
 
 

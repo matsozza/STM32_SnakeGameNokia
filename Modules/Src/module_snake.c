@@ -63,7 +63,7 @@ void IO_sendToLCD()
 			{
 				(void)LCD_Buffer_setPixel(LCD_displayBuffer01, rowIdx+8, colIdx, 1);
 			}
-			else if (!layer0  && !layer1  && !layer2)
+			else if (!layer0 && !layer1 && !layer2)
 			{
 				(void)LCD_Buffer_setPixel(LCD_displayBuffer01, rowIdx+8, colIdx, 0);
 			}
@@ -75,31 +75,31 @@ void IO_sendToLCD()
 
 void snake_initSnakeObj()
 {
-	snakeObj.size = 2; // Starts with size = 2
+	snakeObj.size = 7; // Start size
 	snakeObj.bodyComponent[0].posRow = 20;
-	snakeObj.bodyComponent[0].posCol = 20;
-	snakeObj.bodyComponent[1].posRow = 20;
-	snakeObj.bodyComponent[1].posCol = 21;
-	snakeObj.movementDir = RIGHT; // First movement to the right
+	snakeObj.bodyComponent[0].posCol = 40;
+	snakeObj.bodyComponent[1].posRow = 19;
+	snakeObj.bodyComponent[1].posCol = 40;
+	snakeObj.movementDir = DOWN; // First movement to the right
 }
 
 void snake_updateSnakePos()
 {
 	//Set snake head movement
-	boardPos_t prevSnakePos = snakeObj.bodyComponent[0];
+	boardPos_t prevSnakeHeadPos = snakeObj.bodyComponent[0];
 	switch(snakeObj.movementDir)
 	{
 		case RIGHT:
-			snakeObj.bodyComponent[0].posCol++;
+			snakeObj.bodyComponent[0].posCol+=1;
 			break;
 		case UP:
-			snakeObj.bodyComponent[0].posRow++;
+			snakeObj.bodyComponent[0].posRow-=1;
 			break;
 		case LEFT:
-			snakeObj.bodyComponent[0].posCol--;
+			snakeObj.bodyComponent[0].posCol-=1;
 			break;
 		case DOWN:
-			snakeObj.bodyComponent[0].posRow--;
+			snakeObj.bodyComponent[0].posRow+=1;
 			break;
 		default:
 			return;
@@ -108,11 +108,11 @@ void snake_updateSnakePos()
 	//Set snake body movement
 	for (uint8_t bodyPart = snakeObj.size-1 ; bodyPart > 0; bodyPart--)
 	{
-		if(bodyPart==1)
+		if(bodyPart==1) // Follow head movement
 		{
-			snakeObj.bodyComponent[1] = prevSnakePos;
+			snakeObj.bodyComponent[1] = prevSnakeHeadPos;
 		}
-		else
+		else // Update body positions
 		{
 			snakeObj.bodyComponent[bodyPart] = snakeObj.bodyComponent[bodyPart-1];
 		}
@@ -122,12 +122,12 @@ void snake_updateSnakePos()
 void snake_printSnakeToBoard()
 {
 	// Clear all pixels from snake layer
-	for (int rowIdx = 0; rowIdx < 5; rowIdx++)
+	for (int rowGroupIdx = 0; rowGroupIdx < 5; rowGroupIdx++)
 	{
 		for (int colIdx = 0; colIdx < 84; colIdx++)
 		{
-			boardPixels[rowIdx][colIdx][0] |= 0x00;
-			boardPixels[rowIdx][colIdx][0] |= 0x00;
+			boardPixels[rowGroupIdx][colIdx][0] = 0x00;
+			boardPixels[rowGroupIdx][colIdx][0] = 0x00;
 		}
 	}
 
@@ -137,7 +137,14 @@ void snake_printSnakeToBoard()
 		uint8_t rowIdx = snakeObj.bodyComponent[size].posRow;
 		uint8_t colIdx = snakeObj.bodyComponent[size].posCol;
 
-		board_setPixel(rowIdx, colIdx, 1, 0); // Layer 0 - Snake Layer
+		// Layer 0 - Snake Layer - Snake "Core"
+		board_setPixel(rowIdx, colIdx, 1, 0); 
+
+		// Layer 0 - Snake Layer - Snake "Thick Contours"
+		//board_setPixel(rowIdx+1, colIdx, 1, 0);
+		//board_setPixel(rowIdx-1, colIdx, 1, 0);
+		//board_setPixel(rowIdx, colIdx+1, 1, 0);
+		//board_setPixel(rowIdx, colIdx-1, 1, 0);
 	}
 }
 
@@ -178,25 +185,25 @@ void board_initLayers()
 
 void board_setPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t pixelVal, uint8_t boardLayer)
 {
-	uint8_t rowGroupIdx = (uint8_t)rowIdx / 8; // 'major' row
-	uint8_t rowPixelIdx = (uint8_t)rowIdx % 8; // 'minor' row
+	uint8_t rowGroupIdx = (uint8_t)(rowIdx / 8); // 'major' row of board - skip first display rowGroup
+	uint8_t rowPixelIdx = (uint8_t)(rowIdx % 8); // 'minor' row of board
 
 	// Set a value to a pixel of the board game
 	if (pixelVal)
 	{
-		boardPixels[rowGroupIdx][colIdx][boardLayer] |= (1 << (7 - rowPixelIdx));
+		boardPixels[rowGroupIdx][colIdx][boardLayer] |= (1 << (0+rowPixelIdx));
 	}
 	else
 	{
-		boardPixels[rowGroupIdx][colIdx][boardLayer] &= ~((uint8_t)(1 << (7 - rowPixelIdx)));
+		boardPixels[rowGroupIdx][colIdx][boardLayer] &= ~((uint8_t)(1 << (0+rowPixelIdx)));
 	}
 }
 
 uint8_t board_getPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer)
 {
-	uint8_t rowGroupIdx = (uint8_t)rowIdx / 8; // 'major' row
-	uint8_t rowPixelIdx = (uint8_t)rowIdx % 8; // 'minor' row
-	return (uint8_t) ((boardPixels[rowGroupIdx][colIdx][boardLayer] & (1 << (7 - rowPixelIdx))) > 0); // Return value
+	uint8_t rowGroupIdx = (uint8_t)(rowIdx / 8); // 'major' row
+	uint8_t rowPixelIdx = (uint8_t)(rowIdx % 8); // 'minor' row
+	return (uint8_t) ((boardPixels[rowGroupIdx][colIdx][boardLayer] & (1 << (0+rowPixelIdx))) > 0); // Return value
 }
 
 
