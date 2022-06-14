@@ -103,16 +103,16 @@ void snake_updateSnakePos()
 	switch(snakeObj.movementDir)
 	{
 		case RIGHT:
-			snakeObj.bodyComponent[0].posCol+=2;
+			snakeObj.bodyComponent[0].posCol+=1;
 			break;
 		case UP:
-			snakeObj.bodyComponent[0].posRow-=2;
+			snakeObj.bodyComponent[0].posRow-=1;
 			break;
 		case LEFT:
-			snakeObj.bodyComponent[0].posCol-=2;
+			snakeObj.bodyComponent[0].posCol-=1;
 			break;
 		case DOWN:
-			snakeObj.bodyComponent[0].posRow+=2;
+			snakeObj.bodyComponent[0].posRow+=1;
 			break;
 		default:
 			return;
@@ -163,6 +163,7 @@ void snake_printSnakeToBoard()
 		board_setPixel(rowIdx+1, colIdx-1, 1, 0);
 		board_setPixel(rowIdx-1, colIdx+1, 1, 0);
 		board_setPixel(rowIdx+1, colIdx+1, 1, 0);
+
 	}
 }
 
@@ -187,7 +188,7 @@ void food_updateFood()
 	if(foodRow == snakeRow && foodCol == snakeCol)
 	{
 		foodObj.numFood = 0; // Remove food
-		snakeObj.size+=3;
+		snakeObj.size+=1;
 
 		// ***Delete after 
 		if(snakeObj.size > 140)
