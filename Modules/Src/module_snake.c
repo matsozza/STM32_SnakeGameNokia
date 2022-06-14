@@ -22,18 +22,24 @@
 /* Private includes ----------------------------------------------------------*/
 #include "module_snake.h"
 #include "service_lcd.h"
+#include <stdlib.h>
+#include "main.h"
 
 /* External variables includes -----------------------------------------------*/
 extern LCD_displayBuffer_t *LCD_displayBuffer01;
 
 /* Internal variables includes -----------------------------------------------*/
 snakeObj_t snakeObj;
+foodObj_t foodObj;
 uint8_t boardPixels[5][84][3];
 
 /* Functions implementation --------------------------------------------------*/
 void moduleSnake_initGame()
 {
 	snake_initSnakeObj();
+	
+	food_initFoodObj();
+
 	board_initLayers();
 
 	IO_sendToLCD();
@@ -43,6 +49,9 @@ void moduleSnake_runGame()
 {
 	snake_updateSnakePos();
 	snake_printSnakeToBoard();
+
+	food_updateFood();
+	food_printFoodToBoard();
 
 	IO_sendToLCD();
 }
@@ -60,6 +69,10 @@ void IO_sendToLCD()
 			uint8_t layer2 = board_getPixel(rowIdx, colIdx, 2);
 
 			if (layer0 || layer1 || layer2)
+			{
+				(void)LCD_Buffer_setPixel(LCD_displayBuffer01, rowIdx+8, colIdx, 1);
+			}
+			else if ((layer0 || layer1 || layer2) && rowIdx == 24 && colIdx == 3)
 			{
 				(void)LCD_Buffer_setPixel(LCD_displayBuffer01, rowIdx+8, colIdx, 1);
 			}
@@ -90,16 +103,16 @@ void snake_updateSnakePos()
 	switch(snakeObj.movementDir)
 	{
 		case RIGHT:
-			snakeObj.bodyComponent[0].posCol+=1;
+			snakeObj.bodyComponent[0].posCol+=2;
 			break;
 		case UP:
-			snakeObj.bodyComponent[0].posRow-=1;
+			snakeObj.bodyComponent[0].posRow-=2;
 			break;
 		case LEFT:
-			snakeObj.bodyComponent[0].posCol-=1;
+			snakeObj.bodyComponent[0].posCol-=2;
 			break;
 		case DOWN:
-			snakeObj.bodyComponent[0].posRow+=1;
+			snakeObj.bodyComponent[0].posRow+=2;
 			break;
 		default:
 			return;
@@ -132,10 +145,10 @@ void snake_printSnakeToBoard()
 	}
 
 	// Set the pixels for the new snake position
-	for (uint8_t size = 0; size < snakeObj.size; size++)
+	for (uint8_t idxSize = 0; idxSize < snakeObj.size; idxSize++)
 	{
-		uint8_t rowIdx = snakeObj.bodyComponent[size].posRow;
-		uint8_t colIdx = snakeObj.bodyComponent[size].posCol;
+		uint8_t rowIdx = snakeObj.bodyComponent[idxSize].posRow;
+		uint8_t colIdx = snakeObj.bodyComponent[idxSize].posCol;
 
 		// Layer 0 - Snake Layer - Snake "Core"
 		board_setPixel(rowIdx, colIdx, 1, 0); 
@@ -156,6 +169,76 @@ void snake_printSnakeToBoard()
 void snake_changeDirection(enum direction newDir)
 {
 	snakeObj.movementDir = newDir;
+}
+
+void food_initFoodObj()
+{
+	foodObj.numFood = 0;
+}
+
+void food_updateFood()
+{
+	// Check if food shall be 'eaten'
+	uint8_t foodRow = foodObj.foodComponent[0].posRow;
+	uint8_t foodCol = foodObj.foodComponent[0].posCol;
+	uint8_t snakeRow = snakeObj.bodyComponent[0].posRow;
+	uint8_t snakeCol = snakeObj.bodyComponent[0].posCol;
+
+	if(foodRow == snakeRow && foodCol == snakeCol)
+	{
+		foodObj.numFood = 0; // Remove food
+		snakeObj.size+=3;
+
+		// ***Delete after 
+		if(snakeObj.size > 140)
+		{
+			snakeObj.size = 7;
+		}
+	}
+	// If no food present, add one
+	else if(foodObj.numFood == 0) // Just place one food per time
+	{
+		// Get a random position on the table
+		srand(snakeRow*foodRow+snakeCol*foodCol);		  // Init random number generator
+		//uint8_t randomCol = (uint8_t)(rand() % 80) + 1;	  // Between col. 2 and 81
+		uint8_t randomCol = (uint8_t)(DWT->CYCCNT % 80) + 1; // Between col. 2 and 81
+		// uint8_t randomRow = (uint8_t)(rand() % 36) + 1;	  // Between col. 2 and 37
+		uint8_t randomRow = (uint8_t)(DWT->CYCCNT % 36) + 1; // Between col. 2 and 37
+
+		randomCol += randomCol % 2; // ensure is even
+		randomRow += randomRow % 2; // ensure is even
+
+		foodObj.foodComponent[0].posCol = randomCol;
+		foodObj.foodComponent[0].posRow = randomRow;
+
+		foodObj.numFood = 1;
+	}
+}
+
+void food_printFoodToBoard()
+{
+	// Clear all pixels from food layer (1)
+	for (int rowGroupIdx = 0; rowGroupIdx < 5; rowGroupIdx++)
+	{
+		for (int colIdx = 0; colIdx < 84; colIdx++)
+		{
+			boardPixels[rowGroupIdx][colIdx][1] = 0x00;
+			boardPixels[rowGroupIdx][colIdx][1] = 0x00;
+		}
+	}
+
+	// Set the pixels for the new food position
+	for (uint8_t idxFood = 0; idxFood < foodObj.numFood; idxFood++)
+	{
+		uint8_t rowIdx = foodObj.foodComponent[idxFood].posRow;
+		uint8_t colIdx = foodObj.foodComponent[idxFood].posCol;
+
+		// Layer 1 - Food Layer - Food Shape
+		board_setPixel(rowIdx + 1, colIdx, 1, 1);
+		board_setPixel(rowIdx - 1, colIdx, 1, 1);
+		board_setPixel(rowIdx, colIdx + 1, 1, 1);
+		board_setPixel(rowIdx, colIdx - 1, 1, 1);
+	}
 }
 
 void board_initLayers()
@@ -196,11 +279,11 @@ void board_setPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t pixelVal, uint8_t bo
 	// Set a value to a pixel of the board game
 	if (pixelVal)
 	{
-		boardPixels[rowGroupIdx][colIdx][boardLayer] |= (1 << (0+rowPixelIdx));
+		boardPixels[rowGroupIdx][colIdx][boardLayer] |= (1 << (rowPixelIdx));
 	}
 	else
 	{
-		boardPixels[rowGroupIdx][colIdx][boardLayer] &= ~((uint8_t)(1 << (0+rowPixelIdx)));
+		boardPixels[rowGroupIdx][colIdx][boardLayer] &= ~((uint8_t)(1 << (rowPixelIdx)));
 	}
 }
 
@@ -208,7 +291,7 @@ uint8_t board_getPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer)
 {
 	uint8_t rowGroupIdx = (uint8_t)(rowIdx / 8); // 'major' row
 	uint8_t rowPixelIdx = (uint8_t)(rowIdx % 8); // 'minor' row
-	return (uint8_t) ((boardPixels[rowGroupIdx][colIdx][boardLayer] & (1 << (0+rowPixelIdx))) > 0); // Return value
+	return (uint8_t) ((boardPixels[rowGroupIdx][colIdx][boardLayer] & (1 << (rowPixelIdx))) > 0); // Return value
 }
 
 

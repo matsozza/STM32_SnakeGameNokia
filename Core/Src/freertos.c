@@ -169,11 +169,45 @@ void startTask100ms(void const *argument)
 	/* USER CODE BEGIN startTask100ms */
 	/* Infinite loop */
 	volatile uint8_t taskCounts = 0;
+	int a =0;
+	extern LCD_displayBuffer_t *LCD_displayBuffer01;
+	extern snakeObj_t snakeObj;
+	extern foodObj_t foodObj;
+
 	for (;;)
 	{
 		// Task activities
 		USART2_addToQueue("100ms Task!\n\r");
 		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+
+		moduleSnake_runGame();
+
+		uint8_t foodRow = foodObj.foodComponent[0].posRow;
+		uint8_t foodCol = foodObj.foodComponent[0].posCol;
+		uint8_t snakeRow = snakeObj.bodyComponent[0].posRow;
+		uint8_t snakeCol = snakeObj.bodyComponent[0].posCol;
+		if (foodRow < snakeRow)
+		{
+			snake_changeDirection(UP);
+		}
+		else if (foodRow > snakeRow)
+		{
+			snake_changeDirection(DOWN);
+		}
+		else
+		{
+			if (foodCol < snakeCol)
+			{
+				snake_changeDirection(LEFT);
+			}
+			else if (foodCol > snakeCol)
+			{
+				snake_changeDirection(RIGHT);
+			}
+		}
+
+
+		LCD_Buffer_sendToQueue(LCD_displayBuffer01);
 
 		// Caller for task500ms
 		taskCounts = (uint8_t)((taskCounts + 1) % 5);
@@ -231,28 +265,27 @@ void startTask500ms(void const *argument)
 		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
 		USART2_addToQueue("500ms Task!\n\r");
 
+/*
 		moduleSnake_runGame();
-
-
 		a++;
-		if(a==10)
-		{
-			snake_changeDirection(RIGHT);
-		}
-		else if(a==20)
-		{
-			snake_changeDirection(UP);
-		}
-		else if (a == 30)
+		if(a==14)
 		{
 			snake_changeDirection(LEFT);
 		}
-		else if (a == 40)
+		else if(a==22)
+		{
+			snake_changeDirection(UP);
+		}
+		else if (a == 36)
+		{
+			snake_changeDirection(RIGHT);
+		}
+		else if (a == 44)
 		{
 			snake_changeDirection(DOWN);
 			a = 0;
 		}
-
+*/
 		LCD_Buffer_sendToQueue(LCD_displayBuffer01);
 		osThreadSuspend(task500msHandle);
 	}
