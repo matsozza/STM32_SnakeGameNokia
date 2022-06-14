@@ -47,11 +47,11 @@ void moduleSnake_initGame()
 
 void moduleSnake_runGame()
 {
-	snake_updateSnakePos();
-	snake_printSnakeToBoard();
-
 	food_updateFood();
 	food_printFoodToBoard();
+
+	snake_updateSnakePos();
+	snake_printSnakeToBoard();
 
 	IO_sendToLCD();
 }
@@ -93,7 +93,7 @@ void snake_initSnakeObj()
 	snakeObj.bodyComponent[0].posCol = 40;
 	snakeObj.bodyComponent[1].posRow = 19;
 	snakeObj.bodyComponent[1].posCol = 40;
-	snakeObj.movementDir = DOWN; // First movement to the right
+	snakeObj.movementDir = DOWN; // First movement 
 }
 
 void snake_updateSnakePos()
@@ -119,15 +119,26 @@ void snake_updateSnakePos()
 	}
 
 	//Set snake body movement
-	for (uint8_t bodyPart = snakeObj.size-1 ; bodyPart > 0; bodyPart--)
+	for (uint8_t bodyPart = 1; bodyPart < snakeObj.size; bodyPart++)
 	{
-		if(bodyPart==1) // Follow head movement
+		boardPos_t prevSnakeBodyPart, prevSnakeBodyPart2;
+
+		if (bodyPart == 1) // Follow head movement
 		{
+			prevSnakeBodyPart = snakeObj.bodyComponent[1];
 			snakeObj.bodyComponent[1] = prevSnakeHeadPos;
 		}
 		else // Update body positions
 		{
-			snakeObj.bodyComponent[bodyPart] = snakeObj.bodyComponent[bodyPart-1];
+			prevSnakeBodyPart2 = snakeObj.bodyComponent[bodyPart];
+			snakeObj.bodyComponent[bodyPart] = prevSnakeBodyPart;
+
+			//If is '0,0' uninit. position, do not propagate; use last valid
+			if(prevSnakeBodyPart2.posRow != 0 && prevSnakeBodyPart2.posRow != 0)
+			{
+				prevSnakeBodyPart = prevSnakeBodyPart2;
+			}
+
 		}
 	}
 }
@@ -188,7 +199,7 @@ void food_updateFood()
 	if(foodRow == snakeRow && foodCol == snakeCol)
 	{
 		foodObj.numFood = 0; // Remove food
-		snakeObj.size+=1;
+		snakeObj.size+=2;
 
 		// ***Delete after 
 		if(snakeObj.size > 140)
@@ -200,7 +211,7 @@ void food_updateFood()
 	else if(foodObj.numFood == 0) // Just place one food per time
 	{
 		// Get a random position on the table
-		srand(snakeRow*foodRow+snakeCol*foodCol);		  // Init random number generator
+		//srand(snakeRow*foodRow+snakeCol*foodCol);		  // Init random number generator
 		//uint8_t randomCol = (uint8_t)(rand() % 80) + 1;	  // Between col. 2 and 81
 		uint8_t randomCol = (uint8_t)(DWT->CYCCNT % 80) + 1; // Between col. 2 and 81
 		// uint8_t randomRow = (uint8_t)(rand() % 36) + 1;	  // Between col. 2 and 37
