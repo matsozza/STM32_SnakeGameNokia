@@ -4,7 +4,7 @@
  * 
  * The game is intended to run in the 500ms task.
  * 
- * A board of 44 rows per 84 columns (pixels) will be created.
+ * A board of 40 rows per 84 columns (pixels) will be created.
  * The board is composed of three layers:
  * 		L0: Snake Layer, where the snake runs
  * 		L1: Food / Object Layer, where any food or object is placed
