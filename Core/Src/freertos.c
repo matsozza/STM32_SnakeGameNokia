@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
 #include <string.h>
+#include "adc.h"
 #include "service_uart.h"
 #include "service_lcd.h"
 #include "module_snake.h"
@@ -182,6 +183,7 @@ void startTask100ms(void const *argument)
 
 		moduleSnake_runGame();
 
+		//Simple logic to pursuit food
 		uint8_t foodRow = foodObj.foodComponent[0].posRow;
 		uint8_t foodCol = foodObj.foodComponent[0].posCol;
 		uint8_t snakeRow = snakeObj.bodyComponent[0].posRow;
@@ -205,7 +207,6 @@ void startTask100ms(void const *argument)
 				snake_changeDirection(RIGHT);
 			}
 		}
-
 
 		LCD_Buffer_sendToQueue(LCD_displayBuffer01);
 
@@ -257,7 +258,8 @@ void startTask500ms(void const *argument)
 	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 66);
 	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ')');
 
-	int a = 0;
+
+	//extern ADC_HandleTypeDef hadc1;
 	/* Infinite loop */
 	for (;;)
 	{
@@ -265,27 +267,8 @@ void startTask500ms(void const *argument)
 		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
 		USART2_addToQueue("500ms Task!\n\r");
 
-/*
-		moduleSnake_runGame();
-		a++;
-		if(a==14)
-		{
-			snake_changeDirection(LEFT);
-		}
-		else if(a==22)
-		{
-			snake_changeDirection(UP);
-		}
-		else if (a == 36)
-		{
-			snake_changeDirection(RIGHT);
-		}
-		else if (a == 44)
-		{
-			snake_changeDirection(DOWN);
-			a = 0;
-		}
-*/
+		uint32_t temp = HAL_ADC_GetValue(&hadc1);
+
 		LCD_Buffer_sendToQueue(LCD_displayBuffer01);
 		osThreadSuspend(task500msHandle);
 	}
