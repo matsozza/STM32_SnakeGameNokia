@@ -199,7 +199,7 @@ void food_updateFood()
 	if(foodRow == snakeRow && foodCol == snakeCol)
 	{
 		foodObj.numFood = 0; // Remove food
-		snakeObj.size+=2;
+		snakeObj.size+=7;
 
 		// ***Delete after 
 		if(snakeObj.size > 140)
