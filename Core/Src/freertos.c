@@ -258,8 +258,8 @@ void startTask500ms(void const *argument)
 	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 66);
 	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ')');
 
+	HAL_ADC_Start(&hadc1);
 
-	//extern ADC_HandleTypeDef hadc1;
 	/* Infinite loop */
 	for (;;)
 	{
