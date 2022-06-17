@@ -170,7 +170,6 @@ void startTask100ms(void const *argument)
 	/* USER CODE BEGIN startTask100ms */
 	/* Infinite loop */
 	volatile uint8_t taskCounts = 0;
-	int a =0;
 	extern LCD_displayBuffer_t *LCD_displayBuffer01;
 	extern snakeObj_t snakeObj;
 	extern foodObj_t foodObj;

@@ -22,8 +22,8 @@
 /* Private includes ----------------------------------------------------------*/
 #include "module_snake.h"
 #include "service_lcd.h"
+#include "service_randomGen.h"
 #include <stdlib.h>
-#include "main.h"
 
 /* External variables includes -----------------------------------------------*/
 extern LCD_displayBuffer_t *LCD_displayBuffer01;
@@ -211,11 +211,8 @@ void food_updateFood()
 	else if(foodObj.numFood == 0) // Just place one food per time
 	{
 		// Get a random position on the table
-		//srand(snakeRow*foodRow+snakeCol*foodCol);		  // Init random number generator
-		//uint8_t randomCol = (uint8_t)(rand() % 80) + 1;	  // Between col. 2 and 81
-		uint8_t randomCol = (uint8_t)(DWT->CYCCNT % 80) + 1; // Between col. 2 and 81
-		// uint8_t randomRow = (uint8_t)(rand() % 36) + 1;	  // Between col. 2 and 37
-		uint8_t randomRow = (uint8_t)(DWT->CYCCNT % 36) + 1; // Between col. 2 and 37
+		uint8_t randomCol = (uint8_t)(randomGen_random32b() % 80) + 1; // Between col. 2 and 81
+		uint8_t randomRow = (uint8_t)(randomGen_random32b() % 36) + 1; // Between col. 2 and 37
 
 		randomCol += randomCol % 2; // ensure is even
 		randomRow += randomRow % 2; // ensure is even
