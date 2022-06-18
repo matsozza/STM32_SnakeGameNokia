@@ -72,6 +72,10 @@ static void _moduleTemperature_stateFunction()
 
 static void _moduleTemperature_sendToLCD()
 {
+	if(!tempSensor_checkForData()){
+		return;
+	}
+
 	double readTempDouble = tempSensor_getTempValue();
 	char readTempStr[5];
 	gcvt(readTempDouble, 5, &readTempStr);

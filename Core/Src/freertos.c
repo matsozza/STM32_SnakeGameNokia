@@ -287,7 +287,6 @@ void startTask500ms(void const *argument)
 			a=1;
 		}
 
-
 		moduleTemperature_runTask(1);
 
 		//LCD_Buffer_sendToQueue(LCD_displayBuffer01); // TODO uncomment when full queue bug is fixed

@@ -22,7 +22,11 @@
 //Starts temperature sensor reading
 #define tempSensor_init() HAL_ADC_Start(&hadc1) 
 
+// Get state of conversion / if data is ready
+#define tempSensor_checkForData() (hadc1.Instance->SR & 2)
+
 //Get raw value stored in the temp. snsr
+//#define tempSensor_getRawValue() HAL_ADC_GetValue(&hadc1) 
 #define tempSensor_getRawValue() HAL_ADC_GetValue(&hadc1) 
 
 //Get converted value stored in the temp. snsr
