@@ -21,7 +21,6 @@ extern osMessageQId queueLCDHandle;
 extern osPoolId mPoolLCDHandle;
 
 /* Internal variables includes -----------------------------------------------*/
-//add LCD queue
 LCD_displayBuffer_t *LCD_displayBuffer01;
 
 /* Functions implementation --------------------------------------------------*/
@@ -241,6 +240,7 @@ int LCD_Buffer_getUpdateStatus(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t r
 	return ((LCD_displayBuffer->updateStatus[colIdx] >> (rowGroupIdx)) && 0b1);
 }
 
+// TODO eliminate buffer 'cursor' operations, make atomic functions
 int LCD_Buffer_setCursor(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx)
 {
 	LCD_displayBuffer->rowIdx = rowIdx;
@@ -293,6 +293,7 @@ int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII
 
 int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 {
+	// TODO If queue is full, wait / abort (otherwise LCD Glitch is expected)
 	// Count the number of bytes in the LCD that need to be updated
 	uint16_t updateCounter = 0;
 	uint16_t consecCounter = 0;

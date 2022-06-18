@@ -27,10 +27,11 @@
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
 #include <string.h>
-#include "adc.h"
+#include "service_tempSensor.h"
 #include "service_uart.h"
 #include "service_lcd.h"
 #include "module_snake.h"
+#include "module_temperature.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -174,11 +175,14 @@ void startTask100ms(void const *argument)
 	extern snakeObj_t snakeObj;
 	extern foodObj_t foodObj;
 
+	moduleSnake_initGame();
+
 	for (;;)
 	{
 		// Task activities
 		USART2_addToQueue("100ms Task!\n\r");
 		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+
 
 		moduleSnake_runGame();
 
@@ -230,34 +234,7 @@ void startTask500ms(void const *argument)
 	/* USER CODE BEGIN startTask500ms */
 	extern LCD_displayBuffer_t *LCD_displayBuffer01;
 
-	moduleSnake_initGame();
-
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 0);
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, '@');
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 6);
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'm');
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 12);
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a');
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 18);
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 't');
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 24);
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 's');
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 30);
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'o');
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 36);
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z');
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 42);
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z');
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 48);
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a');
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 54);
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ' ');
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 60);
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ':');
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 66);
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ')');
-
-	HAL_ADC_Start(&hadc1);
+	int a=0; 
 
 	/* Infinite loop */
 	for (;;)
@@ -266,9 +243,54 @@ void startTask500ms(void const *argument)
 		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
 		USART2_addToQueue("500ms Task!\n\r");
 
-		uint32_t temp = HAL_ADC_GetValue(&hadc1);
+		if(a)
+		{
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 0);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, '@');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 6);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'm');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 12);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 18);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 't');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 24);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 's');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 30);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'o');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 36);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 42);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 48);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a');
+			a=0;
+		}
+		else
+		{	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 0);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'S');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 6);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'n');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 12);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 18);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'k');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 24);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 30);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'G');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 36);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 42);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'm');
+			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 48);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e');
+			a=1;
+		}
 
-		LCD_Buffer_sendToQueue(LCD_displayBuffer01);
+
+		moduleTemperature_runTask(1);
+
+		//LCD_Buffer_sendToQueue(LCD_displayBuffer01); // TODO uncomment when full queue bug is fixed
 		osThreadSuspend(task500msHandle);
 	}
 	/* USER CODE END startTask500ms */
