@@ -2,12 +2,13 @@
 ADC1.Channel-1\#ChannelRegularConversion=ADC_CHANNEL_TEMPSENSOR
 ADC1.ClockPrescaler=ADC_CLOCK_SYNC_PCLK_DIV8
 ADC1.ContinuousConvMode=ENABLE
-ADC1.IPParameters=Rank-1\#ChannelRegularConversion,master,Channel-1\#ChannelRegularConversion,SamplingTime-1\#ChannelRegularConversion,NbrOfConversionFlag,InjNumberOfConversion,ContinuousConvMode,NbrOfConversion,ClockPrescaler
+ADC1.EOCSelection=ADC_EOC_SEQ_CONV
+ADC1.IPParameters=Rank-1\#ChannelRegularConversion,master,Channel-1\#ChannelRegularConversion,SamplingTime-1\#ChannelRegularConversion,NbrOfConversionFlag,InjNumberOfConversion,ContinuousConvMode,NbrOfConversion,ClockPrescaler,EOCSelection
 ADC1.InjNumberOfConversion=0
 ADC1.NbrOfConversion=1
 ADC1.NbrOfConversionFlag=1
 ADC1.Rank-1\#ChannelRegularConversion=1
-ADC1.SamplingTime-1\#ChannelRegularConversion=ADC_SAMPLETIME_3CYCLES
+ADC1.SamplingTime-1\#ChannelRegularConversion=ADC_SAMPLETIME_480CYCLES
 ADC1.master=1
 FREERTOS.FootprintOK=true
 FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT,FootprintOK,configMAX_TASK_NAME_LEN,configTICK_RATE_HZ,Queues01,configUSE_IDLE_HOOK
