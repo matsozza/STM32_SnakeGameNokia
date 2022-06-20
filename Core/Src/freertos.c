@@ -218,45 +218,28 @@ void startTask500ms(void const *argument)
 
 		if(a)
 		{
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 0);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, '@');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 6);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'm');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 12);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 18);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 't');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 24);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 's');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 30);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'o');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 36);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 42);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 48);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a');
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, '@',0,0);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'm',0,6);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,12);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 't',0,18);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 's',0,24);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'o',0,30);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z',0,36);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z',0,42);
+				LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,48);
 			a=0;
 		}
 		else
-		{	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 0);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'S');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 6);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'n');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 12);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 18);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'k');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 24);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 30);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'G');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 36);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 42);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'm');
-			LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 48);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e');
+		{	
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'S',0,0);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'n',0,6);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,12);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'k',0,18);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e',0,24);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'G',0,30);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,36);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'm',0,42);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e',0,48);
 			a=1;
 		}
 

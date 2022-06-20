@@ -245,24 +245,6 @@ int LCD_Buffer_getUpdateStatus(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t r
 	return ((LCD_displayBuffer->updateStatus[colIdx] >> (rowGroupIdx)) && 0b1);
 }
 
-// TODO eliminate buffer 'cursor' operations, make atomic functions
-int LCD_Buffer_setCursor(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx)
-{
-	LCD_displayBuffer->rowIdx = rowIdx;
-	LCD_displayBuffer->colIdx = colIdx;
-	return 0;
-}
-
-int LCD_Buffer_getCursorRow(LCD_displayBuffer_t *LCD_displayBuffer)
-{
-	return LCD_displayBuffer->rowIdx;
-}
-
-int LCD_Buffer_getCursorCol(LCD_displayBuffer_t *LCD_displayBuffer)
-{
-	return LCD_displayBuffer->colIdx;
-}
-
 /**
  * @brief Write an ASCII char to a pre-defined position of the
  * LCD display.
@@ -271,14 +253,14 @@ int LCD_Buffer_getCursorCol(LCD_displayBuffer_t *LCD_displayBuffer)
  * @param ASCII_char
  * @return int
  */
-int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII_char)
+int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII_char, uint8_t rowIdx, uint8_t colIdx)
 {
 	// Get char from library
 	LCD_Char_t LCD_CharSel = findCorrespondingChar(ASCII_char); // Find ASCII in library
 
 	// Get current buffer cursor to start the char
-	uint8_t currRow = LCD_Buffer_getCursorRow(LCD_displayBuffer);
-	uint8_t currCol = LCD_Buffer_getCursorCol(LCD_displayBuffer);
+	uint8_t currRow = rowIdx;// LCD_Buffer_getCursorRow(LCD_displayBuffer);
+	uint8_t currCol = colIdx; //LCD_Buffer_getCursorCol(LCD_displayBuffer);
 
 	// Write ASCII to LCD Buffer
 	// ASCII char width is 'bitmap_total_bytes'

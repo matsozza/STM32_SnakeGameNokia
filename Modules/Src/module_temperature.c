@@ -81,10 +81,8 @@ static void _moduleTemperature_sendToLCD()
 		char readTempStr[5];
 		gcvt(readTempDoubleFil, 5, &readTempStr);
 
-		LCD_Buffer_setCursor(moduleTemperature_LCD_displayBuffer, 0, 78); // 83-5
-		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer,'C');
-		LCD_Buffer_setCursor(moduleTemperature_LCD_displayBuffer, 0, 74); // 83-5-4
-		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer,'º');
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer,'C',0,78);
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer,'º',0,74);
 		
 		uint8_t currColIdx = 74;
 		for(int8_t idx=3; idx>=0; idx--)
@@ -96,10 +94,9 @@ static void _moduleTemperature_sendToLCD()
 			{
 				// Set cursor to correct column
 				currColIdx-= char2Write.bitmap_total_bytes;
-				LCD_Buffer_setCursor(moduleTemperature_LCD_displayBuffer,0,currColIdx);
 
 				//Print corresponding character
-				LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer,readTempStr[idx]);
+				LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer,readTempStr[idx],0,currColIdx);
 			}
 		}
 	}
