@@ -52,6 +52,9 @@
 osPoolId mPoolUSART2Handle;
 osPoolId mPoolLCDHandle;
 
+// Common IOs / interfaces for RTOS
+extern LCD_displayBuffer_t *LCD_displayBuffer01;
+
 /* USER CODE END Variables */
 osThreadId task100msHandle;
 osThreadId task500msHandle;
@@ -173,12 +176,11 @@ void startTask100ms(void const *argument)
 	/* USER CODE BEGIN startTask100ms */
 	/* Infinite loop */
 	volatile uint8_t taskCounts = 0;
-	extern LCD_displayBuffer_t *LCD_displayBuffer01;
 	for (;;)
 	{
 		// Task activities
 		USART2_addToQueue("100ms Task!\n\r");
-		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin); // Blink LED2 at task time
 
 		moduleSnake_runTask(LCD_displayBuffer01,1);
 		moduleSnake_autoPlay();
@@ -206,13 +208,13 @@ void startTask500ms(void const *argument)
 	/* USER CODE BEGIN startTask500ms */
 
 	int a=0; 
-	extern LCD_displayBuffer_t *LCD_displayBuffer01;
+
 	/* Infinite loop */
 	for (;;)
 	{
 		// Task activities
 		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-		USART2_addToQueue("500ms Task!\n\r");
+		USART2_addToQueue("500ms Task!\n\r"); // Blink LED1 at task time
 
 		if(a)
 		{
@@ -258,7 +260,7 @@ void startTask500ms(void const *argument)
 			a=1;
 		}
 
-		moduleTemperature_runTask(1);
+		moduleTemperature_runTask(LCD_displayBuffer01,1);
 
 		//LCD_Buffer_sendToQueue(LCD_displayBuffer01); // TODO uncomment when full queue bug is fixed
 		osThreadSuspend(task500msHandle);

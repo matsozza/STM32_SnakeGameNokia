@@ -12,6 +12,10 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "service_tempSensor.h"
+#include "service_lcd.h"
+#include "service_lcd_fonts.h"
+#include <stdlib.h>
+#include <string.h>
 
 /* Defines ------------------------------------------------------------------*/
 
@@ -25,6 +29,6 @@ enum moduleTemperatureState_e
 };
 
 /* Function prototypes -------------------------------------------------------*/
-void moduleTemperature_runTask(uint8_t Activate);
+void moduleTemperature_runTask(LCD_displayBuffer_t *LCD_displayBuffer,uint8_t Activate);
 
 #endif /* INC_CORE_MODULE_TEMPERATURE_H_ */

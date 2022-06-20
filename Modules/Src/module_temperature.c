@@ -10,28 +10,23 @@
 
 /* Private includes ----------------------------------------------------------*/
 #include "module_temperature.h"
-#include "service_tempSensor.h"
-#include "service_lcd.h"
-#include "service_lcd_fonts.h"
-#include <stdlib.h>
-#include <string.h>
 
 /* External variables includes -----------------------------------------------*/
-extern LCD_displayBuffer_t *LCD_displayBuffer01;
 
 /* Internal variables includes -----------------------------------------------*/
 enum moduleTemperatureState_e moduleTemperatureState = MODTEMP_NOT_INIT;
+LCD_displayBuffer_t *moduleTemperature_LCD_displayBuffer;
 
 /* Internal functions includes -----------------------------------------------*/
 static void _moduleTemperature_stateTransition(uint8_t Activate);
-static void _moduleTemperature_stateFunction();
+static void _moduleTemperature_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer);
 static void _moduleTemperature_sendToLCD();
 
 /* Functions implementation --------------------------------------------------*/
-void moduleTemperature_runTask(uint8_t Activate)
+void moduleTemperature_runTask(LCD_displayBuffer_t *LCD_displayBuffer,uint8_t Activate)
 {
 	// State-machine instructions
-	_moduleTemperature_stateFunction();
+	_moduleTemperature_stateFunction(LCD_displayBuffer);
 
 	// State-machine transitions
 	_moduleTemperature_stateTransition(Activate);
@@ -53,12 +48,13 @@ static void _moduleTemperature_stateTransition(uint8_t Activate)
 	}
 }
 
-static void _moduleTemperature_stateFunction()
+static void _moduleTemperature_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer)
 {
 	
 	if(moduleTemperatureState == MODTEMP_NOT_INIT)
 	{
 		tempSensor_init();
+		moduleTemperature_LCD_displayBuffer = LCD_displayBuffer;
 	}
 	else if(moduleTemperatureState == MODTEMP_INIT_STOPPED)
 	{
@@ -85,10 +81,10 @@ static void _moduleTemperature_sendToLCD()
 		char readTempStr[5];
 		gcvt(readTempDoubleFil, 5, &readTempStr);
 
-		LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 78); // 83-5
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01,'C');
-		LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 74); // 83-5-4
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01,'º');
+		LCD_Buffer_setCursor(moduleTemperature_LCD_displayBuffer, 0, 78); // 83-5
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer,'C');
+		LCD_Buffer_setCursor(moduleTemperature_LCD_displayBuffer, 0, 74); // 83-5-4
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer,'º');
 		
 		uint8_t currColIdx = 74;
 		for(int8_t idx=3; idx>=0; idx--)
@@ -100,10 +96,10 @@ static void _moduleTemperature_sendToLCD()
 			{
 				// Set cursor to correct column
 				currColIdx-= char2Write.bitmap_total_bytes;
-				LCD_Buffer_setCursor(LCD_displayBuffer01,0,currColIdx);
+				LCD_Buffer_setCursor(moduleTemperature_LCD_displayBuffer,0,currColIdx);
 
 				//Print corresponding character
-				LCD_Buffer_writeASCIIChar(LCD_displayBuffer01,readTempStr[idx]);
+				LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer,readTempStr[idx]);
 			}
 		}
 	}
