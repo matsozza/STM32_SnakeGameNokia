@@ -49,6 +49,7 @@ LCD_displayBuffer_t* LCD_SPI_Cmd_initDisplay(LCD_displayBuffer_t *LCD_displayBuf
 
 // ***** LCD_Queue - MCU to LCD Queue (indirect communication)
 int LCD_Queue_addByte(uint8_t data, uint8_t DC);
+int LCD_Queue_checkIsFull();
 #define LCD_Queue_addCommand(cmd) LCD_Queue_addByte(cmd, 0);
 #define LCD_Queue_addData(cmd) LCD_Queue_addByte(cmd, 1);
 int LCD_Queue_consumeBytes();

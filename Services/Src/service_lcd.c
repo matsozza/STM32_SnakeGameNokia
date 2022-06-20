@@ -107,8 +107,13 @@ int LCD_Queue_addByte(uint8_t data, uint8_t DC)
 	LCD_dataPackage->dataByte = data; // set value
 	LCD_dataPackage->DC = DC;			 // set value
 	osMessagePut(queueLCDHandle, (uint32_t)LCD_dataPackage, 0);
-	
+
 	return 0;
+}
+
+int LCD_Queue_checkIsFull()
+{
+	return (int)(osMessageAvailableSpace(queueLCDHandle)==0);
 }
 
 int LCD_Queue_consumeBytes()
@@ -293,7 +298,6 @@ int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII
 
 int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 {
-	// TODO If queue is full, wait / abort (otherwise LCD Glitch is expected)
 	// Count the number of bytes in the LCD that need to be updated
 	uint16_t updateCounter = 0;
 	uint16_t consecCounter = 0;
@@ -329,14 +333,17 @@ int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 				}
 				else // If new data IS AVAILABLE in this position
 				{
-					uint8_t bufferByte = LCD_Buffer_getByte(LCD_displayBuffer, rowGroupIdx, colIdx, 1);
-					if(!updateConsecutive)
+					if(!LCD_Queue_checkIsFull()) // If queue is not full, add. Else, abort.
 					{
-						LCD_Queue_Cmd_setRowGroupIdx(rowGroupIdx,0);
-						LCD_Queue_Cmd_setColIdx(colIdx,1);
+						uint8_t bufferByte = LCD_Buffer_getByte(LCD_displayBuffer, rowGroupIdx, colIdx, 1);
+						if(!updateConsecutive)
+						{
+							LCD_Queue_Cmd_setRowGroupIdx(rowGroupIdx,0);
+							LCD_Queue_Cmd_setColIdx(colIdx,1);
+						}
+						LCD_Queue_addData(bufferByte);
+						updateConsecutive = 1;
 					}
-					LCD_Queue_addData(bufferByte);
-					updateConsecutive = 1;
 				}
 			}
 		}
@@ -352,8 +359,15 @@ int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 		{
 			for (uint8_t colIdx = 0; colIdx < 84; colIdx++) // LCD Cols: 84 pixels
 			{
-				uint8_t bufferByte = LCD_Buffer_getByte(LCD_displayBuffer, rowGroupIdx, colIdx, 1);
-				LCD_Queue_addData(bufferByte);
+				if(!LCD_Queue_checkIsFull()) // If queue is not full, add. Else, abort.
+				{
+					uint8_t bufferByte = LCD_Buffer_getByte(LCD_displayBuffer, rowGroupIdx, colIdx, 1);
+					LCD_Queue_addData(bufferByte);
+				}
+				else
+				{
+					return -1;	
+				}
 			}
 		}
 	}

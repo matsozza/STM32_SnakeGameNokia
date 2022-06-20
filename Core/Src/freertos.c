@@ -262,7 +262,7 @@ void startTask500ms(void const *argument)
 
 		moduleTemperature_runTask(LCD_displayBuffer01,1);
 
-		//LCD_Buffer_sendToQueue(LCD_displayBuffer01); // TODO uncomment when full queue bug is fixed
+		LCD_Buffer_sendToQueue(LCD_displayBuffer01);
 		osThreadSuspend(task500msHandle);
 	}
 	/* USER CODE END startTask500ms */
