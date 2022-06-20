@@ -11,9 +11,11 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "cmsis_os.h"
+#include "service_lcd.h"
+#include "service_randomGen.h"
+#include <stdlib.h>
 
 /* Defines ------------------------------------------------------------------*/
-
 
 /* Typedef declare -----------------------------------------------------------*/
 enum moduleSnakeState_e
@@ -50,24 +52,7 @@ typedef struct{
 
 
 /* Function prototypes -------------------------------------------------------*/
-void moduleSnake_runTask(uint8_t Activate);
-
-void _moduleSnake_initGame();
-void _moduleSnake_runGame();
-
-void _IO_sendToLCD();
-
-void _snake_initSnakeObj();
-void _snake_updateSnakePos();
-void _snake_printSnakeToBoard();
-void _snake_changeDirection(enum direction_e newDir);
-
-void _food_initFoodObj();
-void _food_updateFood();
-void _food_printFoodToBoard();
-
-void _board_initLayers();
-void _board_setPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t pixelVal, uint8_t boardLayer);
-uint8_t _board_getPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer);
+void moduleSnake_runTask(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t Activate);
+void moduleSnake_autoPlay();
 
 #endif /* INC_CORE_MODULE_SNAKE_H_ */

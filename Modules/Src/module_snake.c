@@ -21,14 +21,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 #include "module_snake.h"
-#include "service_lcd.h"
-#include "service_randomGen.h"
-#include <stdlib.h>
 
 /* External variables includes -----------------------------------------------*/
-extern LCD_displayBuffer_t *LCD_displayBuffer01;
 
 /* Internal variables includes -----------------------------------------------*/
+LCD_displayBuffer_t *moduleSnake_LCD_displayBuffer;
 enum moduleSnakeState_e moduleSnakeState = MODSNAKE_NOT_INIT;
 snakeObj_t snakeObj;
 foodObj_t foodObj;
@@ -36,17 +33,62 @@ uint8_t boardPixels[5][84][3];
 
 /* Internal functions includes -----------------------------------------------*/
 void _moduleSnake_stateTransition(uint8_t Activate);
-void _moduleSnake_stateFunction();
+void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer);
+
+void _moduleSnake_initGame(LCD_displayBuffer_t *LCD_displayBuffer);
+void _moduleSnake_runGame();
+
+void _IO_sendToLCD();
+
+void _snake_initSnakeObj();
+void _snake_updateSnakePos();
+void _snake_printSnakeToBoard();
+void _snake_changeDirection(enum direction_e newDir);
+
+void _food_initFoodObj();
+void _food_updateFood();
+void _food_printFoodToBoard();
+
+void _board_initLayers();
+void _board_setPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t pixelVal, uint8_t boardLayer);
+uint8_t _board_getPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer);
 
 /* Functions implementation --------------------------------------------------*/
-void moduleSnake_runTask(uint8_t Activate)
+void moduleSnake_runTask(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t Activate)
 {
 	// State-machine instructions
-	_moduleSnake_stateFunction();
+	_moduleSnake_stateFunction(LCD_displayBuffer);
 
 	// State-machine transitions
 	_moduleSnake_stateTransition(Activate);
+}
 
+void moduleSnake_autoPlay()
+{
+		//Simple logic to pursuit food
+		uint8_t foodRow = foodObj.foodComponent[0].posRow;
+		uint8_t foodCol = foodObj.foodComponent[0].posCol;
+		uint8_t snakeRow = snakeObj.bodyComponent[0].posRow;
+		uint8_t snakeCol = snakeObj.bodyComponent[0].posCol;
+		if (foodRow < snakeRow)
+		{
+			_snake_changeDirection(UP);
+		}
+		else if (foodRow > snakeRow)
+		{
+			_snake_changeDirection(DOWN);
+		}
+		else
+		{
+			if (foodCol < snakeCol)
+			{
+				_snake_changeDirection(LEFT);
+			}
+			else if (foodCol > snakeCol)
+			{
+				_snake_changeDirection(RIGHT);
+			}
+		}
 }
 
 void _moduleSnake_stateTransition(uint8_t Activate)
@@ -65,7 +107,7 @@ void _moduleSnake_stateTransition(uint8_t Activate)
 	}
 }
 
-void _moduleSnake_stateFunction()
+void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer)
 {
 	if(moduleSnakeState == MODSNAKE_NOT_INIT)
 	{
@@ -73,7 +115,7 @@ void _moduleSnake_stateFunction()
 	}
 	else if(moduleSnakeState == MODSNAKE_INIT_STOPPED)
 	{
-		_moduleSnake_initGame();
+		_moduleSnake_initGame(LCD_displayBuffer);
 	}
 	else if(moduleSnakeState == MODSNAKE_INIT_RUNNING)
 	{
@@ -81,8 +123,9 @@ void _moduleSnake_stateFunction()
 	}
 }
 
-void _moduleSnake_initGame()
+void _moduleSnake_initGame(LCD_displayBuffer_t *LCD_displayBuffer)
 {
+	moduleSnake_LCD_displayBuffer = LCD_displayBuffer;
 	_snake_initSnakeObj();
 	_food_initFoodObj();
 	_board_initLayers();
@@ -114,15 +157,11 @@ void _IO_sendToLCD()
 
 			if (layer0 || layer1 || layer2)
 			{
-				(void)LCD_Buffer_setPixel(LCD_displayBuffer01, rowIdx+8, colIdx, 1);
-			}
-			else if ((layer0 || layer1 || layer2) && rowIdx == 24 && colIdx == 3)
-			{
-				(void)LCD_Buffer_setPixel(LCD_displayBuffer01, rowIdx+8, colIdx, 1);
+				(void)LCD_Buffer_setPixel(moduleSnake_LCD_displayBuffer, rowIdx+8, colIdx, 1);
 			}
 			else if (!layer0 && !layer1 && !layer2)
 			{
-				(void)LCD_Buffer_setPixel(LCD_displayBuffer01, rowIdx+8, colIdx, 0);
+				(void)LCD_Buffer_setPixel(moduleSnake_LCD_displayBuffer, rowIdx+8, colIdx, 0);
 			}
 		}
 	}

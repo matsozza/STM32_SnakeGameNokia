@@ -48,8 +48,10 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
+
 osPoolId mPoolUSART2Handle;
 osPoolId mPoolLCDHandle;
+
 /* USER CODE END Variables */
 osThreadId task100msHandle;
 osThreadId task500msHandle;
@@ -172,45 +174,14 @@ void startTask100ms(void const *argument)
 	/* Infinite loop */
 	volatile uint8_t taskCounts = 0;
 	extern LCD_displayBuffer_t *LCD_displayBuffer01;
-	extern snakeObj_t snakeObj;
-	extern foodObj_t foodObj;
-
-	//_moduleSnake_initGame();
-
 	for (;;)
 	{
 		// Task activities
 		USART2_addToQueue("100ms Task!\n\r");
 		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
 
-
-		//_moduleSnake_runGame();
-		moduleSnake_runTask(1);
-
-		//Simple logic to pursuit food
-		uint8_t foodRow = foodObj.foodComponent[0].posRow;
-		uint8_t foodCol = foodObj.foodComponent[0].posCol;
-		uint8_t snakeRow = snakeObj.bodyComponent[0].posRow;
-		uint8_t snakeCol = snakeObj.bodyComponent[0].posCol;
-		if (foodRow < snakeRow)
-		{
-			_snake_changeDirection(UP);
-		}
-		else if (foodRow > snakeRow)
-		{
-			_snake_changeDirection(DOWN);
-		}
-		else
-		{
-			if (foodCol < snakeCol)
-			{
-				_snake_changeDirection(LEFT);
-			}
-			else if (foodCol > snakeCol)
-			{
-				_snake_changeDirection(RIGHT);
-			}
-		}
+		moduleSnake_runTask(LCD_displayBuffer01,1);
+		moduleSnake_autoPlay();
 
 		LCD_Buffer_sendToQueue(LCD_displayBuffer01);
 
@@ -233,10 +204,9 @@ void startTask100ms(void const *argument)
 void startTask500ms(void const *argument)
 {
 	/* USER CODE BEGIN startTask500ms */
-	extern LCD_displayBuffer_t *LCD_displayBuffer01;
 
 	int a=0; 
-
+	extern LCD_displayBuffer_t *LCD_displayBuffer01;
 	/* Infinite loop */
 	for (;;)
 	{
