@@ -72,39 +72,41 @@ static void _moduleTemperature_stateFunction()
 
 static void _moduleTemperature_sendToLCD()
 {
-	if(!tempSensor_checkForData()){
-		return;
-	}
+	static double readTempDoubleFil = -255;
 
-	double readTempDouble = tempSensor_getTempValue();
-	char readTempStr[5];
-	gcvt(readTempDouble, 5, &readTempStr);
-
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 78); // 83-5
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01,'C');
-	LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 74); // 83-5-4
-	LCD_Buffer_writeASCIIChar(LCD_displayBuffer01,'º');
-	
-	uint8_t currColIdx = 76;
-
-	for(int8_t idx=3; idx>=0; idx--)
+	if(tempSensor_checkForData())
 	{
-		LCD_Char_t char2Write = findCorrespondingChar(readTempStr[idx]);
-	
-		// If found, print the character (ignore the '?')
-		if(char2Write.ASCII_Char != '?')
+		double readTempDouble = tempSensor_getTempValue();
+
+		// Filter the temperature values
+		readTempDoubleFil = (readTempDoubleFil==-255)? readTempDouble : 0.95*readTempDoubleFil + 0.05*readTempDouble;
+
+		// Create a string to print
+		char readTempStr[5];
+		gcvt(readTempDoubleFil, 5, &readTempStr);
+
+		LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 78); // 83-5
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01,'C');
+		LCD_Buffer_setCursor(LCD_displayBuffer01, 0, 74); // 83-5-4
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01,'º');
+		
+		uint8_t currColIdx = 74;
+		for(int8_t idx=3; idx>=0; idx--)
 		{
-			// Set cursor to correct column
-			currColIdx-= char2Write.bitmap_total_bytes;
-			LCD_Buffer_setCursor(LCD_displayBuffer01,0,currColIdx);
+			LCD_Char_t char2Write = findCorrespondingChar(readTempStr[idx]);
+		
+			// If found, print the character (ignore the '?' chars)
+			if(char2Write.ASCII_Char != '?')
+			{
+				// Set cursor to correct column
+				currColIdx-= char2Write.bitmap_total_bytes;
+				LCD_Buffer_setCursor(LCD_displayBuffer01,0,currColIdx);
 
-			//Print corresponding character
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01,readTempStr[idx]);
+				//Print corresponding character
+				LCD_Buffer_writeASCIIChar(LCD_displayBuffer01,readTempStr[idx]);
+			}
 		}
-
 	}
-	
-	
 }
 
 

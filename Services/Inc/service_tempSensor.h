@@ -31,7 +31,7 @@
 
 //Get converted value stored in the temp. snsr
 #define tempSensor_getTempValue() { \
-(double)tempSensor_getRawValue() * \
+(double)tempSensor_getRawValue() * 0.96* \
 (double)CONV_SLOPE + (double)CONV_LINCOFF} 
 
 /* Typedef declare -----------------------------------------------------------*/
