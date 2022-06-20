@@ -175,7 +175,7 @@ void startTask100ms(void const *argument)
 	extern snakeObj_t snakeObj;
 	extern foodObj_t foodObj;
 
-	moduleSnake_initGame();
+	//_moduleSnake_initGame();
 
 	for (;;)
 	{
@@ -184,7 +184,8 @@ void startTask100ms(void const *argument)
 		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
 
 
-		moduleSnake_runGame();
+		//_moduleSnake_runGame();
+		moduleSnake_runTask(1);
 
 		//Simple logic to pursuit food
 		uint8_t foodRow = foodObj.foodComponent[0].posRow;
@@ -193,21 +194,21 @@ void startTask100ms(void const *argument)
 		uint8_t snakeCol = snakeObj.bodyComponent[0].posCol;
 		if (foodRow < snakeRow)
 		{
-			snake_changeDirection(UP);
+			_snake_changeDirection(UP);
 		}
 		else if (foodRow > snakeRow)
 		{
-			snake_changeDirection(DOWN);
+			_snake_changeDirection(DOWN);
 		}
 		else
 		{
 			if (foodCol < snakeCol)
 			{
-				snake_changeDirection(LEFT);
+				_snake_changeDirection(LEFT);
 			}
 			else if (foodCol > snakeCol)
 			{
-				snake_changeDirection(RIGHT);
+				_snake_changeDirection(RIGHT);
 			}
 		}
 

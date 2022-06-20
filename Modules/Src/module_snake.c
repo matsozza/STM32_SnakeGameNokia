@@ -29,34 +29,78 @@
 extern LCD_displayBuffer_t *LCD_displayBuffer01;
 
 /* Internal variables includes -----------------------------------------------*/
+enum moduleSnakeState_e moduleSnakeState = MODSNAKE_NOT_INIT;
 snakeObj_t snakeObj;
 foodObj_t foodObj;
 uint8_t boardPixels[5][84][3];
 
+/* Internal functions includes -----------------------------------------------*/
+void _moduleSnake_stateTransition(uint8_t Activate);
+void _moduleSnake_stateFunction();
+
 /* Functions implementation --------------------------------------------------*/
-void moduleSnake_initGame()
+void moduleSnake_runTask(uint8_t Activate)
 {
-	snake_initSnakeObj();
-	
-	food_initFoodObj();
+	// State-machine instructions
+	_moduleSnake_stateFunction();
 
-	board_initLayers();
+	// State-machine transitions
+	_moduleSnake_stateTransition(Activate);
 
-	IO_sendToLCD();
 }
 
-void moduleSnake_runGame()
+void _moduleSnake_stateTransition(uint8_t Activate)
 {
-	food_updateFood();
-	food_printFoodToBoard();
-
-	snake_updateSnakePos();
-	snake_printSnakeToBoard();
-
-	IO_sendToLCD();
+	if(Activate && moduleSnakeState == MODSNAKE_NOT_INIT)
+	{
+		moduleSnakeState = MODSNAKE_INIT_STOPPED;
+	}
+	else if(Activate && moduleSnakeState == MODSNAKE_INIT_STOPPED)
+	{
+		moduleSnakeState = MODSNAKE_INIT_RUNNING;
+	}
+	else if(!Activate && moduleSnakeState == MODSNAKE_INIT_RUNNING)
+	{
+		moduleSnakeState = MODSNAKE_INIT_STOPPED;
+	}
 }
 
-void IO_sendToLCD()
+void _moduleSnake_stateFunction()
+{
+	if(moduleSnakeState == MODSNAKE_NOT_INIT)
+	{
+		// Empty
+	}
+	else if(moduleSnakeState == MODSNAKE_INIT_STOPPED)
+	{
+		_moduleSnake_initGame();
+	}
+	else if(moduleSnakeState == MODSNAKE_INIT_RUNNING)
+	{
+		_moduleSnake_runGame();
+	}
+}
+
+void _moduleSnake_initGame()
+{
+	_snake_initSnakeObj();
+	_food_initFoodObj();
+	_board_initLayers();
+	_IO_sendToLCD();
+}
+
+void _moduleSnake_runGame()
+{
+	_food_updateFood();
+	_food_printFoodToBoard();
+
+	_snake_updateSnakePos();
+	_snake_printSnakeToBoard();
+
+	_IO_sendToLCD();
+}
+
+void _IO_sendToLCD()
 {
 	// Print all the pixels related to the board
 	for (uint8_t rowIdx = 0; rowIdx < 40; rowIdx++)
@@ -64,9 +108,9 @@ void IO_sendToLCD()
 		for (uint8_t colIdx = 0; colIdx < 84; colIdx++)
 		{
 			// Print data according to layers hierarchy
-			uint8_t layer0 = board_getPixel(rowIdx, colIdx, 0);
-			uint8_t layer1 = board_getPixel(rowIdx, colIdx, 1);
-			uint8_t layer2 = board_getPixel(rowIdx, colIdx, 2);
+			uint8_t layer0 = _board_getPixel(rowIdx, colIdx, 0);
+			uint8_t layer1 = _board_getPixel(rowIdx, colIdx, 1);
+			uint8_t layer2 = _board_getPixel(rowIdx, colIdx, 2);
 
 			if (layer0 || layer1 || layer2)
 			{
@@ -86,7 +130,7 @@ void IO_sendToLCD()
 	return;
 }
 
-void snake_initSnakeObj()
+void _snake_initSnakeObj()
 {
 	snakeObj.size = 7; // Start size
 	snakeObj.bodyComponent[0].posRow = 20;
@@ -96,7 +140,7 @@ void snake_initSnakeObj()
 	snakeObj.movementDir = DOWN; // First movement 
 }
 
-void snake_updateSnakePos()
+void _snake_updateSnakePos()
 {
 	//Set snake head movement
 	boardPos_t prevSnakeHeadPos = snakeObj.bodyComponent[0];
@@ -143,7 +187,7 @@ void snake_updateSnakePos()
 	}
 }
 
-void snake_printSnakeToBoard()
+void _snake_printSnakeToBoard()
 {
 	// Clear all pixels from snake layer
 	for (int rowGroupIdx = 0; rowGroupIdx < 5; rowGroupIdx++)
@@ -162,33 +206,33 @@ void snake_printSnakeToBoard()
 		uint8_t colIdx = snakeObj.bodyComponent[idxSize].posCol;
 
 		// Layer 0 - Snake Layer - Snake "Core"
-		board_setPixel(rowIdx, colIdx, 1, 0); 
+		_board_setPixel(rowIdx, colIdx, 1, 0); 
 
 		// Layer 0 - Snake Layer - Snake "Thick Contours"
-		board_setPixel(rowIdx+1, colIdx, 1, 0);
-		board_setPixel(rowIdx-1, colIdx, 1, 0);
-		board_setPixel(rowIdx, colIdx+1, 1, 0);
-		board_setPixel(rowIdx, colIdx-1, 1, 0);
+		_board_setPixel(rowIdx+1, colIdx, 1, 0);
+		_board_setPixel(rowIdx-1, colIdx, 1, 0);
+		_board_setPixel(rowIdx, colIdx+1, 1, 0);
+		_board_setPixel(rowIdx, colIdx-1, 1, 0);
 		
-		board_setPixel(rowIdx-1, colIdx-1, 1, 0);
-		board_setPixel(rowIdx+1, colIdx-1, 1, 0);
-		board_setPixel(rowIdx-1, colIdx+1, 1, 0);
-		board_setPixel(rowIdx+1, colIdx+1, 1, 0);
+		_board_setPixel(rowIdx-1, colIdx-1, 1, 0);
+		_board_setPixel(rowIdx+1, colIdx-1, 1, 0);
+		_board_setPixel(rowIdx-1, colIdx+1, 1, 0);
+		_board_setPixel(rowIdx+1, colIdx+1, 1, 0);
 
 	}
 }
 
-void snake_changeDirection(enum direction newDir)
+void _snake_changeDirection(enum direction_e newDir)
 {
 	snakeObj.movementDir = newDir;
 }
 
-void food_initFoodObj()
+void _food_initFoodObj()
 {
 	foodObj.numFood = 0;
 }
 
-void food_updateFood()
+void _food_updateFood()
 {
 	// Check if food shall be 'eaten'
 	uint8_t foodRow = foodObj.foodComponent[0].posRow;
@@ -224,7 +268,7 @@ void food_updateFood()
 	}
 }
 
-void food_printFoodToBoard()
+void _food_printFoodToBoard()
 {
 	// Clear all pixels from food layer (1)
 	for (int rowGroupIdx = 0; rowGroupIdx < 5; rowGroupIdx++)
@@ -243,14 +287,14 @@ void food_printFoodToBoard()
 		uint8_t colIdx = foodObj.foodComponent[idxFood].posCol;
 
 		// Layer 1 - Food Layer - Food Shape
-		board_setPixel(rowIdx + 1, colIdx, 1, 1);
-		board_setPixel(rowIdx - 1, colIdx, 1, 1);
-		board_setPixel(rowIdx, colIdx + 1, 1, 1);
-		board_setPixel(rowIdx, colIdx - 1, 1, 1);
+		_board_setPixel(rowIdx + 1, colIdx, 1, 1);
+		_board_setPixel(rowIdx - 1, colIdx, 1, 1);
+		_board_setPixel(rowIdx, colIdx + 1, 1, 1);
+		_board_setPixel(rowIdx, colIdx - 1, 1, 1);
 	}
 }
 
-void board_initLayers()
+void _board_initLayers()
 {
 	// Clear all layers data
 	for (uint8_t rowGroupIdx = 0; rowGroupIdx < 5; rowGroupIdx++)
@@ -280,7 +324,7 @@ void board_initLayers()
 	}
 }
 
-void board_setPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t pixelVal, uint8_t boardLayer)
+void _board_setPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t pixelVal, uint8_t boardLayer)
 {
 	uint8_t rowGroupIdx = (uint8_t)(rowIdx / 8); // 'major' row of board - skip first display rowGroup
 	uint8_t rowPixelIdx = (uint8_t)(rowIdx % 8); // 'minor' row of board
@@ -296,7 +340,7 @@ void board_setPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t pixelVal, uint8_t bo
 	}
 }
 
-uint8_t board_getPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer)
+uint8_t _board_getPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer)
 {
 	uint8_t rowGroupIdx = (uint8_t)(rowIdx / 8); // 'major' row
 	uint8_t rowPixelIdx = (uint8_t)(rowIdx % 8); // 'minor' row

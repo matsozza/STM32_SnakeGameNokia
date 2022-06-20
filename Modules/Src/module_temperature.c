@@ -20,7 +20,7 @@
 extern LCD_displayBuffer_t *LCD_displayBuffer01;
 
 /* Internal variables includes -----------------------------------------------*/
-enum moduleTemperatureState_e moduleTemperatureState = NOT_INIT;
+enum moduleTemperatureState_e moduleTemperatureState = MODTEMP_NOT_INIT;
 
 /* Internal functions includes -----------------------------------------------*/
 static void _moduleTemperature_stateTransition(uint8_t Activate);
@@ -39,32 +39,32 @@ void moduleTemperature_runTask(uint8_t Activate)
 
 static void _moduleTemperature_stateTransition(uint8_t Activate)
 {
-	if(Activate && moduleTemperatureState == NOT_INIT)
+	if(Activate && moduleTemperatureState == MODTEMP_NOT_INIT)
 	{
-		moduleTemperatureState = INIT_RUNNING;
+		moduleTemperatureState = MODTEMP_INIT_RUNNING;
 	}
-	else if(Activate && moduleTemperatureState == INIT_STOPPED)
+	else if(Activate && moduleTemperatureState == MODTEMP_INIT_STOPPED)
 	{
-		moduleTemperatureState = INIT_RUNNING;
+		moduleTemperatureState = MODTEMP_INIT_RUNNING;
 	}
-	else if(!Activate && moduleTemperatureState == INIT_RUNNING)
+	else if(!Activate && moduleTemperatureState == MODTEMP_INIT_RUNNING)
 	{
-		moduleTemperatureState = INIT_STOPPED;
+		moduleTemperatureState = MODTEMP_INIT_STOPPED;
 	}
 }
 
 static void _moduleTemperature_stateFunction()
 {
 	
-	if(moduleTemperatureState == NOT_INIT)
+	if(moduleTemperatureState == MODTEMP_NOT_INIT)
 	{
 		tempSensor_init();
 	}
-	else if(moduleTemperatureState == INIT_STOPPED)
+	else if(moduleTemperatureState == MODTEMP_INIT_STOPPED)
 	{
 		//Empty
 	}
-	else if(moduleTemperatureState == INIT_RUNNING)
+	else if(moduleTemperatureState == MODTEMP_INIT_RUNNING)
 	{
 		_moduleTemperature_sendToLCD();
 	}

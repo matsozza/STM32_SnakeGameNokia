@@ -19,9 +19,9 @@
 /* Typedef declare -----------------------------------------------------------*/
 enum moduleTemperatureState_e
 {
-    NOT_INIT,
-    INIT_STOPPED,
-    INIT_RUNNING
+    MODTEMP_NOT_INIT,
+    MODTEMP_INIT_STOPPED,
+    MODTEMP_INIT_RUNNING
 };
 
 /* Function prototypes -------------------------------------------------------*/
