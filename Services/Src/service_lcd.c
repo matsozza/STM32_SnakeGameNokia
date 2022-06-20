@@ -21,7 +21,6 @@ extern osMessageQId queueLCDHandle;
 extern osPoolId mPoolLCDHandle;
 
 /* Internal variables includes -----------------------------------------------*/
-//add LCD queue
 LCD_displayBuffer_t *LCD_displayBuffer01;
 
 /* Functions implementation --------------------------------------------------*/
@@ -94,7 +93,7 @@ LCD_displayBuffer_t* LCD_SPI_Cmd_initDisplay(LCD_displayBuffer_t *LCD_displayBuf
 	// Set all update flags to perform a first clear of the display
 	for (uint8_t idx = 0; idx < 84;idx++)
 	{
-		LCD_displayBuffer01->updateStatus[idx] = 0xFC;
+		LCD_displayBuffer01->updateStatus[idx] = 0x3F;
 	}
 
 	return LCD_displayBuffer01;
@@ -157,19 +156,18 @@ int LCD_Buffer_setPixel(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, 
 	uint8_t rowPixelIdx = (uint8_t)rowIdx % 8; // 'minor' row
 
 	// Check if there's any change in the value before setting / clearing
-	//uint8_t	currVal = (LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx)) >> 7);
-	uint8_t currVal = (LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] >> (7-rowPixelIdx)) & (0b1);
+	uint8_t currVal = (LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] >> (rowPixelIdx)) & (0b1);
 
 	if (currVal != val)
 	{
 		// Set or clear value in the 'displayMatrix' LCD Buffer
 		if (val)
 		{
-			LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] |= (1 << (7 - rowPixelIdx));
+			LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] |= (1 << (rowPixelIdx));
 		}
 		else
 		{
-			LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] &= ~((uint8_t)(1 << (7 - rowPixelIdx)));
+			LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] &= ~((uint8_t)(1 << (rowPixelIdx)));
 		}
 
 		// Set the 'updateStatus' position
@@ -189,12 +187,9 @@ int LCD_Buffer_getPixel(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, 
 	{
 		uint8_t rowGroupIdx = rowIdx / 8;
 		LCD_Buffer_setUpdateStatus(LCD_displayBuffer, rowGroupIdx, colIdx, 0); //Clear updt Flg
-		return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1<<(7-rowPixelIdx)); // Return value
 	}
-	else
-	{
-		return LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (7 - rowPixelIdx)); // Just return data at the req. position ('peek')
-	}
+
+	return (int)((LCD_displayBuffer->displayMatrix[rowGroupIdx][colIdx] & (1 << (rowPixelIdx)))>0); // Return value
 }
 
 int LCD_Buffer_setByte(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx, uint8_t val)
@@ -231,20 +226,21 @@ int LCD_Buffer_setUpdateStatus(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t r
 {
 	if(val) // Set
 	{
-		LCD_displayBuffer->updateStatus[colIdx] |= (1 << (7 - rowGroupIdx));
+		LCD_displayBuffer->updateStatus[colIdx] |= (1 << (rowGroupIdx));
 	}
 	else // Clear
 	{
-		LCD_displayBuffer->updateStatus[colIdx] &= ~((uint8_t)(1 << (7 - rowGroupIdx)));
+		LCD_displayBuffer->updateStatus[colIdx] &= ~((uint8_t)(1 << (rowGroupIdx)));
 	}
 
 	return 0;
 }
 
 int LCD_Buffer_getUpdateStatus(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowGroupIdx, uint8_t colIdx){
-	return ((LCD_displayBuffer->updateStatus[colIdx] >> (7 - rowGroupIdx)) && 0b1);
+	return ((LCD_displayBuffer->updateStatus[colIdx] >> (rowGroupIdx)) && 0b1);
 }
 
+// TODO eliminate buffer 'cursor' operations, make atomic functions
 int LCD_Buffer_setCursor(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t rowIdx, uint8_t colIdx)
 {
 	LCD_displayBuffer->rowIdx = rowIdx;
@@ -287,7 +283,7 @@ int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII
 		// ASCII lib. char height is 8
 		for (int rowIdx = 0; rowIdx < 8; rowIdx++)
 		{
-			uint8_t bitValue = (uint8_t)((LCD_CharSel.bitmap[colIdx] >> (7 - rowIdx)) & 0b1);
+			uint8_t bitValue = (uint8_t)((LCD_CharSel.bitmap[colIdx] >> (rowIdx)) & 0b1);
 			LCD_Buffer_setPixel(LCD_displayBuffer, currRow + rowIdx, currCol + colIdx, bitValue);
 		}
 	}
@@ -297,6 +293,7 @@ int LCD_Buffer_writeASCIIChar(LCD_displayBuffer_t *LCD_displayBuffer, char ASCII
 
 int LCD_Buffer_sendToQueue(LCD_displayBuffer_t *LCD_displayBuffer)
 {
+	// TODO If queue is full, wait / abort (otherwise LCD Glitch is expected)
 	// Count the number of bytes in the LCD that need to be updated
 	uint16_t updateCounter = 0;
 	uint16_t consecCounter = 0;

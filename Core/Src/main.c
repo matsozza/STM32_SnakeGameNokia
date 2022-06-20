@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "adc.h"
 #include "spi.h"
 #include "usart.h"
 #include "gpio.h"
@@ -87,12 +88,13 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_SPI1_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
   // ***** SEGGER SystemView configuration *****
   DWT->CTRL |= (1<<0); //Start CYCCNT for timestamp counting (Sozza)
-  SEGGER_SYSVIEW_Conf();
-  SEGGER_SYSVIEW_Start();
+  //SEGGER_SYSVIEW_Conf();
+  //SEGGER_SYSVIEW_Start();
 
   // ***** LCD Start-up routine *****
   extern LCD_displayBuffer_t *LCD_displayBuffer01;
