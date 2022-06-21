@@ -82,7 +82,7 @@ static void _moduleTemperature_sendToLCD()
 		gcvt(readTempDoubleFil, 5, &readTempStr);
 
 		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer,'C',0,78);
-		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer,'º',0,74);
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer,(char)'º',0,74);
 		
 		uint8_t currColIdx = 74;
 		for(int8_t idx=3; idx>=0; idx--)
