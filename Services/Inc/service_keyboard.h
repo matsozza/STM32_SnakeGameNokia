@@ -22,22 +22,18 @@
 
 /* Defines -------------------------------------------------------------------*/
 
-// EXTKEYBOARD_PIN0 PB8
-// EXTKEYBOARD_PIN1 PB6
-// EXTKEYBOARD_PIN2 PB4
-// EXTKEYBOARD_PIN3 PG15
-// EXTKEYBOARD_PIN4 PG13
-// EXTKEYBOARD_PIN5 PG11
-// EXTKEYBOARD_PIN6 PG9
-// EXTKEYBOARD_PIN7 PD6
-
-
 /* Typedef declare -----------------------------------------------------------*/
-
+typedef struct{
+    char inputKey;
+    uint8_t input_UID;
+} serviceKeyboardInput_t;
 
 /* Function prototypes -------------------------------------------------------*/
-void serviceKeyboard_configPins_getRow();
-void serviceKeyboard_configPins_getCol();
+char serviceKeyboard_lookUpValue();
+void serviceKeyboard_getGroundedCol();
+void serviceKeyboard_getGroundedRow(uint16_t GPIO_Pin);
+void serviceKeyboard_configPins_rowsAsInputs();
+void serviceKeyboard_configPins_colsAsInputs();
 
 #endif /* INC_CORE_SERVICES_KEYBOARD_H_ */
 
