@@ -8,6 +8,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 #include "service_keyboard.h"
+#include "service_cycleDelay.h"
 #include "gpio.h"
 
 /* External variables includes -----------------------------------------------*/
@@ -36,7 +37,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	serviceKeyboard_getGroundedCol();
 
 	// Move GPIOs back to orig. config, interruptible rows as inputs
-	//serviceKeyboard_configPins_rowsAsInputs();
+	//serviceKeyboard_configPins_rowsAsInputs();// TODO debounce this logic
 	char c = serviceKeyboard_lookUpValue();
 	return;
 }
@@ -215,8 +216,8 @@ void serviceKeyboard_configPins_colsAsInputs()
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-	for(uint8_t i = 1 ; i<2; i++){} // Time is needed for pin configuration to take effect
-
+	// Time delay for GPIO configuration to take effect
+	CYCLE_DELAY_40_TICKS();
 }
 
 
