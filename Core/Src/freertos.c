@@ -30,6 +30,7 @@
 #include "service_tempSensor.h"
 #include "service_uart.h"
 #include "service_lcd.h"
+#include "service_keyboard.h"
 #include "module_snake.h"
 #include "module_temperature.h"
 /* USER CODE END Includes */
@@ -182,6 +183,7 @@ void startTask100ms(void const * argument)
 		USART2_addToQueue("100ms Task!\n\r");
 		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin); // Blink LED2 at task time
 
+		char keyPressed = serviceKeyboard_consumeKey();
 		moduleSnake_runTask(LCD_displayBuffer01,1);
 		moduleSnake_autoPlay();
 

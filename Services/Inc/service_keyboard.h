@@ -25,15 +25,13 @@
 /* Typedef declare -----------------------------------------------------------*/
 typedef struct{
     char inputKey;
-    uint8_t input_UID;
+    uint8_t inputConsumed;
+    uint16_t GPIO_Pin;
 } serviceKeyboardInput_t;
 
 /* Function prototypes -------------------------------------------------------*/
-char serviceKeyboard_lookUpValue();
-void serviceKeyboard_getGroundedCol();
-void serviceKeyboard_getGroundedRow(uint16_t GPIO_Pin);
-void serviceKeyboard_configPins_rowsAsInputs();
-void serviceKeyboard_configPins_colsAsInputs();
+char serviceKeyboard_consumeKey();
+
 
 #endif /* INC_CORE_SERVICES_KEYBOARD_H_ */
 

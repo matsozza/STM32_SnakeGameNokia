@@ -24,11 +24,28 @@ const char serviceKeyboard_lookupTable[4][4] = {
                                                 };
 serviceKeyboardInput_t  serviceKeyboardInput;
 
+/* Internal functions includes -----------------------------------------------*/
+static void serviceKeyboard_enableKeyInterrupts(uint8_t Enable);
+static char serviceKeyboard_lookUpValue();
+static void serviceKeyboard_getGroundedCol();
+static void serviceKeyboard_getGroundedRow(uint16_t GPIO_Pin);
+static void serviceKeyboard_configPins_rowsAsInputs();
+static void serviceKeyboard_configPins_colsAsInputs();
+
 /* Functions implementation --------------------------------------------------*/
 
 // Callback function for GPIO implemented locally in service file
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
+	//If last input still not consumed by task, ignore other inputs
+	if(!serviceKeyboardInput.inputConsumed)
+	{
+		return;
+	}	
+	
+	// Disable Keyboard interrupts
+	serviceKeyboard_enableKeyInterrupts(0);
+
 	// Get the row corresponding to the pressed key
 	serviceKeyboard_getGroundedRow(GPIO_Pin);
 	
@@ -38,11 +55,42 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 	// Move GPIOs back to orig. config, interruptible rows as inputs
 	//serviceKeyboard_configPins_rowsAsInputs();// TODO debounce this logic
-	char c = serviceKeyboard_lookUpValue();
-	return;
+	
+	// Get pressed key from lookUp table
+	serviceKeyboardInput.inputKey = serviceKeyboard_lookUpValue();
+	serviceKeyboardInput.inputConsumed = 0;
+	serviceKeyboardInput.GPIO_Pin = GPIO_Pin;
+	
+	// Reenable Keyboard interrupts
+	//serviceKeyboard_enableKeyInterrupts(1);
+	
 }
 
-char serviceKeyboard_lookUpValue()
+char serviceKeyboard_consumeKey()
+{
+	serviceKeyboardInput.inputConsumed = 1;
+	serviceKeyboard_enableKeyInterrupts(1);
+	serviceKeyboard_configPins_rowsAsInputs();
+	return serviceKeyboardInput.inputKey;
+}
+
+static void serviceKeyboard_enableKeyInterrupts(uint8_t Enable)
+{
+	if(Enable)
+	{
+		HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+		HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+		HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+	}
+	else
+	{
+		HAL_NVIC_DisableIRQ(EXTI4_IRQn);
+		HAL_NVIC_DisableIRQ(EXTI9_5_IRQn);
+		HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
+	}
+}
+
+static char serviceKeyboard_lookUpValue()
 {
 	// Get column Idx
 	uint8_t colIdx;
@@ -89,7 +137,7 @@ char serviceKeyboard_lookUpValue()
 
 }
 
-void serviceKeyboard_getGroundedRow(uint16_t GPIO_Pin)
+static void serviceKeyboard_getGroundedRow(uint16_t GPIO_Pin)
 {
     switch(GPIO_Pin)
     {
@@ -110,7 +158,7 @@ void serviceKeyboard_getGroundedRow(uint16_t GPIO_Pin)
     }
 }
 
-void serviceKeyboard_getGroundedCol()
+static void serviceKeyboard_getGroundedCol()
 {
 	serviceKeyboard_groundedCol = 0b1111;
 	
@@ -147,7 +195,7 @@ void serviceKeyboard_getGroundedCol()
 	}
 }
 
-void serviceKeyboard_configPins_rowsAsInputs()
+static void serviceKeyboard_configPins_rowsAsInputs()
 {
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -182,7 +230,7 @@ void serviceKeyboard_configPins_rowsAsInputs()
 	HAL_GPIO_WritePin(EXTKEYBOARD_PIN7_GPIO_Port, EXTKEYBOARD_PIN7_Pin, GPIO_PIN_RESET);
 }
 
-void serviceKeyboard_configPins_colsAsInputs()
+static void serviceKeyboard_configPins_colsAsInputs()
 {
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
