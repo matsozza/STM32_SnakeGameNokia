@@ -5,7 +5,7 @@
  * Pins 0 to 3 are rows, initialized as Inputs
  * Pins 4 to 7 are columns, initialized as Outputs
  *
- * Pins 0 to 3 trigger interruptions when grounded
+ * Pins 0 to 3 trigger interruptions when pressed
  *
  *  Created on: June 20, 2022
  *      Author: Matheus Sozza
@@ -21,6 +21,7 @@
 #include "gpio.h"
 
 /* Defines -------------------------------------------------------------------*/
+#define EXTKEYBOARD_TIMER_HANDLE htim2
 
 /* Typedef declare -----------------------------------------------------------*/
 typedef struct{
@@ -31,6 +32,7 @@ typedef struct{
 
 /* Function prototypes -------------------------------------------------------*/
 char serviceKeyboard_consumeKey();
+void serviceKeyboard_TIM_PeriodElapsedCallback();
 
 
 #endif /* INC_CORE_SERVICES_KEYBOARD_H_ */

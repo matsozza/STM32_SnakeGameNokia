@@ -21,6 +21,7 @@
 #include "cmsis_os.h"
 #include "adc.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -28,6 +29,7 @@
 /* USER CODE BEGIN Includes */
 #include "SEGGER_SYSVIEW.h"
 #include "service_lcd.h"
+#include "service_keyboard.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -89,6 +91,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_SPI1_Init();
   MX_ADC1_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
   // ***** SEGGER SystemView configuration *****
@@ -183,6 +186,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
+
+  // TIM 2 - Time used for keyboard debouncing
+  else if (htim->Instance == TIM2) {
+	  serviceKeyboard_TIM_PeriodElapsedCallback();
+  }
 
   /* USER CODE END Callback 1 */
 }

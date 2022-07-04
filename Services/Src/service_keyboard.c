@@ -10,12 +10,14 @@
 #include "service_keyboard.h"
 #include "service_cycleDelay.h"
 #include "gpio.h"
+#include "tim.h"
 
 /* External variables includes -----------------------------------------------*/
 
 /* Internal variables includes -----------------------------------------------*/
-uint8_t serviceKeyboard_groundedRow;
-uint8_t serviceKeyboard_groundedCol;
+uint8_t serviceKeyboard_busyFlag = 0;
+uint8_t serviceKeyboard_pressedRow;
+uint8_t serviceKeyboard_pressedCol;
 const char serviceKeyboard_lookupTable[4][4] = {
                                                 {'1', '2', '3', 'A'},
                                                 {'4', '5', '6', 'B'},
@@ -27,43 +29,59 @@ serviceKeyboardInput_t  serviceKeyboardInput;
 /* Internal functions includes -----------------------------------------------*/
 static void serviceKeyboard_enableKeyInterrupts(uint8_t Enable);
 static char serviceKeyboard_lookUpValue();
-static void serviceKeyboard_getGroundedCol();
-static void serviceKeyboard_getGroundedRow(uint16_t GPIO_Pin);
+static uint8_t serviceKeyboard_getPressedCol();
+static uint8_t serviceKeyboard_getPressedRow(uint16_t GPIO_Pin);
 static void serviceKeyboard_configPins_rowsAsInputs();
 static void serviceKeyboard_configPins_colsAsInputs();
 
 /* Functions implementation --------------------------------------------------*/
 
-// Callback function for GPIO implemented locally in service file
+// STEP 1 - Callback function for GPIO click
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	//If last input still not consumed by task, ignore other inputs
-	if(!serviceKeyboardInput.inputConsumed)
+	if(!serviceKeyboardInput.inputConsumed || serviceKeyboard_busyFlag)
 	{
 		return;
-	}	
-	
-	// Disable Keyboard interrupts
-	serviceKeyboard_enableKeyInterrupts(0);
+	}
+	else
+	{
+		serviceKeyboard_busyFlag=1;
 
-	// Get the row corresponding to the pressed key
-	serviceKeyboard_getGroundedRow(GPIO_Pin);
-	
-	// Reconfigure the GPIOs to get the column of the pressed key
-	serviceKeyboard_configPins_colsAsInputs();
-	serviceKeyboard_getGroundedCol();
+		// Disable Keyboard interrupts
+		//serviceKeyboard_enableKeyInterrupts(0);
 
-	// Move GPIOs back to orig. config, interruptible rows as inputs
-	//serviceKeyboard_configPins_rowsAsInputs();// TODO debounce this logic
-	
+		// Get the row corresponding to the pressed key
+		serviceKeyboard_pressedRow = serviceKeyboard_getPressedRow(GPIO_Pin);
+
+		// Start debounce timer
+		HAL_StatusTypeDef tim_status = HAL_TIM_Base_Start_IT(&EXTKEYBOARD_TIMER_HANDLE);
+
+		// Reconfigure the GPIOs to get the column of the pressed key
+		serviceKeyboard_configPins_colsAsInputs();
+	}
+}
+
+// STEP 2 - Callback function for debouncer TIMER
+void serviceKeyboard_TIM_PeriodElapsedCallback()
+{
+	// Stop timer
+	HAL_StatusTypeDef tim_status = HAL_TIM_Base_Stop_IT(&EXTKEYBOARD_TIMER_HANDLE);
+
+	// Get the column corresponding to the pressed key
+	serviceKeyboard_pressedCol = serviceKeyboard_getPressedCol();
+
 	// Get pressed key from lookUp table
 	serviceKeyboardInput.inputKey = serviceKeyboard_lookUpValue();
 	serviceKeyboardInput.inputConsumed = 0;
-	serviceKeyboardInput.GPIO_Pin = GPIO_Pin;
 	
+	// Move GPIOs back to orig. config, interruptible rows as inputs
+	serviceKeyboard_configPins_rowsAsInputs();
+	serviceKeyboard_busyFlag=0;
+
 	// Reenable Keyboard interrupts
 	//serviceKeyboard_enableKeyInterrupts(1);
-	
+
 }
 
 char serviceKeyboard_consumeKey()
@@ -93,8 +111,8 @@ static void serviceKeyboard_enableKeyInterrupts(uint8_t Enable)
 static char serviceKeyboard_lookUpValue()
 {
 	// Get column Idx
-	uint8_t colIdx;
-	switch(serviceKeyboard_groundedCol)
+	int8_t colIdx;
+	switch(serviceKeyboard_pressedCol)
 	{
 		case 0b0001:
 			colIdx = 0;
@@ -102,19 +120,19 @@ static char serviceKeyboard_lookUpValue()
 		case 0b0010:
 			colIdx = 1;
 			break;
-		case 0b100:
+		case 0b0100:
 			colIdx = 2;
 			break;
 		case 0b1000:
 			colIdx = 3;
 			break;
 		default:
-			colIdx=0;
+			colIdx=-1;
 	}
 
 	// Get row Idx
-	uint8_t rowIdx;
-	switch(serviceKeyboard_groundedRow)
+	int8_t rowIdx;
+	switch(serviceKeyboard_pressedRow)
 	{
 		case 0b0001:
 			rowIdx = 0;
@@ -129,70 +147,78 @@ static char serviceKeyboard_lookUpValue()
 			rowIdx = 3;
 			break;
 		default:
-			rowIdx=0;
+			rowIdx=-1;
 	}
 
 	//Lookup value
-	return serviceKeyboard_lookupTable[rowIdx][colIdx];
+	if(colIdx<0)
+	{
+		return '<';
+	}
+	else if(rowIdx<0)
+	{
+		return '>';
+	}
 
+	return serviceKeyboard_lookupTable[rowIdx][colIdx];
 }
 
-static void serviceKeyboard_getGroundedRow(uint16_t GPIO_Pin)
+static uint8_t serviceKeyboard_getPressedRow(uint16_t GPIO_Pin)
 {
-    switch(GPIO_Pin)
+    uint8_t serviceKeyboard_pressedRow_loc;
+
+	switch(GPIO_Pin)
     {
 		case EXTKEYBOARD_PIN0_Pin:
-			serviceKeyboard_groundedRow = 0b0001;
+			serviceKeyboard_pressedRow_loc = 0b0001;
 			break;
 		case EXTKEYBOARD_PIN1_Pin:
-			serviceKeyboard_groundedRow = 0b0010;
+			serviceKeyboard_pressedRow_loc = 0b0010;
 			break;
 		case EXTKEYBOARD_PIN2_Pin:
-			serviceKeyboard_groundedRow = 0b0100;
+			serviceKeyboard_pressedRow_loc = 0b0100;
 			break;
 		case EXTKEYBOARD_PIN3_Pin:
-			serviceKeyboard_groundedRow = 0b1000;
+			serviceKeyboard_pressedRow_loc = 0b1000;
 			break;
 		default:
-			serviceKeyboard_groundedRow = 0b0000;
+			serviceKeyboard_pressedRow_loc = 0b0000;
     }
+
+	return serviceKeyboard_pressedRow_loc;
 }
 
-static void serviceKeyboard_getGroundedCol()
+static uint8_t serviceKeyboard_getPressedCol()
 {
-	serviceKeyboard_groundedCol = 0b1111;
-	
 	//Read column 0 / Pin4
-	uint8_t colGrounded = HAL_GPIO_ReadPin(EXTKEYBOARD_PIN4_GPIO_Port, EXTKEYBOARD_PIN4_Pin);
-	if(colGrounded ==0)
+	uint8_t colPressed = HAL_GPIO_ReadPin(EXTKEYBOARD_PIN4_GPIO_Port, EXTKEYBOARD_PIN4_Pin);
+	if(colPressed ==0)
 	{
-		serviceKeyboard_groundedCol = 0b0001;
-		return; //Early return, save time
+		return 0b0001; //Early return, save time
 	}
 
 	//Read column 0 / Pin4
-	colGrounded = HAL_GPIO_ReadPin(EXTKEYBOARD_PIN5_GPIO_Port, EXTKEYBOARD_PIN5_Pin);
-	if(colGrounded ==0)
+	colPressed = HAL_GPIO_ReadPin(EXTKEYBOARD_PIN5_GPIO_Port, EXTKEYBOARD_PIN5_Pin);
+	if(colPressed ==0)
 	{
-		serviceKeyboard_groundedCol = 0b0010;
-		return; //Early return, save time
+		return 0b0010; //Early return, save time
 	}
 
 	//Read column 0 / Pin4
-	colGrounded = HAL_GPIO_ReadPin(EXTKEYBOARD_PIN6_GPIO_Port, EXTKEYBOARD_PIN6_Pin);
-	if(colGrounded ==0)
+	colPressed = HAL_GPIO_ReadPin(EXTKEYBOARD_PIN6_GPIO_Port, EXTKEYBOARD_PIN6_Pin);
+	if(colPressed ==0)
 	{
-		serviceKeyboard_groundedCol = 0b0100;
-		return; //Early return, save time
+		return 0b0100; //Early return, save time
 	}
 
 	//Read column 0 / Pin4
-	colGrounded = HAL_GPIO_ReadPin(EXTKEYBOARD_PIN7_GPIO_Port, EXTKEYBOARD_PIN7_Pin);
-	if(colGrounded ==0)
+	colPressed = HAL_GPIO_ReadPin(EXTKEYBOARD_PIN7_GPIO_Port, EXTKEYBOARD_PIN7_Pin);
+	if(colPressed ==0)
 	{
-		serviceKeyboard_groundedCol = 0b1000;
-		return; //Last return, worst case
+		return 0b1000; //Last return, worst case
 	}
+
+	return 0b0000;
 }
 
 static void serviceKeyboard_configPins_rowsAsInputs()
@@ -265,6 +291,8 @@ static void serviceKeyboard_configPins_colsAsInputs()
 	HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
 	// Time delay for GPIO configuration to take effect
+	CYCLE_DELAY_40_TICKS();
+	CYCLE_DELAY_40_TICKS();
 	CYCLE_DELAY_40_TICKS();
 }
 
