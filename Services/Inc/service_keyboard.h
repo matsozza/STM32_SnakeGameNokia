@@ -22,12 +22,13 @@
 
 /* Defines -------------------------------------------------------------------*/
 #define EXTKEYBOARD_TIMER_HANDLE htim2
+#define EXTKEYBOARD_MAX_COL_READ_ATTEMPT 5
+#define EXTKEYBOARD_USE_COL_IT 0
 
 /* Typedef declare -----------------------------------------------------------*/
 typedef struct{
     char inputKey;
     uint8_t inputConsumed;
-    uint16_t GPIO_Pin;
 } serviceKeyboardInput_t;
 
 /* Function prototypes -------------------------------------------------------*/

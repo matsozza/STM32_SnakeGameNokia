@@ -25,7 +25,7 @@ const char serviceKeyboard_lookupTable[4][4] = {
                                                 {'7', '8', '9', 'C'},
                                                 {'*', '0', '#', 'D'}
                                                 };
-serviceKeyboardInput_t  serviceKeyboardInput;
+serviceKeyboardInput_t  serviceKeyboardInput = {'x', 1 };
 
 /* Internal functions includes -----------------------------------------------*/
 static void serviceKeyboard_enableKeyInterrupts(uint8_t Enable);
@@ -81,11 +81,6 @@ void serviceKeyboard_TIM_PeriodElapsedCallback()
 	{
 		serviceKeyboardInput.inputKey = readKey;
 		serviceKeyboardInput.inputConsumed = 0;
-		
-		// Move GPIOs back to orig. config, interruptible rows as inputs
-		serviceKeyboard_configPins_rowsAsInputs();
-		serviceKeyboard_busyFlag=0;
-		serviceKeyboard_colReadAttempts=0;
 	}
 	else if(serviceKeyboard_colReadAttempts < EXTKEYBOARD_MAX_COL_READ_ATTEMPT)
 	{
@@ -93,22 +88,28 @@ void serviceKeyboard_TIM_PeriodElapsedCallback()
 		HAL_StatusTypeDef tim_status = HAL_TIM_Base_Start_IT(&EXTKEYBOARD_TIMER_HANDLE);
 		return;
 	}
-	else //If not, rethrow interruption
-	{
-		serviceKeyboard_colReadAttempts=0;
-	}
+
+	// Move GPIOs back to orig. config, interruptible rows as inputs, wait next click
+	serviceKeyboard_configPins_rowsAsInputs();
+	serviceKeyboard_busyFlag=0;
+	serviceKeyboard_colReadAttempts=0;
 
 	// Reenable Keyboard interrupts
 	//serviceKeyboard_enableKeyInterrupts(1);
-
 }
 
 char serviceKeyboard_consumeKey()
 {
-	serviceKeyboardInput.inputConsumed = 1;
-	serviceKeyboard_enableKeyInterrupts(1);
-	serviceKeyboard_configPins_rowsAsInputs();
-	return serviceKeyboardInput.inputKey;
+	if(!serviceKeyboardInput.inputConsumed)
+	{
+		// Flag the input as consumed
+		serviceKeyboardInput.inputConsumed = 1;
+		return serviceKeyboardInput.inputKey;
+	}
+	else
+	{
+		return 'x';
+	}
 }
 
 static void serviceKeyboard_enableKeyInterrupts(uint8_t Enable)

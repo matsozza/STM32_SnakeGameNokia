@@ -180,10 +180,18 @@ void startTask100ms(void const * argument)
 	for (;;)
 	{
 		// Task activities
-		USART2_addToQueue("100ms Task!\n\r");
+		//USART2_addToQueue("100ms Task!\n\r");
 		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin); // Blink LED2 at task time
 
 		char keyPressed = serviceKeyboard_consumeKey();
+		if(keyPressed != 'x')
+		{
+			char strKey[16] = "KeyPress: ";
+			strcat(strKey, &keyPressed);
+			strcat(strKey, "\n\r\0");
+			
+			USART2_addToQueue(&strKey);
+		}
 		moduleSnake_runTask(LCD_displayBuffer01,1);
 		moduleSnake_autoPlay();
 
@@ -216,7 +224,7 @@ void startTask500ms(void const * argument)
 	{
 		// Task activities
 		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-		USART2_addToQueue("500ms Task!\n\r"); // Blink LED1 at task time
+		//USART2_addToQueue("500ms Task!\n\r"); // Blink LED1 at task time
 
 		if(a)
 		{
