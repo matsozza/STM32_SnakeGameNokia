@@ -63,14 +63,6 @@ void MX_TIM2_Init(void)
   }
   /* USER CODE BEGIN TIM2_Init 2 */
 
-#if EXTKEYBOARD_USE_COL_IT == 1
-  htim2.Init.Period = 200;
-  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-#endif
-
   /* USER CODE END TIM2_Init 2 */
 
 }
