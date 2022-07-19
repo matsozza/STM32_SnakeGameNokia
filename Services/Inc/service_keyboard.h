@@ -22,8 +22,8 @@
 
 /* Defines -------------------------------------------------------------------*/
 #define EXTKEYBOARD_TIMER_HANDLE htim2
-#define EXTKEYBOARD_MAX_COL_READ_ATTEMPT 5
-#define EXTKEYBOARD_USE_COL_IT 0
+#define EXTKEYBOARD_MAX_COL_READ_ATTEMPT 10
+#define EXTKEYBOARD_DEBUG_LVL_USART 1
 
 /* Typedef declare -----------------------------------------------------------*/
 typedef struct{

@@ -8,6 +8,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 #include "service_keyboard.h"
+#include "service_uart.h"
 #include "service_cycleDelay.h"
 #include "gpio.h"
 #include "tim.h"
@@ -41,23 +42,16 @@ static void serviceKeyboard_configPins_colsAsInputs();
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	//If last input still not consumed by task, ignore other inputs
-	if(!serviceKeyboardInput.inputConsumed || serviceKeyboard_busyFlag)
-	{
-		return;
-	}
-	else
+	if(serviceKeyboardInput.inputConsumed && !serviceKeyboard_busyFlag)
 	{
 		serviceKeyboard_colReadAttempts = 0;
 		serviceKeyboard_busyFlag=1;
-
-		// Disable Keyboard interrupts
-		//serviceKeyboard_enableKeyInterrupts(0);
 
 		// Get the row corresponding to the pressed key
 		serviceKeyboard_pressedRow = serviceKeyboard_getPressedRow(GPIO_Pin);
 
 		// Start debounce timer
-		HAL_StatusTypeDef tim_status = HAL_TIM_Base_Start_IT(&EXTKEYBOARD_TIMER_HANDLE);
+		HAL_TIM_Base_Start_IT(&EXTKEYBOARD_TIMER_HANDLE);
 
 		// Reconfigure the GPIOs to get the column of the pressed key
 		serviceKeyboard_configPins_colsAsInputs();
@@ -68,12 +62,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 void serviceKeyboard_TIM_PeriodElapsedCallback()
 {
 	// Stop timer
-	HAL_StatusTypeDef tim_status = HAL_TIM_Base_Stop_IT(&EXTKEYBOARD_TIMER_HANDLE);
+	HAL_TIM_Base_Stop_IT(&EXTKEYBOARD_TIMER_HANDLE);
 
 	// Get the column corresponding to the pressed key
 	serviceKeyboard_pressedCol = serviceKeyboard_getPressedCol();
-
-	// Get pressed key from lookUp table
 	char readKey = serviceKeyboard_lookUpValue();
 
 	// Check if a column has been detected
@@ -81,6 +73,12 @@ void serviceKeyboard_TIM_PeriodElapsedCallback()
 	{
 		serviceKeyboardInput.inputKey = readKey;
 		serviceKeyboardInput.inputConsumed = 0;
+		
+		#if EXTKEYBOARD_DEBUG_LVL_USART >=1
+			char debugMsg[15];
+			sprintf(debugMsg, "SKB_ColAttempt:%d\n\r", serviceKeyboard_colReadAttempts);
+			USART2_addToQueue(debugMsg);
+		#endif
 	}
 	else if(serviceKeyboard_colReadAttempts < EXTKEYBOARD_MAX_COL_READ_ATTEMPT)
 	{
@@ -88,14 +86,19 @@ void serviceKeyboard_TIM_PeriodElapsedCallback()
 		HAL_StatusTypeDef tim_status = HAL_TIM_Base_Start_IT(&EXTKEYBOARD_TIMER_HANDLE);
 		return;
 	}
+	else
+	{
+		#if EXTKEYBOARD_DEBUG_LVL_USART >=1
+			char debugMsg[15];
+			sprintf(debugMsg, "SKB_LostKey\n\r", serviceKeyboard_colReadAttempts);
+			USART2_addToQueue(debugMsg);
+		#endif
+	}
 
 	// Move GPIOs back to orig. config, interruptible rows as inputs, wait next click
 	serviceKeyboard_configPins_rowsAsInputs();
 	serviceKeyboard_busyFlag=0;
 	serviceKeyboard_colReadAttempts=0;
-
-	// Reenable Keyboard interrupts
-	//serviceKeyboard_enableKeyInterrupts(1);
 }
 
 char serviceKeyboard_consumeKey()
@@ -242,27 +245,20 @@ static void serviceKeyboard_configPins_rowsAsInputs()
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
 	// Configure the pins connected to the rows as interruptible inputs
+	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Pin = EXTKEYBOARD_PIN3_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(EXTKEYBOARD_PIN3_GPIO_Port, &GPIO_InitStruct);
-
 	GPIO_InitStruct.Pin = EXTKEYBOARD_PIN2_Pin|EXTKEYBOARD_PIN1_Pin|EXTKEYBOARD_PIN0_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	//Configure the pins connected to the columns as low level outputs
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	GPIO_InitStruct.Pin = EXTKEYBOARD_PIN7_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	HAL_GPIO_Init(EXTKEYBOARD_PIN7_GPIO_Port, &GPIO_InitStruct);
-
 	GPIO_InitStruct.Pin = EXTKEYBOARD_PIN6_Pin|EXTKEYBOARD_PIN5_Pin|EXTKEYBOARD_PIN4_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
 	// Set all cols to RESET - Ground
@@ -277,16 +273,12 @@ static void serviceKeyboard_configPins_colsAsInputs()
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
 	// Configure the pins connected to the rows as low level outputs
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	GPIO_InitStruct.Pin = EXTKEYBOARD_PIN3_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	HAL_GPIO_Init(EXTKEYBOARD_PIN3_GPIO_Port, &GPIO_InitStruct);
-
 	GPIO_InitStruct.Pin = EXTKEYBOARD_PIN2_Pin|EXTKEYBOARD_PIN1_Pin|EXTKEYBOARD_PIN0_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	// Set all rows to RESET - Ground
@@ -296,19 +288,15 @@ static void serviceKeyboard_configPins_colsAsInputs()
 	HAL_GPIO_WritePin(EXTKEYBOARD_PIN3_GPIO_Port, EXTKEYBOARD_PIN3_Pin, GPIO_PIN_RESET);
 
 	//Configure the pins connected to the columns as inputs
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Pin = EXTKEYBOARD_PIN7_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(EXTKEYBOARD_PIN7_GPIO_Port, &GPIO_InitStruct);
-
 	GPIO_InitStruct.Pin = EXTKEYBOARD_PIN6_Pin|EXTKEYBOARD_PIN5_Pin|EXTKEYBOARD_PIN4_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
 	// Time delay for GPIO configuration to take effect
-	CYCLE_DELAY_40_TICKS();
-	CYCLE_DELAY_40_TICKS();
+	CYCLE_DELAY_80_TICKS();
 	CYCLE_DELAY_40_TICKS();
 }
 
