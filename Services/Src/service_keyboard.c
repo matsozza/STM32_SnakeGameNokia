@@ -45,22 +45,23 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	{
 		return;
 	}
+	else
+	{
+		serviceKeyboard_colReadAttempts = 0;
+		serviceKeyboard_busyFlag=1;
 
-	serviceKeyboard_colReadAttempts = 0;
-	serviceKeyboard_busyFlag=1;
+		// Disable Keyboard interrupts
+		//serviceKeyboard_enableKeyInterrupts(0);
 
-	// Disable Keyboard interrupts
-	//serviceKeyboard_enableKeyInterrupts(0);
+		// Get the row corresponding to the pressed key
+		serviceKeyboard_pressedRow = serviceKeyboard_getPressedRow(GPIO_Pin);
 
-	// Get the row corresponding to the pressed key
-	serviceKeyboard_pressedRow = serviceKeyboard_getPressedRow(GPIO_Pin);
+		// Start debounce timer
+		HAL_StatusTypeDef tim_status = HAL_TIM_Base_Start_IT(&EXTKEYBOARD_TIMER_HANDLE);
 
-	// Start debounce timer
-	HAL_StatusTypeDef tim_status = HAL_TIM_Base_Start_IT(&EXTKEYBOARD_TIMER_HANDLE);
-
-	// Reconfigure the GPIOs to get the column of the pressed key
-	serviceKeyboard_configPins_colsAsInputs();
-
+		// Reconfigure the GPIOs to get the column of the pressed key
+		serviceKeyboard_configPins_colsAsInputs();
+	}
 }
 
 // STEP 2 - Callback function for debouncer TIMER
@@ -294,22 +295,19 @@ static void serviceKeyboard_configPins_colsAsInputs()
 	HAL_GPIO_WritePin(EXTKEYBOARD_PIN2_GPIO_Port, EXTKEYBOARD_PIN2_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(EXTKEYBOARD_PIN3_GPIO_Port, EXTKEYBOARD_PIN3_Pin, GPIO_PIN_RESET);
 
-
 	//Configure the pins connected to the columns as inputs
-#if EXTKEYBOARD_USE_COL_IT == 1
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-#else
-	GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
-#endif
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	GPIO_InitStruct.Pin = EXTKEYBOARD_PIN6_Pin|EXTKEYBOARD_PIN5_Pin|EXTKEYBOARD_PIN4_Pin;
-	HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
-
 	GPIO_InitStruct.Pin = EXTKEYBOARD_PIN7_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(EXTKEYBOARD_PIN7_GPIO_Port, &GPIO_InitStruct);
 
+	GPIO_InitStruct.Pin = EXTKEYBOARD_PIN6_Pin|EXTKEYBOARD_PIN5_Pin|EXTKEYBOARD_PIN4_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
 	// Time delay for GPIO configuration to take effect
+	CYCLE_DELAY_40_TICKS();
 	CYCLE_DELAY_40_TICKS();
 	CYCLE_DELAY_40_TICKS();
 }
