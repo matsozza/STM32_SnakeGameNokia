@@ -186,10 +186,8 @@ void startTask100ms(void const * argument)
 		char keyPressed = serviceKeyboard_consumeKey();
 		if(keyPressed != 'x')
 		{
-			char strKey[16] = "KeyPress: ";
-			strcat(strKey, &keyPressed);
-			strcat(strKey, "\n\r\0");
-			
+			char strKey[16];
+			sprintf(strKey, "KeyPress:%c \n\r",keyPressed);
 			USART2_addToQueue(&strKey);
 		}
 		moduleSnake_runTask(LCD_displayBuffer01,1);
