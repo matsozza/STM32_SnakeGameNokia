@@ -25,8 +25,8 @@ extern osMessageQId queueLCDHandle;
 // 500ms Task
 int task500ms_LCDWrite;
 
-// 500ms Task
-char task500ms_keyPressed;
+// 100ms Task
+char task100ms_keyPressed;
 
 // Idle Task Variables
 volatile uint32_t taskIdle_queueUSART2_msgWaiting;
@@ -38,7 +38,7 @@ extern LCD_displayBuffer_t *LCD_displayBuffer01;
 /* Functions implementation --------------------------------------------------*/
 void taskManager_100ms_init()
 {
-	char task500ms_keyPressed = 'x';
+	char task100ms_keyPressed = 'x';
 }
 
 void taskManager_100ms_run()
@@ -47,17 +47,17 @@ void taskManager_100ms_run()
 	HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin); // Blink LED2 at task time
 
 	// ** Check and consume keyboard pressed key
-	char task500ms_keyPressed = serviceKeyboard_consumeKey();
-	if(task500ms_keyPressed != 'x')
+	char task100ms_keyPressed = serviceKeyboard_consumeKey();
+	if(task100ms_keyPressed != 'x')
 	{
 		char strKey[16];
-		sprintf(strKey, "KeyPress:%c \n\r",task500ms_keyPressed);
+		sprintf(strKey, "KeyPress:%c \n\r",task100ms_keyPressed);
 		USART2_addToQueue(&strKey);
 	}
 
 	// ** Run RTOS modules
-	moduleSnake_runTask(LCD_displayBuffer01,1);
-	moduleSnake_autoPlay();
+	moduleSnake_runTask(LCD_displayBuffer01,task100ms_keyPressed,1);
+	//moduleSnake_autoPlay();
 
 	// ** Send LCD Buffer to queue for further updating
 	LCD_Buffer_sendToQueue(LCD_displayBuffer01);

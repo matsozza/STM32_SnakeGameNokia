@@ -52,7 +52,7 @@ typedef struct{
 
 
 /* Function prototypes -------------------------------------------------------*/
-void moduleSnake_runTask(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t Activate);
+void moduleSnake_runTask(LCD_displayBuffer_t *LCD_displayBuffer, char keyPressed, uint8_t Activate);
 void moduleSnake_autoPlay();
 
 #endif /* INC_CORE_MODULE_SNAKE_H_ */

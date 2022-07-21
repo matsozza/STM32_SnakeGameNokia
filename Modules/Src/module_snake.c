@@ -30,13 +30,16 @@ enum moduleSnakeState_e moduleSnakeState = MODSNAKE_NOT_INIT;
 snakeObj_t snakeObj;
 foodObj_t foodObj;
 uint8_t boardPixels[5][84][3];
+char keyPressedGlb;
 
 /* Internal functions includes -----------------------------------------------*/
 void _moduleSnake_stateTransition(uint8_t Activate);
-void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer);
+void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer, char keyPressed);
 
 void _moduleSnake_initGame(LCD_displayBuffer_t *LCD_displayBuffer);
 void _moduleSnake_runGame();
+
+void _key_consumeKey();
 
 void _IO_sendToLCD();
 
@@ -54,10 +57,10 @@ void _board_setPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t pixelVal, uint8_t b
 uint8_t _board_getPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer);
 
 /* Functions implementation --------------------------------------------------*/
-void moduleSnake_runTask(LCD_displayBuffer_t *LCD_displayBuffer, uint8_t Activate)
+void moduleSnake_runTask(LCD_displayBuffer_t *LCD_displayBuffer, char keyPressed, uint8_t Activate)
 {
 	// State-machine instructions
-	_moduleSnake_stateFunction(LCD_displayBuffer);
+	_moduleSnake_stateFunction(LCD_displayBuffer, keyPressed);
 
 	// State-machine transitions
 	_moduleSnake_stateTransition(Activate);
@@ -107,7 +110,7 @@ void _moduleSnake_stateTransition(uint8_t Activate)
 	}
 }
 
-void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer)
+void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer, char keyPressed)
 {
 	if(moduleSnakeState == MODSNAKE_NOT_INIT)
 	{
@@ -119,6 +122,7 @@ void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer)
 	}
 	else if(moduleSnakeState == MODSNAKE_INIT_RUNNING)
 	{
+		keyPressedGlb = keyPressed;
 		_moduleSnake_runGame();
 	}
 }
@@ -134,6 +138,8 @@ void _moduleSnake_initGame(LCD_displayBuffer_t *LCD_displayBuffer)
 
 void _moduleSnake_runGame()
 {
+	_key_consumeKey();
+
 	_food_updateFood();
 	_food_printFoodToBoard();
 
@@ -141,6 +147,25 @@ void _moduleSnake_runGame()
 	_snake_printSnakeToBoard();
 
 	_IO_sendToLCD();
+}
+
+void _key_consumeKey()
+{
+	switch(keyPressedGlb)
+	{
+		case '2':
+			_snake_changeDirection(UP);
+			break;
+		case '4':
+			_snake_changeDirection(LEFT);
+			break;
+		case '6':
+			_snake_changeDirection(RIGHT);
+			break;
+		case '8':
+			_snake_changeDirection(DOWN);
+			break;
+	}
 }
 
 void _IO_sendToLCD()
