@@ -25,14 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdlib.h>
-#include <string.h>
-#include "service_tempSensor.h"
-#include "service_uart.h"
-#include "service_lcd.h"
-#include "service_keyboard.h"
-#include "module_snake.h"
-#include "module_temperature.h"
+#include "task_manager.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,9 +45,6 @@
 
 osPoolId mPoolUSART2Handle;
 osPoolId mPoolLCDHandle;
-
-// Common IOs / interfaces for RTOS
-extern LCD_displayBuffer_t *LCD_displayBuffer01;
 
 /* USER CODE END Variables */
 osThreadId task100msHandle;
@@ -81,19 +71,10 @@ void vApplicationIdleHook(void);
 /* USER CODE BEGIN 2 */
 __weak void vApplicationIdleHook(void)
 {
-	volatile uint32_t queueUSART2_msgWaiting = 0;
-	volatile uint32_t queueLCD_msgWaiting = 0;
+	taskManager_idleTask_init();
 	for (;;)
 	{
-		// ** Check and consume USART2 queue
-		queueUSART2_msgWaiting = osMessageWaiting(queueUSART2Handle); // Check items on USART2 queue
-		if (queueUSART2_msgWaiting > 0)
-			USART2_consumeFromQueue(); // Consume USART2 Queue items
-
-		// ** Check and consume LCD queue
-		queueLCD_msgWaiting = osMessageWaiting(queueLCDHandle); // Check items on LCD queue
-		if (queueLCD_msgWaiting > 0)
-			LCD_Queue_consumeBytes(); // Consume LCD Queue items
+		taskManager_idleTask_run();
 	}
 }
 /* USER CODE END 2 */
@@ -175,25 +156,11 @@ void MX_FREERTOS_Init(void) {
 void startTask100ms(void const * argument)
 {
   /* USER CODE BEGIN startTask100ms */
-	/* Infinite loop */
-	volatile uint8_t taskCounts = 0;
+	taskManager_100ms_init();
+	uint8_t taskCounts;
 	for (;;)
 	{
-		// Task activities
-		//USART2_addToQueue("100ms Task!\n\r");
-		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin); // Blink LED2 at task time
-
-		char keyPressed = serviceKeyboard_consumeKey();
-		if(keyPressed != 'x')
-		{
-			char strKey[16];
-			sprintf(strKey, "KeyPress:%c \n\r",keyPressed);
-			USART2_addToQueue(&strKey);
-		}
-		moduleSnake_runTask(LCD_displayBuffer01,1);
-		moduleSnake_autoPlay();
-
-		LCD_Buffer_sendToQueue(LCD_displayBuffer01);
+		taskManager_100ms_run();
 
 		// Caller for task500ms
 		taskCounts = (uint8_t)((taskCounts + 1) % 5);
@@ -214,46 +181,10 @@ void startTask100ms(void const * argument)
 void startTask500ms(void const * argument)
 {
   /* USER CODE BEGIN startTask500ms */
-
-	int a=0; 
-
-	/* Infinite loop */
+	taskManager_500ms_init();
 	for (;;)
 	{
-		// Task activities
-		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-		//USART2_addToQueue("500ms Task!\n\r"); // Blink LED1 at task time
-
-		if(a)
-		{
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, '@',0,0);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'm',0,6);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,12);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 't',0,18);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 's',0,24);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'o',0,30);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z',0,36);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z',0,42);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,48);
-			a=0;
-		}
-		else
-		{	
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'S',0,0);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'n',0,6);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,12);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'k',0,18);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e',0,24);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'G',0,30);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,36);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'm',0,42);
-			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e',0,48);
-			a=1;
-		}
-
-		moduleTemperature_runTask(LCD_displayBuffer01,1);
-
-		LCD_Buffer_sendToQueue(LCD_displayBuffer01);
+		taskManager_500ms_run();
 		osThreadSuspend(task500msHandle);
 	}
   /* USER CODE END startTask500ms */
