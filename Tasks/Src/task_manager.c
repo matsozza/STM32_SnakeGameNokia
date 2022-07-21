@@ -1,0 +1,125 @@
+/*
+ * Task Manager module
+ * task_manager.c
+ *
+ * Manages the methods for tasks
+ *
+ *  Created on: July 20, 2022
+ *      Author: Matheus Sozza
+ */
+
+/* Private includes ----------------------------------------------------------*/
+#include "task_manager.h"
+#include "freertos.h"
+
+/* External variables includes -----------------------------------------------*/
+// FreeRTOS featured variables
+extern osPoolId mPoolUSART2Handle;
+extern osPoolId mPoolLCDHandle;
+extern osThreadId task100msHandle;
+extern osThreadId task500msHandle;
+extern osMessageQId queueUSART2Handle;
+extern osMessageQId queueLCDHandle;
+
+/* Internal variables includes -----------------------------------------------*/
+// 500ms Task
+int task500ms_LCDWrite;
+
+// 500ms Task
+char task500ms_keyPressed;
+
+// Idle Task Variables
+volatile uint32_t taskIdle_queueUSART2_msgWaiting;
+volatile uint32_t taskIdle_queueLCD_msgWaiting;
+
+// Common IOs / interfaces for RTOS
+extern LCD_displayBuffer_t *LCD_displayBuffer01;
+
+/* Functions implementation --------------------------------------------------*/
+void taskManager_100ms_init()
+{
+	char task500ms_keyPressed = 'x';
+	uint8_t task500ms_keyPressedAvbl = 0;
+}
+
+void taskManager_100ms_run()
+{
+	//USART2_addToQueue("100ms Task!\n\r");
+	HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin); // Blink LED2 at task time
+
+	// ** Check and consume keyboard pressed key
+	char task500ms_keyPressed = serviceKeyboard_consumeKey();
+	if(keyPressed != 'x')
+	{
+		char strKey[16];
+		sprintf(strKey, "KeyPress:%c \n\r",keyPressed);
+		USART2_addToQueue(&strKey);
+	}
+
+	// ** Run RTOS modules
+	moduleSnake_runTask(LCD_displayBuffer01,1);
+	moduleSnake_autoPlay();
+
+	// ** Send LCD Buffer to queue for further updating
+	LCD_Buffer_sendToQueue(LCD_displayBuffer01);
+}
+
+void taskManager_500ms_init()
+{
+	task500ms_LCDWrite=0;
+}
+
+void taskManager_500ms_run()
+{
+	// Task activities
+	HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+	//USART2_addToQueue("500ms Task!\n\r"); // Blink LED1 at task time
+
+	if(task500ms_LCDWrite)
+	{
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, '@',0,0);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'm',0,6);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,12);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 't',0,18);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 's',0,24);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'o',0,30);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z',0,36);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z',0,42);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,48);
+		task500ms_LCDWrite=0;
+	}
+	else
+	{	
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'S',0,0);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'n',0,6);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,12);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'k',0,18);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e',0,24);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'G',0,30);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,36);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'm',0,42);
+		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e',0,48);
+		task500ms_LCDWrite=1;
+	}
+
+	moduleTemperature_runTask(LCD_displayBuffer01,1);
+	LCD_Buffer_sendToQueue(LCD_displayBuffer01);
+}
+
+void taskManager_idleTask_init()
+{
+	taskIdle_queueUSART2_msgWaiting = 0;
+	taskIdle_queueLCD_msgWaiting = 0;
+}
+
+void taskManager_idleTask_run()
+{
+		// ** Check and consume USART2 queue
+		taskIdle_queueUSART2_msgWaiting = osMessageWaiting(queueUSART2Handle); // Check USART2 queue
+		if (taskIdle_queueUSART2_msgWaiting > 0)	USART2_consumeFromQueue(); // Consume USART2 Queue items
+
+		// ** Check and consume LCD queue
+		taskIdle_queueLCD_msgWaiting = osMessageWaiting(queueLCDHandle); // Check LCD queue
+		if (taskIdle_queueLCD_msgWaiting > 0) LCD_Queue_consumeBytes(); // Consume LCD Queue items
+
+}

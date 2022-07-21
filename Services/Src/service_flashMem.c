@@ -36,7 +36,6 @@ uint8_t flashMem_getByte(uint32_t Address, uint32_t Offset)
 	return *((uint8_t*) (Address + Offset));
 }
 
-
 int8_t flashMem_eraseSector()
 {
 	if(HAL_FLASH_Unlock() == HAL_OK)
