@@ -30,6 +30,7 @@
 #include "service_tempSensor.h"
 #include "service_uart.h"
 #include "service_lcd.h"
+#include "service_keyboard.h"
 #include "module_snake.h"
 #include "module_temperature.h"
 /* USER CODE END Includes */
@@ -66,13 +67,13 @@ osMessageQId queueLCDHandle;
 
 /* USER CODE END FunctionPrototypes */
 
-void startTask100ms(void const *argument);
-void startTask500ms(void const *argument);
+void startTask100ms(void const * argument);
+void startTask500ms(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
-void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize);
+void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
 
 /* Hook prototypes */
 void vApplicationIdleHook(void);
@@ -111,57 +112,57 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackTyp
 /* USER CODE END GET_IDLE_TASK_MEMORY */
 
 /**
- * @brief  FreeRTOS initialization
- * @param  None
- * @retval None
- */
-void MX_FREERTOS_Init(void)
-{
-	/* USER CODE BEGIN Init */
-	/* USER CODE END Init */
+  * @brief  FreeRTOS initialization
+  * @param  None
+  * @retval None
+  */
+void MX_FREERTOS_Init(void) {
+  /* USER CODE BEGIN Init */
+  /* USER CODE END Init */
 
-	/* USER CODE BEGIN RTOS_MUTEX */
+  /* USER CODE BEGIN RTOS_MUTEX */
 	/* add mutexes, ... */
-	/* USER CODE END RTOS_MUTEX */
+  /* USER CODE END RTOS_MUTEX */
 
-	/* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
 	/* add semaphores, ... */
-	/* USER CODE END RTOS_SEMAPHORES */
+  /* USER CODE END RTOS_SEMAPHORES */
 
-	/* USER CODE BEGIN RTOS_TIMERS */
+  /* USER CODE BEGIN RTOS_TIMERS */
 	/* start timers, add new ones, ... */
-	/* USER CODE END RTOS_TIMERS */
+  /* USER CODE END RTOS_TIMERS */
 
-	/* Create the queue(s) */
-	/* definition and creation of queueUSART2 */
-	osMessageQDef(queueUSART2, 5, uint32_t); // USART_message_t);
-	queueUSART2Handle = osMessageCreate(osMessageQ(queueUSART2), NULL);
+  /* Create the queue(s) */
+  /* definition and creation of queueUSART2 */
+  osMessageQDef(queueUSART2, 5, uint32_t);
+  queueUSART2Handle = osMessageCreate(osMessageQ(queueUSART2), NULL);
 
-	/* definition and creation of queueLCD */
-	osMessageQDef(queueLCD, 512, uint32_t); // LCD_dataPackage_t);
-	queueLCDHandle = osMessageCreate(osMessageQ(queueLCD), NULL);
+  /* definition and creation of queueLCD */
+  osMessageQDef(queueLCD, 512, uint32_t);
+  queueLCDHandle = osMessageCreate(osMessageQ(queueLCD), NULL);
 
-	/* USER CODE BEGIN RTOS_QUEUES */
+  /* USER CODE BEGIN RTOS_QUEUES */
 	/* add queues, ... */
 	osPoolDef(mPoolUSART2Handle, 15, USART_message_t);
 	mPoolUSART2Handle = osPoolCreate(osPool(mPoolUSART2Handle));
 
 	osPoolDef(mPoolLCDHandle, 512, LCD_dataPackage_t);
 	mPoolLCDHandle = osPoolCreate(osPool(mPoolLCDHandle));
-	/* USER CODE END RTOS_QUEUES */
+  /* USER CODE END RTOS_QUEUES */
 
-	/* Create the thread(s) */
-	/* definition and creation of task100ms */
-	osThreadDef(task100ms, startTask100ms, osPriorityNormal, 0, 128);
-	task100msHandle = osThreadCreate(osThread(task100ms), NULL);
+  /* Create the thread(s) */
+  /* definition and creation of task100ms */
+  osThreadDef(task100ms, startTask100ms, osPriorityNormal, 0, 128);
+  task100msHandle = osThreadCreate(osThread(task100ms), NULL);
 
-	/* definition and creation of task500ms */
-	osThreadDef(task500ms, startTask500ms, osPriorityAboveNormal, 0, 128);
-	task500msHandle = osThreadCreate(osThread(task500ms), NULL);
+  /* definition and creation of task500ms */
+  osThreadDef(task500ms, startTask500ms, osPriorityAboveNormal, 0, 128);
+  task500msHandle = osThreadCreate(osThread(task500ms), NULL);
 
-	/* USER CODE BEGIN RTOS_THREADS */
+  /* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
-	/* USER CODE END RTOS_THREADS */
+  /* USER CODE END RTOS_THREADS */
+
 }
 
 /* USER CODE BEGIN Header_startTask100ms */
@@ -171,17 +172,24 @@ void MX_FREERTOS_Init(void)
  * @retval None
  */
 /* USER CODE END Header_startTask100ms */
-void startTask100ms(void const *argument)
+void startTask100ms(void const * argument)
 {
-	/* USER CODE BEGIN startTask100ms */
+  /* USER CODE BEGIN startTask100ms */
 	/* Infinite loop */
 	volatile uint8_t taskCounts = 0;
 	for (;;)
 	{
 		// Task activities
-		USART2_addToQueue("100ms Task!\n\r");
+		//USART2_addToQueue("100ms Task!\n\r");
 		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin); // Blink LED2 at task time
 
+		char keyPressed = serviceKeyboard_consumeKey();
+		if(keyPressed != 'x')
+		{
+			char strKey[16];
+			sprintf(strKey, "KeyPress:%c \n\r",keyPressed);
+			USART2_addToQueue(&strKey);
+		}
 		moduleSnake_runTask(LCD_displayBuffer01,1);
 		moduleSnake_autoPlay();
 
@@ -193,7 +201,7 @@ void startTask100ms(void const *argument)
 			osThreadResume(task500msHandle);
 		osDelay(100);
 	}
-	/* USER CODE END startTask100ms */
+  /* USER CODE END startTask100ms */
 }
 
 /* USER CODE BEGIN Header_startTask500ms */
@@ -203,9 +211,9 @@ void startTask100ms(void const *argument)
  * @retval None
  */
 /* USER CODE END Header_startTask500ms */
-void startTask500ms(void const *argument)
+void startTask500ms(void const * argument)
 {
-	/* USER CODE BEGIN startTask500ms */
+  /* USER CODE BEGIN startTask500ms */
 
 	int a=0; 
 
@@ -214,7 +222,7 @@ void startTask500ms(void const *argument)
 	{
 		// Task activities
 		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-		USART2_addToQueue("500ms Task!\n\r"); // Blink LED1 at task time
+		//USART2_addToQueue("500ms Task!\n\r"); // Blink LED1 at task time
 
 		if(a)
 		{
@@ -226,7 +234,7 @@ void startTask500ms(void const *argument)
 			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'o',0,30);
 			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z',0,36);
 			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'z',0,42);
-				LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,48);
+			LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'a',0,48);
 			a=0;
 		}
 		else
@@ -248,7 +256,7 @@ void startTask500ms(void const *argument)
 		LCD_Buffer_sendToQueue(LCD_displayBuffer01);
 		osThreadSuspend(task500msHandle);
 	}
-	/* USER CODE END startTask500ms */
+  /* USER CODE END startTask500ms */
 }
 
 /* Private application code --------------------------------------------------*/
