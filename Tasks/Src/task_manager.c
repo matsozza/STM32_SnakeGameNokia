@@ -39,7 +39,6 @@ extern LCD_displayBuffer_t *LCD_displayBuffer01;
 void taskManager_100ms_init()
 {
 	char task500ms_keyPressed = 'x';
-	uint8_t task500ms_keyPressedAvbl = 0;
 }
 
 void taskManager_100ms_run()
@@ -49,10 +48,10 @@ void taskManager_100ms_run()
 
 	// ** Check and consume keyboard pressed key
 	char task500ms_keyPressed = serviceKeyboard_consumeKey();
-	if(keyPressed != 'x')
+	if(task500ms_keyPressed != 'x')
 	{
 		char strKey[16];
-		sprintf(strKey, "KeyPress:%c \n\r",keyPressed);
+		sprintf(strKey, "KeyPress:%c \n\r",task500ms_keyPressed);
 		USART2_addToQueue(&strKey);
 	}
 

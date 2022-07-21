@@ -40,11 +40,9 @@ int8_t flashMem_eraseSector()
 {
 	if(HAL_FLASH_Unlock() == HAL_OK)
 	{
-		if(FLASH_Erase_Sector(FLASHMEM_DEFAULT_SECTOR, FLASHMEM_DEFAULT_VRANGE) == HAL_OK)
-		{
-			HAL_FLASH_Lock();
-			return 0;
-		}
+		FLASH_Erase_Sector(FLASHMEM_DEFAULT_SECTOR, FLASHMEM_DEFAULT_VRANGE);
+		HAL_FLASH_Lock();
+		return 0;
 	}
 	return -1;
 }
