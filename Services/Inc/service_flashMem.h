@@ -21,6 +21,7 @@
 
 /* Typedef declare -----------------------------------------------------------*/
 
+
 /* Function prototypes -------------------------------------------------------*/
 int8_t flashMem_writeByte(uint8_t Data, uint32_t Address, uint32_t Offset);
 uint8_t flashMem_getByte(uint32_t Address, uint32_t Offset);
