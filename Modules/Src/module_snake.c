@@ -26,11 +26,16 @@
 
 /* Internal variables includes -----------------------------------------------*/
 LCD_displayBuffer_t *moduleSnake_LCD_displayBuffer;
-enum moduleSnakeState_e moduleSnakeState = MODSNAKE_NOT_INIT;
-snakeObj_t snakeObj;
-foodObj_t foodObj;
-uint8_t boardPixels[5][84][3];
-char keyPressedGlb;
+enum moduleSnakeState_e moduleSnakeState = MODSNAKE_NOT_INIT; // State machine current state
+enum moduleSnakeStateTrans_e moduleSnakeStateTrans = MODSNAKE_IDLE; // State machine internal transition
+char moduleSnake_keyPressedGlb;
+uint8_t moduleSnake_boardPixels[5][84][3];
+
+snakeObj_t snakeObj; // Internal type
+foodObj_t foodObj; // Internal type
+
+/* Internal constant includes -----------------------------------------------*/
+const uint8_t moduleSnake_splashScreen1[] = MODSNAKE_SPLASH_SCREEN_01
 
 /* Internal functions includes -----------------------------------------------*/
 void _moduleSnake_stateTransition(uint8_t Activate);
@@ -102,7 +107,14 @@ void _moduleSnake_stateTransition(uint8_t Activate)
 	}
 	else if(Activate && moduleSnakeState == MODSNAKE_INIT_STOPPED)
 	{
-		moduleSnakeState = MODSNAKE_INIT_RUNNING;
+		moduleSnakeState = MODSNAKE_INIT_SPLASH;
+	}
+	else if(Activate && moduleSnakeState == MODSNAKE_INIT_SPLASH)
+	{
+		if(moduleSnakeStateTrans == MODSNAKE_SPLASH_RUN)
+		{
+			moduleSnakeState = MODSNAKE_INIT_RUNNING;
+		}
 	}
 	else if(!Activate && moduleSnakeState == MODSNAKE_INIT_RUNNING)
 	{
@@ -112,6 +124,8 @@ void _moduleSnake_stateTransition(uint8_t Activate)
 
 void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer, char keyPressed)
 {
+	moduleSnake_keyPressedGlb = keyPressed;
+	
 	if(moduleSnakeState == MODSNAKE_NOT_INIT)
 	{
 		// Empty
@@ -120,9 +134,12 @@ void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer, char key
 	{
 		_moduleSnake_initGame(LCD_displayBuffer);
 	}
+	else if(moduleSnakeState == MODSNAKE_INIT_SPLASH)
+	{
+		_moduleSnake_splashScreen();
+	}
 	else if(moduleSnakeState == MODSNAKE_INIT_RUNNING)
 	{
-		keyPressedGlb = keyPressed;
 		_moduleSnake_runGame();
 	}
 }
@@ -134,6 +151,21 @@ void _moduleSnake_initGame(LCD_displayBuffer_t *LCD_displayBuffer)
 	_food_initFoodObj();
 	_board_initLayers();
 	_IO_sendToLCD();
+}
+
+void _moduleSnake_splashScreen()
+{
+	
+	for(uint8_t rowIdx = 8; rowIdx < 48; rowIdx++)
+	{
+		for(uint8_t colIdx = 0; colIdx < 84; colIdx++)
+		{
+			uint8_t pixelVal = moduleSnake_splashScreen1[colIdx + 84*(rowIdx-8)];
+			LCD_Buffer_setPixel(moduleSnake_LCD_displayBuffer, rowIdx, colIdx, pixelVal);
+		}
+	}
+
+	//moduleSnakeStateTrans = MODSNAKE_SPLASH_RUN;
 }
 
 void _moduleSnake_runGame()
@@ -151,7 +183,7 @@ void _moduleSnake_runGame()
 
 void _key_consumeKey()
 {
-	switch(keyPressedGlb)
+	switch(moduleSnake_keyPressedGlb)
 	{
 		case '2':
 			_snake_changeDirection(UP);
@@ -258,8 +290,8 @@ void _snake_printSnakeToBoard()
 	{
 		for (int colIdx = 0; colIdx < 84; colIdx++)
 		{
-			boardPixels[rowGroupIdx][colIdx][0] = 0x00;
-			boardPixels[rowGroupIdx][colIdx][0] = 0x00;
+			moduleSnake_boardPixels[rowGroupIdx][colIdx][0] = 0x00;
+			moduleSnake_boardPixels[rowGroupIdx][colIdx][0] = 0x00;
 		}
 	}
 
@@ -339,8 +371,8 @@ void _food_printFoodToBoard()
 	{
 		for (int colIdx = 0; colIdx < 84; colIdx++)
 		{
-			boardPixels[rowGroupIdx][colIdx][1] = 0x00;
-			boardPixels[rowGroupIdx][colIdx][1] = 0x00;
+			moduleSnake_boardPixels[rowGroupIdx][colIdx][1] = 0x00;
+			moduleSnake_boardPixels[rowGroupIdx][colIdx][1] = 0x00;
 		}
 	}
 
@@ -367,24 +399,24 @@ void _board_initLayers()
 		{
 			for (uint8_t layerIdx = 0; layerIdx < 3; layerIdx++)
 			{
-				boardPixels[rowGroupIdx][colIdx][layerIdx] = 0x00;
-				boardPixels[rowGroupIdx][colIdx][layerIdx] = 0x00;
+				moduleSnake_boardPixels[rowGroupIdx][colIdx][layerIdx] = 0x00;
+				moduleSnake_boardPixels[rowGroupIdx][colIdx][layerIdx] = 0x00;
 			}
 		}
 	}
 
-	// Creates the boardPixels lines - vertical
+	// Creates the moduleSnake_boardPixels lines - vertical
 	for (uint8_t rowGroupIdx = 0; rowGroupIdx < 5; rowGroupIdx++)
 	{
-		boardPixels[rowGroupIdx][0][2] = 0xFF;
-		boardPixels[rowGroupIdx][83][2] = 0xFF;
+		moduleSnake_boardPixels[rowGroupIdx][0][2] = 0xFF;
+		moduleSnake_boardPixels[rowGroupIdx][83][2] = 0xFF;
 	}
 
-	// Creates the boardPixels lines - horizontal
+	// Creates the moduleSnake_boardPixels lines - horizontal
 	for (uint8_t colIdx = 0; colIdx < 84; colIdx++)
 	{
-		boardPixels[0][colIdx][2] |= 0x01;
-		boardPixels[4][colIdx][2] |= 0x80;
+		moduleSnake_boardPixels[0][colIdx][2] |= 0x01;
+		moduleSnake_boardPixels[4][colIdx][2] |= 0x80;
 	}
 }
 
@@ -396,11 +428,11 @@ void _board_setPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t pixelVal, uint8_t b
 	// Set a value to a pixel of the board game
 	if (pixelVal)
 	{
-		boardPixels[rowGroupIdx][colIdx][boardLayer] |= (1 << (rowPixelIdx));
+		moduleSnake_boardPixels[rowGroupIdx][colIdx][boardLayer] |= (1 << (rowPixelIdx));
 	}
 	else
 	{
-		boardPixels[rowGroupIdx][colIdx][boardLayer] &= ~((uint8_t)(1 << (rowPixelIdx)));
+		moduleSnake_boardPixels[rowGroupIdx][colIdx][boardLayer] &= ~((uint8_t)(1 << (rowPixelIdx)));
 	}
 }
 
@@ -408,7 +440,7 @@ uint8_t _board_getPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer)
 {
 	uint8_t rowGroupIdx = (uint8_t)(rowIdx / 8); // 'major' row
 	uint8_t rowPixelIdx = (uint8_t)(rowIdx % 8); // 'minor' row
-	return (uint8_t) ((boardPixels[rowGroupIdx][colIdx][boardLayer] & (1 << (rowPixelIdx))) > 0); // Return value
+	return (uint8_t) ((moduleSnake_boardPixels[rowGroupIdx][colIdx][boardLayer] & (1 << (rowPixelIdx))) > 0); // Return value
 }
 
 

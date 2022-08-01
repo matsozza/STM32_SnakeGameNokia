@@ -1951,8 +1951,7 @@ Queue_t * const pxQueue = xQueue;
 	configASSERT( pxQueue );
 
 	taskENTER_CRITICAL();
-	{
-		uxReturn = pxQueue->uxLength - pxQueue->uxMessagesWaiting;
+	{		uxReturn = pxQueue->uxLength - pxQueue->uxMessagesWaiting;
 	}
 	taskEXIT_CRITICAL();
 
