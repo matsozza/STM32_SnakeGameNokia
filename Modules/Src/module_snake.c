@@ -165,7 +165,10 @@ void _moduleSnake_splashScreen()
 		}
 	}
 
-	//moduleSnakeStateTrans = MODSNAKE_SPLASH_RUN;
+	if(moduleSnake_keyPressedGlb != 'x') // If any key pressed, start game
+	{
+		moduleSnakeStateTrans = MODSNAKE_SPLASH_RUN;
+	}
 }
 
 void _moduleSnake_runGame()

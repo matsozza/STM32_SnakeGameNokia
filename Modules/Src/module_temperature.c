@@ -74,10 +74,21 @@ static void _moduleTemperature_sendToLCD()
 	{
 		double readTempDouble = tempSensor_getTempValue();
 
+		// Print first part of string
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer, 'C',0,0);
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer, 'P',0,6);
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer, 'U',0,12);
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer, ' ',0,18);
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer, 'T',0,24);
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer, 'e',0,30);
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer, 'm',0,36);
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer, 'p',0,42);
+		LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer, ':',0,48);
+		
 		// Filter the temperature values
 		readTempDoubleFil = (readTempDoubleFil==-255)? readTempDouble : 0.95*readTempDoubleFil + 0.05*readTempDouble;
 
-		// Create a string to print
+		// Create a string to print numeric vals
 		char readTempStr[5];
 		gcvt(readTempDoubleFil, 5, &readTempStr);
 

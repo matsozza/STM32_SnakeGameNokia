@@ -74,33 +74,6 @@ void taskManager_500ms_run()
 	HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
 	//USART2_addToQueue("500ms Task!\n\r"); // Blink LED1 at task time
 
-	if(task500ms_LCDWrite)
-	{
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ' ',0,0);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ' ',0,6);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ' ',0,12);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ' ',0,18);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ' ',0,24);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ' ',0,30);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ' ',0,36);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ' ',0,42);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ' ',0,48);
-		task500ms_LCDWrite=0;
-	}
-	else
-	{	
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'C',0,0);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'P',0,6);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'U',0,12);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ' ',0,18);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'T',0,24);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'e',0,30);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'm',0,36);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, 'p',0,42);
-		LCD_Buffer_writeASCIIChar(LCD_displayBuffer01, ':',0,48);
-		task500ms_LCDWrite=1;
-	}
-
 	moduleTemperature_runTask(LCD_displayBuffer01,1);
 	LCD_Buffer_sendToQueue(LCD_displayBuffer01);
 }
