@@ -43,6 +43,7 @@ void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer, char key
 
 void _moduleSnake_initGame(LCD_displayBuffer_t *LCD_displayBuffer);
 void _moduleSnake_runGame();
+void _moduleSnake_splashScreen();
 
 void _key_consumeKey();
 
@@ -52,6 +53,7 @@ void _snake_initSnakeObj();
 void _snake_updateSnakePos();
 void _snake_printSnakeToBoard();
 void _snake_changeDirection(enum direction_e newDir);
+void _snake_checkViolation();
 
 void _food_initFoodObj();
 void _food_updateFood();
@@ -103,22 +105,36 @@ void _moduleSnake_stateTransition(uint8_t Activate)
 {
 	if(Activate && moduleSnakeState == MODSNAKE_NOT_INIT)
 	{
-		moduleSnakeState = MODSNAKE_INIT_STOPPED;
+		if(Activate) moduleSnakeState = MODSNAKE_INIT_STOPPED;
 	}
 	else if(Activate && moduleSnakeState == MODSNAKE_INIT_STOPPED)
 	{
-		moduleSnakeState = MODSNAKE_INIT_SPLASH;
+		if(Activate) moduleSnakeState = MODSNAKE_INIT_SPLASH;
 	}
-	else if(Activate && moduleSnakeState == MODSNAKE_INIT_SPLASH)
+	else if(moduleSnakeState == MODSNAKE_INIT_SPLASH)
 	{
-		if(moduleSnakeStateTrans == MODSNAKE_SPLASH_RUN)
+		if(Activate && moduleSnakeStateTrans == MODSNAKE_SPLASH_RUN)
 		{
 			moduleSnakeState = MODSNAKE_INIT_RUNNING;
 		}
 	}
-	else if(!Activate && moduleSnakeState == MODSNAKE_INIT_RUNNING)
+	else if(moduleSnakeState == MODSNAKE_INIT_RUNNING)
 	{
-		moduleSnakeState = MODSNAKE_INIT_STOPPED;
+		if(!Activate)
+		{
+			moduleSnakeState = MODSNAKE_INIT_STOPPED;
+		}
+		else if(moduleSnakeStateTrans == MODSNAKE_RUN_GAMEOVER)
+		{
+			moduleSnakeState = MODSNAKE_INIT_GAMEOVER;
+		}
+	}
+	else if(moduleSnakeState == MODSNAKE_INIT_GAMEOVER)
+	{
+		if(moduleSnakeStateTrans == MODSNAKE_GAMEOVER_STOPPED)
+		{
+			moduleSnakeState = MODSNAKE_INIT_STOPPED;
+		}
 	}
 }
 
@@ -142,6 +158,10 @@ void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer, char key
 	{
 		_moduleSnake_runGame();
 	}
+	else if(moduleSnakeState == MODSNAKE_INIT_GAMEOVER)
+	{
+		_moduleSnake_gameOver();
+	}
 }
 
 void _moduleSnake_initGame(LCD_displayBuffer_t *LCD_displayBuffer)
@@ -155,7 +175,9 @@ void _moduleSnake_initGame(LCD_displayBuffer_t *LCD_displayBuffer)
 
 void _moduleSnake_splashScreen()
 {
-	
+	static uint8_t splashTic = 0;
+
+	// Show background image always
 	for(uint8_t rowIdx = 8; rowIdx < 48; rowIdx++)
 	{
 		for(uint8_t colIdx = 0; colIdx < 84; colIdx++)
@@ -165,9 +187,103 @@ void _moduleSnake_splashScreen()
 		}
 	}
 
+	if(splashTic>9)
+	{
+		//Outer border + inner board
+		for(uint8_t rowIdx = 20; rowIdx < 32; rowIdx++)
+		{
+			for(uint8_t colIdx = 4; colIdx < 80; colIdx++)
+			{
+				uint8_t pixelVal = rowIdx==20||rowIdx==31||colIdx==4||colIdx == 79 ? 1 : 0;
+				LCD_Buffer_setPixel(moduleSnake_LCD_displayBuffer, rowIdx, colIdx, pixelVal);
+			}
+		}
+		
+		//Text 'Press Key'
+		LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'P', 22, 14);
+		LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'r', 22, 20);
+		LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'e', 22, 26);
+		LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 's', 22, 32);
+		LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 's', 22, 38);
+		LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 22, 44);
+		LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'K', 22, 50);
+		LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'e', 22, 56);
+		LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'y', 22, 62);
+		LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, '!', 22, 68);
+	}
+
 	if(moduleSnake_keyPressedGlb != 'x') // If any key pressed, start game
 	{
 		moduleSnakeStateTrans = MODSNAKE_SPLASH_RUN;
+	}
+
+	splashTic = (splashTic+1)%20;
+}
+
+void _moduleSnake_gameOver()
+{
+	static uint8_t gameOverTic = 0;
+
+	// Show background image always
+	for(uint8_t rowIdx = 8; rowIdx < 48; rowIdx++)
+	{
+		for(uint8_t colIdx = 0; colIdx < 84; colIdx++)
+		{
+			uint8_t pixelVal = moduleSnake_splashScreen1[colIdx + 84*(rowIdx-8)];
+			LCD_Buffer_setPixel(moduleSnake_LCD_displayBuffer, rowIdx, colIdx, pixelVal);
+		}
+	}
+
+	//Outer border + inner board
+	for(uint8_t rowIdx = 10; rowIdx < 40; rowIdx++)
+	{
+		for(uint8_t colIdx = 4; colIdx < 80; colIdx++)
+		{
+			uint8_t pixelVal = rowIdx==10||rowIdx==39||colIdx==4||colIdx == 79 ? 1 : 0;
+			LCD_Buffer_setPixel(moduleSnake_LCD_displayBuffer, rowIdx, colIdx, pixelVal);
+		}
+	}
+	
+	// Write gameover text
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'G', 12, 14);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'A', 12, 20);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'M', 12, 26);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'E', 12, 32);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 12, 38);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'O', 12, 44);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'V', 12, 50);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'E', 12, 56);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'R', 12, 62);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, '!', 12, 68);
+
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'S', 20, 14);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'c', 20, 20);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'o', 20, 26);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'r', 20, 32);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'e', 20, 38);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ':', 20, 44);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 20, 50);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 20, 56);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 20, 62);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 20, 68);
+
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'R', 28, 14);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'e', 28, 20);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'c', 28, 26);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'o', 28, 32);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'r', 28, 38);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'd', 28, 44);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ':', 28, 50);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 28, 56);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 28, 62);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 28, 68);
+
+	gameOverTic++;
+
+	if(gameOverTic>50)
+	{
+		moduleSnakeStateTrans = MODSNAKE_GAMEOVER_STOPPED;
+		gameOverTic=0;
 	}
 }
 
@@ -179,26 +295,71 @@ void _moduleSnake_runGame()
 	_food_printFoodToBoard();
 
 	_snake_updateSnakePos();
+	_snake_checkViolation();
 	_snake_printSnakeToBoard();
+	_snake_checkViolation();
 
 	_IO_sendToLCD();
+
 }
 
 void _key_consumeKey()
 {
 	switch(moduleSnake_keyPressedGlb)
 	{
+		// Direct / direction independent cases
 		case '2':
-			_snake_changeDirection(UP);
+			if(snakeObj.movementDir != DOWN) _snake_changeDirection(UP);
 			break;
 		case '4':
-			_snake_changeDirection(LEFT);
+			if(snakeObj.movementDir != RIGHT) _snake_changeDirection(LEFT);
 			break;
 		case '6':
-			_snake_changeDirection(RIGHT);
+			if(snakeObj.movementDir != LEFT) _snake_changeDirection(RIGHT);
 			break;
 		case '8':
-			_snake_changeDirection(DOWN);
+			if(snakeObj.movementDir != UP) _snake_changeDirection(DOWN);
+			break;
+		// Indirect / direction dependent case
+		case '1':
+			if(snakeObj.movementDir == LEFT)
+			{
+				_snake_changeDirection(UP);
+			}
+			else if((snakeObj.movementDir == UP))
+			{
+				_snake_changeDirection(LEFT);
+			}
+			break;
+		case '3':
+			if(snakeObj.movementDir == RIGHT)
+			{
+				_snake_changeDirection(UP);
+			}
+			else if((snakeObj.movementDir == UP))
+			{
+				_snake_changeDirection(RIGHT);
+			}
+			break;
+		case '7':
+			if(snakeObj.movementDir == LEFT)
+			{
+				_snake_changeDirection(DOWN);
+			}
+			else if((snakeObj.movementDir == DOWN))
+			{
+				_snake_changeDirection(LEFT);
+			}
+			break;
+		case '9':
+			if(snakeObj.movementDir == RIGHT)
+			{
+				_snake_changeDirection(DOWN);
+			}
+			else if((snakeObj.movementDir == DOWN))
+			{
+				_snake_changeDirection(RIGHT);
+			}
 			break;
 	}
 }
@@ -241,24 +402,55 @@ void _snake_initSnakeObj()
 
 void _snake_updateSnakePos()
 {
+	//Move snake once each 2 tasks (slow-down)
+	static uint8_t snakeTic = 0;
+
+	if(!snakeTic)
+	{
+		snakeTic=1;
+		return;
+	}
+	else{
+		snakeTic=0;
+	}
+	
 	//Set snake head movement
 	boardPos_t prevSnakeHeadPos = snakeObj.bodyComponent[0];
 	switch(snakeObj.movementDir)
 	{
 		case RIGHT:
-			snakeObj.bodyComponent[0].posCol+=1;
+			snakeObj.bodyComponent[0].posCol+=2;
 			break;
 		case UP:
-			snakeObj.bodyComponent[0].posRow-=1;
+			snakeObj.bodyComponent[0].posRow-=2;
 			break;
 		case LEFT:
-			snakeObj.bodyComponent[0].posCol-=1;
+			snakeObj.bodyComponent[0].posCol-=2;
 			break;
 		case DOWN:
-			snakeObj.bodyComponent[0].posRow+=1;
+			snakeObj.bodyComponent[0].posRow+=2;
 			break;
 		default:
 			return;
+	}
+
+	// Avoid negatives / out of bounds, LCD may glitch
+	if(snakeObj.bodyComponent[0].posCol < 0)
+	{
+		snakeObj.bodyComponent[0].posCol = 0;
+	} 
+	else if(snakeObj.bodyComponent[0].posCol > 83)
+	{
+		snakeObj.bodyComponent[0].posCol = 83;
+	}
+
+	if(snakeObj.bodyComponent[0].posRow < 0)
+	{
+		snakeObj.bodyComponent[0].posRow = 0;
+	} 
+	else if(snakeObj.bodyComponent[0].posRow > 39)
+	{
+		snakeObj.bodyComponent[0].posRow = 39;
 	}
 
 	//Set snake body movement
@@ -266,7 +458,7 @@ void _snake_updateSnakePos()
 	{
 		boardPos_t prevSnakeBodyPart, prevSnakeBodyPart2;
 
-		if (bodyPart == 1) // Follow head movement
+		if (bodyPart==1) // Follow head movement
 		{
 			prevSnakeBodyPart = snakeObj.bodyComponent[1];
 			snakeObj.bodyComponent[1] = prevSnakeHeadPos;
@@ -281,7 +473,6 @@ void _snake_updateSnakePos()
 			{
 				prevSnakeBodyPart = prevSnakeBodyPart2;
 			}
-
 		}
 	}
 }
@@ -324,6 +515,31 @@ void _snake_printSnakeToBoard()
 void _snake_changeDirection(enum direction_e newDir)
 {
 	snakeObj.movementDir = newDir;
+}
+
+void _snake_checkViolation()
+{
+	// Check if the snake touched itself
+	for(uint8_t bodyPart = 1; bodyPart < snakeObj.size; bodyPart++)
+	{
+		if((snakeObj.bodyComponent[0].posRow == snakeObj.bodyComponent[bodyPart].posRow) &&
+			(snakeObj.bodyComponent[0].posCol == snakeObj.bodyComponent[bodyPart].posCol))
+			{
+				moduleSnakeStateTrans = MODSNAKE_RUN_GAMEOVER;
+				return;
+			}
+	}
+
+	// Check if the snake touched the wall
+	if(snakeObj.bodyComponent[0].posRow <= 0 ||
+	 	snakeObj.bodyComponent[0].posRow >= 39 ||
+	 	snakeObj.bodyComponent[0].posCol <= 0 ||
+	 	snakeObj.bodyComponent[0].posCol >= 83)
+		{
+			moduleSnakeStateTrans = MODSNAKE_RUN_GAMEOVER;
+		}
+
+	return;
 }
 
 void _food_initFoodObj()
