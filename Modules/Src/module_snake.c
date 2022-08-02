@@ -21,6 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 #include "module_snake.h"
+#include "service_flashMem.h"
+#include <stdio.h>
 
 /* External variables includes -----------------------------------------------*/
 
@@ -245,6 +247,13 @@ void _moduleSnake_gameOver()
 	}
 	
 	// Write gameover text
+	uint8_t snakeRecordSize = flashMem_getByte(FLASHMEM_START_ADDRESS, MODSNAKE_EEPROM_RECORD);
+	char snakeRecordStr[4] = {'\0','\0','\0','\0'};
+	sprintf(snakeRecordStr, "%d", snakeRecordSize);
+
+	char snakeCurrSize[4] = {'\0','\0','\0','\0'};;
+	sprintf(snakeCurrSize, "%d", snakeObj.size);
+
 	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'G', 12, 14);
 	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'A', 12, 20);
 	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'M', 12, 26);
@@ -256,32 +265,38 @@ void _moduleSnake_gameOver()
 	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'R', 12, 62);
 	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, '!', 12, 68);
 
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'S', 20, 14);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'c', 20, 20);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'o', 20, 26);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'r', 20, 32);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'e', 20, 38);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ':', 20, 44);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 20, 50);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 20, 56);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 20, 62);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 20, 68);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'S', 20, 12);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'c', 20, 18);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'o', 20, 24);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'r', 20, 30);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'e', 20, 36);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ':', 20, 42);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, snakeCurrSize[0], 20, 48);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, snakeCurrSize[1], 20, 54);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, snakeCurrSize[2], 20, 60);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, snakeCurrSize[3], 20, 66);
 
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'R', 28, 14);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'e', 28, 20);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'c', 28, 26);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'o', 28, 32);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'r', 28, 38);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'd', 28, 44);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ':', 28, 50);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 28, 56);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 28, 62);
-	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ' ', 28, 68);
-
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'R', 28, 12);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'e', 28, 18);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'c', 28, 24);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'o', 28, 30);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'r', 28, 36);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, 'd', 28, 42);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, ':', 28, 48);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, snakeRecordStr[0], 28, 54);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, snakeRecordStr[1], 28, 60);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, snakeRecordStr[2], 28, 66);
+	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, snakeRecordStr[3], 28, 72);
 	gameOverTic++;
 
 	if(gameOverTic>50)
 	{
+		// Save record in non-volatile memory (NVM)
+		if(snakeRecordSize < snakeObj.size)
+		{
+			flashMem_writeByte(snakeObj.size,FLASHMEM_START_ADDRESS, MODSNAKE_EEPROM_RECORD);
+		}
+
 		moduleSnakeStateTrans = MODSNAKE_GAMEOVER_STOPPED;
 		gameOverTic=0;
 	}
@@ -558,7 +573,7 @@ void _food_updateFood()
 	if(foodRow == snakeRow && foodCol == snakeCol)
 	{
 		foodObj.numFood = 0; // Remove food
-		snakeObj.size+=7;
+		snakeObj.size+=5;
 
 		// ***Delete after 
 		if(snakeObj.size > 140)
