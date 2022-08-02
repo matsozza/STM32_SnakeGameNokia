@@ -294,7 +294,9 @@ void _moduleSnake_gameOver()
 		// Save record in non-volatile memory (NVM)
 		if(snakeRecordSize < snakeObj.size)
 		{
-			flashMem_writeByte(snakeObj.size,FLASHMEM_START_ADDRESS, MODSNAKE_EEPROM_RECORD);
+			// TODO Temporary work-around, shall be managed by flashMem lib
+			flashMem_eraseSector(); 
+			flashMem_writeByte((uint8_t)snakeObj.size, (uint32_t)FLASHMEM_START_ADDRESS, (uint32_t)MODSNAKE_EEPROM_RECORD);
 		}
 
 		moduleSnakeStateTrans = MODSNAKE_GAMEOVER_STOPPED;
