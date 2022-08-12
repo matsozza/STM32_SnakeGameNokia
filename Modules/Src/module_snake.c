@@ -409,11 +409,18 @@ void _IO_sendToLCD()
 
 void _snake_initSnakeObj()
 {
-	snakeObj.size = 7; // Start size
+	snakeObj.size = 5; // Start size
 	snakeObj.bodyComponent[0].posRow = 20;
 	snakeObj.bodyComponent[0].posCol = 40;
 	snakeObj.bodyComponent[1].posRow = 19;
 	snakeObj.bodyComponent[1].posCol = 40;
+
+	for(uint8_t idx=2; idx<255;idx++) // Clear garbage
+	{
+		snakeObj.bodyComponent[idx].posRow = 0;
+		snakeObj.bodyComponent[idx].posCol = 0;
+	}
+
 	snakeObj.movementDir = DOWN; // First movement 
 }
 
@@ -452,20 +459,20 @@ void _snake_updateSnakePos()
 	}
 
 	// Avoid negatives / out of bounds, LCD may glitch
-	if(snakeObj.bodyComponent[0].posCol < 0)
+	if(snakeObj.bodyComponent[0].posCol <= 0)
 	{
 		snakeObj.bodyComponent[0].posCol = 0;
 	} 
-	else if(snakeObj.bodyComponent[0].posCol > 83)
+	else if(snakeObj.bodyComponent[0].posCol >= 83)
 	{
 		snakeObj.bodyComponent[0].posCol = 83;
 	}
 
-	if(snakeObj.bodyComponent[0].posRow < 0)
+	if(snakeObj.bodyComponent[0].posRow <= 0)
 	{
 		snakeObj.bodyComponent[0].posRow = 0;
 	} 
-	else if(snakeObj.bodyComponent[0].posRow > 39)
+	else if(snakeObj.bodyComponent[0].posRow >= 39)
 	{
 		snakeObj.bodyComponent[0].posRow = 39;
 	}
@@ -575,12 +582,12 @@ void _food_updateFood()
 	if(foodRow == snakeRow && foodCol == snakeCol)
 	{
 		foodObj.numFood = 0; // Remove food
-		snakeObj.size+=5;
+		snakeObj.size+=3;
 
-		// ***Delete after 
-		if(snakeObj.size > 140)
+		// TODO ***Delete after - reset snake
+		if(snakeObj.size > 240)
 		{
-			snakeObj.size = 7;
+			snakeObj.size = 5;
 		}
 	}
 	// If no food present, add one

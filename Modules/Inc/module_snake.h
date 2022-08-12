@@ -99,7 +99,7 @@ typedef struct
 typedef struct{
     uint8_t size;
     enum direction_e movementDir; // 0-right 1-up 2-left 3-down
-    boardPos_t bodyComponent[500]; // 48 - 8 - 1 - 1 = 38 of height per  82 of width
+    boardPos_t bodyComponent[255]; 
 } snakeObj_t;
 
 typedef struct{
