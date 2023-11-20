@@ -77,7 +77,18 @@ void moduleSnake_runTask(LCD_displayBuffer_t *LCD_displayBuffer, char keyPressed
 
 void moduleSnake_autoPlay()
 {
-		//Simple logic to pursuit food
+		// Check if game is in the splash screen
+		if(moduleSnakeState == MODSNAKE_INIT_SPLASH)
+		{
+			static tmpCnt = 0;
+			if(tmpCnt++ > 10)	
+			{
+				moduleSnakeStateTrans = MODSNAKE_SPLASH_RUN;
+				tmpCnt = 0;
+			}
+		}		
+		
+		// Simple logic to pursuit food
 		uint8_t foodRow = foodObj.foodComponent[0].posRow;
 		uint8_t foodCol = foodObj.foodComponent[0].posCol;
 		uint8_t snakeRow = snakeObj.bodyComponent[0].posRow;
