@@ -107,11 +107,19 @@ char serviceKeyboard_consumeKey()
 	{
 		// Flag the input as consumed
 		serviceKeyboardInput.inputConsumed = 1;
+
+		#if EXTKEYBOARD_DEBUG_LVL_USART >=1
+		// USART feedback about pressed key
+		char strKey[16];
+		sprintf(strKey, "SKB_KeyPress:%c \n\r",serviceKeyboardInput.inputKey);
+		USART2_addToQueue(&strKey);
+		#endif
+
 		return serviceKeyboardInput.inputKey;
 	}
 	else
 	{
-		return 'x';
+		return 'x'; // No input to be consumed
 	}
 }
 

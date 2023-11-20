@@ -38,26 +38,20 @@ extern LCD_displayBuffer_t *LCD_displayBuffer01;
 /* Functions implementation --------------------------------------------------*/
 void taskManager_100ms_init()
 {
-	char task100ms_keyPressed = 'x';
+	task100ms_keyPressed = 'x'; 
 }
 
 void taskManager_100ms_run()
 {
-	//USART2_addToQueue("100ms Task!\n\r");
+	//USART2_addToQueue("-> 100ms Task!\n\r");
 	HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin); // Blink LED2 at task time
 
 	// ** Check and consume keyboard pressed key
-	char task100ms_keyPressed = serviceKeyboard_consumeKey();
-	if(task100ms_keyPressed != 'x')
-	{
-		char strKey[16];
-		sprintf(strKey, "KeyPress:%c \n\r",task100ms_keyPressed);
-		USART2_addToQueue(&strKey);
-	}
+	task100ms_keyPressed = serviceKeyboard_consumeKey();
 
 	// ** Run RTOS modules
 	moduleSnake_runTask(LCD_displayBuffer01,task100ms_keyPressed,1);
-	//moduleSnake_autoPlay();
+	moduleSnake_autoPlay();
 
 	// ** Send LCD Buffer to queue for further updating
 	LCD_Buffer_sendToQueue(LCD_displayBuffer01);
@@ -72,7 +66,7 @@ void taskManager_500ms_run()
 {
 	// Task activities
 	HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-	//USART2_addToQueue("500ms Task!\n\r"); // Blink LED1 at task time
+	//USART2_addToQueue("----> 500ms Task!\n\r"); // Blink LED1 at task time
 
 	moduleTemperature_runTask(LCD_displayBuffer01,1);
 	LCD_Buffer_sendToQueue(LCD_displayBuffer01);
