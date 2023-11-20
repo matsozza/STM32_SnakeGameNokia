@@ -12,11 +12,16 @@
 /* Includes ------------------------------------------------------------------*/
 #include "cmsis_os.h"
 #include "service_lcd.h"
+#include "service_lcd_fonts.h"
 #include "service_randomGen.h"
+#include "service_flashMem.h"
+#include "service_uart.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 /* Defines ------------------------------------------------------------------*/
 
+#define MODSNAKE_DEBUG_LVL_USART 1
 #define MODSNAKE_EEPROM_RECORD 0x00000000
 
 // Splash screen bitmap images for snake game
@@ -97,7 +102,7 @@ typedef struct
 } boardPos_t;
 
 typedef struct{
-    uint8_t size;
+    uint16_t size;
     enum direction_e movementDir; // 0-right 1-up 2-left 3-down
     boardPos_t bodyComponent[255]; 
 } snakeObj_t;

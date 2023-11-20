@@ -75,7 +75,7 @@ void serviceKeyboard_TIM_PeriodElapsedCallback()
 		serviceKeyboardInput.inputConsumed = 0;
 		
 		#if EXTKEYBOARD_DEBUG_LVL_USART >=1
-			char debugMsg[15];
+			char debugMsg[25];
 			sprintf(debugMsg, "SKB_ColAttempt:%d\n\r", serviceKeyboard_colReadAttempts);
 			USART2_addToQueue(debugMsg);
 		#endif

@@ -21,8 +21,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 #include "module_snake.h"
-#include "service_flashMem.h"
-#include <stdio.h>
 
 /* External variables includes -----------------------------------------------*/
 
@@ -32,6 +30,7 @@ enum moduleSnakeState_e moduleSnakeState = MODSNAKE_NOT_INIT; // State machine c
 enum moduleSnakeStateTrans_e moduleSnakeStateTrans = MODSNAKE_IDLE; // State machine internal transition
 char moduleSnake_keyPressedGlb;
 uint8_t moduleSnake_boardPixels[5][84][3];
+uint8_t moduleSnake_resetEEPROM;
 
 snakeObj_t snakeObj; // Internal type
 foodObj_t foodObj; // Internal type
@@ -46,6 +45,7 @@ void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer, char key
 void _moduleSnake_initGame(LCD_displayBuffer_t *LCD_displayBuffer);
 void _moduleSnake_runGame();
 void _moduleSnake_splashScreen();
+void _moduleSnake_gameOver();
 
 void _key_consumeKey();
 
@@ -61,9 +61,12 @@ void _food_initFoodObj();
 void _food_updateFood();
 void _food_printFoodToBoard();
 
+void _misc_showMsg();
+
 void _board_initLayers();
 void _board_setPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t pixelVal, uint8_t boardLayer);
 uint8_t _board_getPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer);
+uint8_t _board_writeASCIIChar(char ASCII_char, uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer);
 
 /* Functions implementation --------------------------------------------------*/
 void moduleSnake_runTask(LCD_displayBuffer_t *LCD_displayBuffer, char keyPressed, uint8_t Activate)
@@ -77,41 +80,105 @@ void moduleSnake_runTask(LCD_displayBuffer_t *LCD_displayBuffer, char keyPressed
 
 void moduleSnake_autoPlay()
 {
-		// Check if game is in the splash screen
-		if(moduleSnakeState == MODSNAKE_INIT_SPLASH)
+	// Check if game is in the splash screen
+	static uint8_t tmpCnt = 0;
+	if(moduleSnakeState == MODSNAKE_INIT_SPLASH)
+	{			
+		if(tmpCnt > 30)	
 		{
-			static tmpCnt = 0;
-			if(tmpCnt++ > 10)	
-			{
-				moduleSnakeStateTrans = MODSNAKE_SPLASH_RUN;
-				tmpCnt = 0;
-			}
-		}		
-		
-		// Simple logic to pursuit food
-		uint8_t foodRow = foodObj.foodComponent[0].posRow;
-		uint8_t foodCol = foodObj.foodComponent[0].posCol;
-		uint8_t snakeRow = snakeObj.bodyComponent[0].posRow;
-		uint8_t snakeCol = snakeObj.bodyComponent[0].posCol;
-		if (foodRow < snakeRow)
-		{
-			_snake_changeDirection(UP);
+			moduleSnakeStateTrans = MODSNAKE_SPLASH_RUN;
+			tmpCnt = 0;
 		}
-		else if (foodRow > snakeRow)
-		{
-			_snake_changeDirection(DOWN);
+		else{
+			tmpCnt++;
 		}
-		else
+	}		
+	
+	// Simple logic to pursuit food
+	uint8_t foodRow = foodObj.foodComponent[0].posRow;
+	uint8_t foodCol = foodObj.foodComponent[0].posCol;
+	uint8_t snakeRow = snakeObj.bodyComponent[0].posRow;
+	uint8_t snakeCol = snakeObj.bodyComponent[0].posCol;
+
+	uint8_t nokMoves = 0x0; //Evasive / survival moves -> UP / DOWN / LEFT / RIGHT
+	
+	// Check for blocked moves (survival mode)
+	for(uint16_t bodyPart = 1; bodyPart < snakeObj.size; bodyPart++)
+	{
+		// UP move blocked
+		if((snakeObj.bodyComponent[bodyPart].posRow == snakeRow-2 && snakeObj.bodyComponent[bodyPart].posCol == snakeCol) || snakeRow == 2)
 		{
-			if (foodCol < snakeCol)
-			{
-				_snake_changeDirection(LEFT);
-			}
-			else if (foodCol > snakeCol)
+			nokMoves |= 0b1000;
+		}
+
+		// DOWN move blocked
+		if((snakeObj.bodyComponent[bodyPart].posRow == snakeRow+2 && snakeObj.bodyComponent[bodyPart].posCol == snakeCol) || snakeRow == 36)
+		{
+			nokMoves |= 0b100;
+		}
+
+		// LEFT move blocked
+		if((snakeObj.bodyComponent[bodyPart].posRow == snakeRow && snakeObj.bodyComponent[bodyPart].posCol == snakeCol-2) || snakeCol == 2)
+		{
+			nokMoves |= 0b10;
+		}
+
+		// RIGHT move blocked
+		if((snakeObj.bodyComponent[bodyPart].posRow == snakeRow && snakeObj.bodyComponent[bodyPart].posCol == snakeCol+2) || snakeCol == 80)
+		{
+			nokMoves |= 0b1;
+		}
+	}
+
+	#if MODSNAKE_DEBUG_LVL_USART >=1
+	char debugMsg[25];
+	sprintf(debugMsg, "MODSNAKE_NokM %d\n\r", nokMoves);
+	USART2_addToQueue(debugMsg);
+	#endif
+
+	// Simple moves to chase food if next tile is survivable
+	if (foodRow < snakeRow && !(nokMoves & 0b1000))
+	{
+		_snake_changeDirection(UP);
+	}
+	else if (foodRow > snakeRow && !(nokMoves & 0b100))
+	{
+		_snake_changeDirection(DOWN);
+	}
+	else if (foodCol < snakeCol && !(nokMoves & 0b10))
+	{
+		_snake_changeDirection(LEFT);
+	}
+	else if (foodCol > snakeCol && !(nokMoves & 0b1))
+	{
+		_snake_changeDirection(RIGHT);
+	}
+	else // If no new direction requested, just ensure survival in current direction
+	{
+		if((snakeObj.movementDir == UP && nokMoves & 0b1000) ||	(snakeObj.movementDir == DOWN && nokMoves & 0b0100))
+		{
+			if(nokMoves & 0b10)
 			{
 				_snake_changeDirection(RIGHT);
 			}
+			else
+			{
+				_snake_changeDirection(LEFT);
+			}
+
 		}
+		else if((snakeObj.movementDir == LEFT && nokMoves & 0b10) ||	(snakeObj.movementDir == RIGHT && nokMoves & 0b1))
+		{
+			if(nokMoves & 0b1000)
+			{
+				_snake_changeDirection(DOWN);
+			}
+			else
+			{
+				_snake_changeDirection(UP);
+			}
+		}
+	}
 }
 
 void _moduleSnake_stateTransition(uint8_t Activate)
@@ -180,6 +247,7 @@ void _moduleSnake_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer, char key
 void _moduleSnake_initGame(LCD_displayBuffer_t *LCD_displayBuffer)
 {
 	moduleSnake_LCD_displayBuffer = LCD_displayBuffer;
+	moduleSnake_resetEEPROM = 0; // do not reset
 	_snake_initSnakeObj();
 	_food_initFoodObj();
 	_board_initLayers();
@@ -258,9 +326,16 @@ void _moduleSnake_gameOver()
 	}
 	
 	// Write gameover text
-	uint8_t snakeRecordSize = flashMem_getByte(FLASHMEM_START_ADDRESS, MODSNAKE_EEPROM_RECORD);
+	uint16_t snakeRecordSize = flashMem_getHalfWord(FLASHMEM_START_ADDRESS, MODSNAKE_EEPROM_RECORD);
 	char snakeRecordStr[4] = {'\0','\0','\0','\0'};
-	sprintf(snakeRecordStr, "%d", snakeRecordSize);
+	if(moduleSnake_resetEEPROM == 1)
+	{
+		sprintf(snakeRecordStr, "%d", snakeObj.size);
+	}
+	else
+	{
+		sprintf(snakeRecordStr, "%d", snakeRecordSize > snakeObj.size ? snakeRecordSize : snakeObj.size);
+	}
 
 	char snakeCurrSize[4] = {'\0','\0','\0','\0'};;
 	sprintf(snakeCurrSize, "%d", snakeObj.size);
@@ -302,16 +377,23 @@ void _moduleSnake_gameOver()
 
 	if(gameOverTic>50)
 	{
-		// Save record in non-volatile memory (NVM)
-		if(snakeRecordSize < snakeObj.size)
+		// FIXME Temporary work-around, shall be managed by flashMem lib
+		// Reset record value to current value in non-volatile memory (NVM)
+		if(moduleSnake_resetEEPROM == 1)
 		{
-			// TODO Temporary work-around, shall be managed by flashMem lib
-			flashMem_eraseSector(); 
-			flashMem_writeByte((uint8_t)snakeObj.size, (uint32_t)FLASHMEM_START_ADDRESS, (uint32_t)MODSNAKE_EEPROM_RECORD);
+			flashMem_eraseSector();
+			flashMem_writeHalfWord((uint16_t)snakeObj.size, (uint32_t)FLASHMEM_START_ADDRESS, (uint32_t)MODSNAKE_EEPROM_RECORD); // Reset command
+		}
+		// Save new record in non-volatile memory (NVM)
+		else if(snakeRecordSize < snakeObj.size)
+		{
+			flashMem_eraseSector();
+			flashMem_writeHalfWord((uint16_t)snakeObj.size, (uint32_t)FLASHMEM_START_ADDRESS, (uint32_t)MODSNAKE_EEPROM_RECORD);
 		}
 
 		moduleSnakeStateTrans = MODSNAKE_GAMEOVER_STOPPED;
 		gameOverTic=0;
+		moduleSnake_resetEEPROM=0;
 	}
 }
 
@@ -326,6 +408,8 @@ void _moduleSnake_runGame()
 	_snake_checkViolation();
 	_snake_printSnakeToBoard();
 	_snake_checkViolation();
+
+	_misc_showMsg();
 
 	_IO_sendToLCD();
 
@@ -348,7 +432,7 @@ void _key_consumeKey()
 		case '8':
 			if(snakeObj.movementDir != UP) _snake_changeDirection(DOWN);
 			break;
-		// Indirect / direction dependent case
+		// Indirect / direction dependent cases
 		case '1':
 			if(snakeObj.movementDir == LEFT)
 			{
@@ -389,6 +473,10 @@ void _key_consumeKey()
 				_snake_changeDirection(RIGHT);
 			}
 			break;
+		// Reset EEPROM recorded value for record
+		case 'D': 
+			moduleSnake_resetEEPROM = 2;
+			break;
 	}
 }
 
@@ -400,6 +488,8 @@ void _IO_sendToLCD()
 		for (uint8_t colIdx = 0; colIdx < 84; colIdx++)
 		{
 			// Print data according to layers hierarchy
+			// 0 - Transparent
+			// 1 - Black
 			uint8_t layer0 = _board_getPixel(rowIdx, colIdx, 0);
 			uint8_t layer1 = _board_getPixel(rowIdx, colIdx, 1);
 			uint8_t layer2 = _board_getPixel(rowIdx, colIdx, 2);
@@ -489,7 +579,7 @@ void _snake_updateSnakePos()
 	}
 
 	//Set snake body movement
-	for (uint8_t bodyPart = 1; bodyPart < snakeObj.size; bodyPart++)
+	for (uint16_t bodyPart = 1; bodyPart < snakeObj.size; bodyPart++)
 	{
 		boardPos_t prevSnakeBodyPart, prevSnakeBodyPart2;
 
@@ -555,7 +645,7 @@ void _snake_changeDirection(enum direction_e newDir)
 void _snake_checkViolation()
 {
 	// Check if the snake touched itself
-	for(uint8_t bodyPart = 1; bodyPart < snakeObj.size; bodyPart++)
+	for(uint16_t bodyPart = 1; bodyPart < snakeObj.size; bodyPart++)
 	{
 		if((snakeObj.bodyComponent[0].posRow == snakeObj.bodyComponent[bodyPart].posRow) &&
 			(snakeObj.bodyComponent[0].posCol == snakeObj.bodyComponent[bodyPart].posCol))
@@ -577,6 +667,50 @@ void _snake_checkViolation()
 	return;
 }
 
+void _misc_showMsg()
+{
+	// User message showing that the record value was reseted
+	static uint8_t cntTicks;
+	if(moduleSnake_resetEEPROM == 0)
+	{
+		cntTicks = 8;
+	}
+	else if (moduleSnake_resetEEPROM == 2)
+	{
+		// Show message outer border + inner board
+		for(uint8_t rowIdx = 20-4; rowIdx < 32-4; rowIdx++)
+		{
+			for(uint8_t colIdx = 4; colIdx < 80; colIdx++)
+			{
+				uint8_t pixelVal = rowIdx==20-4||rowIdx==31-4||colIdx==4||colIdx == 79 ? 1 : 0;
+				_board_setPixel(rowIdx, colIdx, pixelVal & (cntTicks>0),2); // Message Level
+				_board_setPixel(rowIdx, colIdx, pixelVal & (cntTicks>0),0); // Snake Level
+			}
+		}
+
+		if(cntTicks>0)
+		{			
+			//Text 'NVM Reset'
+			_board_writeASCIIChar( 'N', 18, 14,2);
+			_board_writeASCIIChar( 'V', 18, 20,2);
+			_board_writeASCIIChar( 'M', 18, 26,2);
+			_board_writeASCIIChar( ' ', 18, 32,2);
+			_board_writeASCIIChar( 'R', 18, 38,2);
+			_board_writeASCIIChar( 'e', 18, 44,2);
+			_board_writeASCIIChar( 's', 18, 50,2);
+			_board_writeASCIIChar( 'e', 18, 56,2);
+			_board_writeASCIIChar( 't', 18, 62,2);
+			_board_writeASCIIChar( '!', 18, 68,2);
+			
+			cntTicks--;
+		}
+		else
+		{
+			moduleSnake_resetEEPROM = 1;
+		}	
+	}
+}
+
 void _food_initFoodObj()
 {
 	foodObj.numFood = 0;
@@ -584,7 +718,7 @@ void _food_initFoodObj()
 
 void _food_updateFood()
 {
-	// Check if food shall be 'eaten'
+	// Check if food was eaten by the snake
 	uint8_t foodRow = foodObj.foodComponent[0].posRow;
 	uint8_t foodCol = foodObj.foodComponent[0].posCol;
 	uint8_t snakeRow = snakeObj.bodyComponent[0].posRow;
@@ -593,27 +727,52 @@ void _food_updateFood()
 	if(foodRow == snakeRow && foodCol == snakeCol)
 	{
 		foodObj.numFood = 0; // Remove food
-		snakeObj.size+=3;
-
-		// TODO ***Delete after - reset snake
-		if(snakeObj.size > 240)
-		{
-			snakeObj.size = 5;
-		}
+		snakeObj.size+=1;
 	}
 	// If no food present, add one
 	else if(foodObj.numFood == 0) // Just place one food per time
 	{
-		// Get a random position on the table
-		uint8_t randomCol = (uint8_t)(randomGen_random32b() % 80) + 1; // Between col. 2 and 81
-		uint8_t randomRow = (uint8_t)(randomGen_random32b() % 36) + 1; // Between col. 2 and 37
+		uint8_t isValid=0;
+		uint8_t randomCol, randomRow;
 
-		randomCol += randomCol % 2; // ensure is even
-		randomRow += randomRow % 2; // ensure is even
+		do
+		{
+			// Get a random position on the table
+			randomCol = (uint8_t)(randomGen_random32b() % 80) + 1; // Between col. 2 and 81
+			randomRow = (uint8_t)(randomGen_random32b() % 36) + 1; // Between col. 2 and 37
+
+			randomCol += randomCol % 2; // ensure is even
+			randomRow += randomRow % 2; // ensure is even
+
+			// Check if this position doesn't match any part of the snake's body (hidden food)
+			for(uint16_t bodyPart = 1; bodyPart < snakeObj.size; bodyPart++)
+			{
+				if(snakeObj.bodyComponent[bodyPart].posRow == randomRow && snakeObj.bodyComponent[bodyPart].posCol == randomCol)
+				{
+					#if MODSNAKE_DEBUG_LVL_USART >=2
+					char debugMsg[25];
+					sprintf(debugMsg, "MODSNAKE_ResetFood\n\r");
+					USART2_addToQueue(debugMsg);
+					#endif
+					
+					isValid = 0; // Hidden food
+					break;
+				}
+				else if (bodyPart == snakeObj.size-1)
+				{
+					#if MODSNAKE_DEBUG_LVL_USART >=2
+					char debugMsg[25];
+					sprintf(debugMsg, "MODSNAKE_PlacedFood\n\r");
+					USART2_addToQueue(debugMsg);
+					#endif
+					isValid = 1; // No hidden food
+				}
+			}
+		}
+		while(!isValid);
 
 		foodObj.foodComponent[0].posCol = randomCol;
 		foodObj.foodComponent[0].posRow = randomRow;
-
 		foodObj.numFood = 1;
 	}
 }
@@ -695,6 +854,31 @@ uint8_t _board_getPixel(uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer)
 	uint8_t rowGroupIdx = (uint8_t)(rowIdx / 8); // 'major' row
 	uint8_t rowPixelIdx = (uint8_t)(rowIdx % 8); // 'minor' row
 	return (uint8_t) ((moduleSnake_boardPixels[rowGroupIdx][colIdx][boardLayer] & (1 << (rowPixelIdx))) > 0); // Return value
+}
+
+uint8_t _board_writeASCIIChar(char ASCII_char, uint8_t rowIdx, uint8_t colIdx, uint8_t boardLayer)
+{
+	// Get char from library
+	LCD_Char_t LCD_CharSel = findCorrespondingChar(ASCII_char); // Find ASCII in library
+
+	// Get current buffer cursor to start the char
+	uint8_t currRow = rowIdx;
+	uint8_t currCol = colIdx; 
+
+	// Write ASCII to LCD Buffer
+	// ASCII char width is 'bitmap_total_bytes'
+	uint8_t bitmapWidth = LCD_CharSel.bitmap_total_bytes;
+	for (int colIdx = 0; colIdx < bitmapWidth; colIdx++)
+	{
+		// ASCII lib. char height is 8
+		for (int rowIdx = 0; rowIdx < 8; rowIdx++)
+		{
+			uint8_t bitValue = (uint8_t)((LCD_CharSel.bitmap[colIdx] >> (rowIdx)) & 0b1);
+			_board_setPixel(currRow + rowIdx, currCol + colIdx, bitValue, boardLayer);
+		}
+	}
+
+	return 0;
 }
 
 

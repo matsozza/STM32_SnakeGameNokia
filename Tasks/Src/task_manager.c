@@ -51,7 +51,7 @@ void taskManager_100ms_run()
 
 	// ** Run RTOS modules
 	moduleSnake_runTask(LCD_displayBuffer01,task100ms_keyPressed,1);
-	moduleSnake_autoPlay();
+	//moduleSnake_autoPlay();
 
 	// ** Send LCD Buffer to queue for further updating
 	LCD_Buffer_sendToQueue(LCD_displayBuffer01);
