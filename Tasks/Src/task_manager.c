@@ -50,9 +50,8 @@ void taskManager_100ms_run()
 	task100ms_keyPressed = serviceKeyboard_consumeKey();
 
 	// ** Run RTOS modules
-	//moduleSnake_runTask(LCD_displayBuffer01,task100ms_keyPressed,1);
 	moduleMainMenu_runTask(LCD_displayBuffer01,task100ms_keyPressed,1);
-	//moduleSnake_autoPlay();
+
 
 	// ** Send LCD Buffer to queue for further updating
 	LCD_Buffer_sendToQueue(LCD_displayBuffer01);

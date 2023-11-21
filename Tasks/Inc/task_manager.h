@@ -18,7 +18,7 @@
 #include "service_uart.h"
 #include "service_lcd.h"
 #include "service_keyboard.h"
-#include "module_snake.h"
+#include "module_mainMenu.h"
 #include "module_temperature.h"
 
 /* Defines -------------------------------------------------------------------*/
