@@ -379,16 +379,11 @@ void _moduleSnake_gameOver()
 	{
 		// FIXME Temporary work-around, shall be managed by flashMem lib
 		// Reset record value to current value in non-volatile memory (NVM)
-		if(moduleSnake_resetEEPROM == 1)
+
+		if(moduleSnake_resetEEPROM == 1 || snakeRecordSize < snakeObj.size)
 		{
 			flashMem_eraseSector();
 			flashMem_writeHalfWord((uint16_t)snakeObj.size, (uint32_t)FLASHMEM_START_ADDRESS, (uint32_t)MODSNAKE_EEPROM_RECORD); // Reset command
-		}
-		// Save new record in non-volatile memory (NVM)
-		else if(snakeRecordSize < snakeObj.size)
-		{
-			flashMem_eraseSector();
-			flashMem_writeHalfWord((uint16_t)snakeObj.size, (uint32_t)FLASHMEM_START_ADDRESS, (uint32_t)MODSNAKE_EEPROM_RECORD);
 		}
 
 		moduleSnakeStateTrans = MODSNAKE_GAMEOVER_STOPPED;
