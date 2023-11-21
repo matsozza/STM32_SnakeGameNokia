@@ -1,6 +1,6 @@
 /**
  * Temperature module - runs in 500ms task, prints to LCD upper part
- * module_snake.c
+ * module_temperature.c
  * 
  * 
  *  Created on: June 17, 2022
