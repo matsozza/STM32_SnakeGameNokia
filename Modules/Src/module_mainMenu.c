@@ -30,9 +30,11 @@ void _moduleMainMenu_stateTransition();
 void _moduleMainMenu_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer, char keyPressed);
 void _moduleMainMenu_init(LCD_displayBuffer_t *LCD_displayBuffer);
 void _moduleMainMenu_menuActive();
+void _moduleMainMenu_subTaskStarting();
 void _moduleMainMenu_subTaskRunning();
 void _IO_printMenu();
 void _IO_printLoading();
+uint8_t _misc_waitTicks(uint16_t tickCnt);
 
 /* Functions implementation --------------------------------------------------*/
 void moduleMainMenu_runTask(LCD_displayBuffer_t *LCD_displayBuffer, char keyPressed, uint8_t Activate)
@@ -56,18 +58,10 @@ void _moduleMainMenu_stateTransition()
 	}
 	else if (moduleMainMenuState == MODMENU_SUBTASK_STARTING && moduleMainMenu_actvModule != 0) // Task starting to task running
     {
-        static uint16_t tickCnt = 0;
-
-        if(tickCnt > 16)
+        if( _misc_waitTicks(20) == 0 )
         {
-            moduleMainMenuState = MODMENU_SUBTASK_RUNNING;
-            tickCnt = 0;
+        	moduleMainMenuState = MODMENU_SUBTASK_RUNNING;
         }
-        else
-        {
-            _IO_printLoading();
-            tickCnt++;
-        }        
     }
     else if (moduleMainMenu_actvModule == 0) // Back to main menu
     {
@@ -90,7 +84,7 @@ void _moduleMainMenu_stateFunction(LCD_displayBuffer_t *LCD_displayBuffer, char 
     }
     else if(moduleMainMenuState == MODMENU_SUBTASK_STARTING) // If a specific task is running
     {
-        // Empty transition
+        _moduleMainMenu_subTaskStarting();
     }
     else if(moduleMainMenuState == MODMENU_SUBTASK_RUNNING)
     {
@@ -117,6 +111,11 @@ void _moduleMainMenu_menuActive()
             // Display main menu normally
             _IO_printMenu();
     }
+}
+
+void _moduleMainMenu_subTaskStarting()
+{
+    _IO_printLoading();
 }
 
 void _moduleMainMenu_subTaskRunning()
@@ -295,4 +294,25 @@ void _IO_printLoading()
     (void) LCD_Buffer_writeASCIIChar(moduleMainMenu_LCD_displayBuffer, '-', 34, 66);
     (void) LCD_Buffer_writeASCIIChar(moduleMainMenu_LCD_displayBuffer, '-', 34, 72);
     (void) LCD_Buffer_writeASCIIChar(moduleMainMenu_LCD_displayBuffer, '-', 34, 78);
+}
+
+uint8_t _misc_waitTicks(uint16_t tickCnt_arg)
+{
+    static uint16_t tickCnt = 65535;
+
+    if(tickCnt == 65535)
+    {
+    	tickCnt = tickCnt_arg;
+    }
+    else if(tickCnt<=0)
+    {
+        tickCnt = 16;
+        return 0;
+    }
+    else
+    {
+        _IO_printLoading();
+    }  
+    tickCnt--;
+    return 1;
 }
