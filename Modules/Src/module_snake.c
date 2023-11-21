@@ -1,15 +1,15 @@
 /**
- * Snake Game module - runs in 500ms task
+ * Snake Game module - runs in 100ms task
  * module_snake.c
  * 
- * The game is intended to run in the 500ms task.
+ * The game is intended to run in the 100ms task.
  * 
  * A board of 40 rows per 84 columns (pixels) will be created.
  * The board is composed of three layers:
  * 		L0: Snake Layer, where the snake runs
  * 		L1: Food / Object Layer, where any food or object is placed
  * 		L2: Boundaries / Board Layer, where all the game boundaries and
- * 		barriers are placed
+ * 		barriers are placed + feedback messages
  *
  *  L0 has precedence to write a pixel over layers L1 and L2.
  * 	L1 has precedence over layer L2.

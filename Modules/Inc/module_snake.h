@@ -1,5 +1,5 @@
 /**
- * Snake Game module - runs in 500ms task
+ * Snake Game module - runs in 100ms task
  * module_snake.h
  *
  *  Created on: May 30, 2022
