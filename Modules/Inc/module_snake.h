@@ -21,7 +21,7 @@
 
 /* Defines ------------------------------------------------------------------*/
 
-#define MODSNAKE_DEBUG_LVL_USART 1
+#define MODSNAKE_DEBUG_LVL_USART 0
 #define MODSNAKE_EEPROM_RECORD 0x00000000
 
 // Splash screen bitmap images for snake game
