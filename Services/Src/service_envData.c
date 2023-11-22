@@ -71,7 +71,7 @@ void _serviceEnvData_queryStart()
 {
 	#if ENVDATA_DEBUG_LVL_USART >=1
 	char debugMsg[25];
-	sprintf(debugMsg, "\n\r-->QUERY\n\r");
+	sprintf(debugMsg, "QUERY_ST\n\r");
 	USART2_addToQueue(debugMsg);
 	#endif
 	
@@ -93,6 +93,12 @@ void _serviceEnvData_queryStart()
 
 void _serviceEnvData_queryEnd()
 {
+	#if ENVDATA_DEBUG_LVL_USART >=1
+	char debugMsg[25];
+	sprintf(debugMsg, "QUERY_FN\n\r");
+	USART2_addToQueue(debugMsg);
+	#endif	
+	
 	// Set pin to high level
 	HAL_GPIO_WritePin(ENV_DATA_GPIO_Port, ENV_DATA_Pin, GPIO_PIN_SET);
 
@@ -105,9 +111,10 @@ void _serviceEnvData_queryEnd()
 
 void _serviceEnvData_stateTransition()
 {
-	if(envDataState == ENVDATA_IDLE && idxSample == 1)
+	// STEP 1 - EXTI Trigger
+	if(envDataState == ENVDATA_IDLE)
 	{
-		envDataState = ENVDATA_QUERYING;
+		envDataState = idxSample==1 ? ENVDATA_QUERYING : ENVDATA_ERR;
 	}
 	else if(envDataState == ENVDATA_QUERYING && idxSample == 2 )
 	{
@@ -132,23 +139,20 @@ void _serviceEnvData_stateTransition()
 			envDataState = ENVDATA_CHECKING;
 		}
 	}
-	else if (envDataState == ENVDATA_CHECKING)
+	
+	
+	// STEP 2 - No EXTI Trigger - Perform checksum
+	if (envDataState == ENVDATA_CHECKING)
 	{
-		if(_serviceData_checking() != 0)
-		{
-			envDataState = ENVDATA_ERR;
-		}
-		else
-		{
-			envDataState = ENVDATA_DONE;
-		}
+		envDataState = _serviceData_checking() != 0 ? ENVDATA_ERR : ENVDATA_DONE;
 	}
 	
 	
-	// Error / Done handling - separate conditional
+	// STEP 3 - No EXTI trigger - Result (Error / Done) handling 
 	if(envDataState == ENVDATA_DONE)
 	{
 		envDataState = ENVDATA_IDLE;
+		ambVld = 1;
 
 		#if ENVDATA_DEBUG_LVL_USART >=1
 		char debugMsg[25];
@@ -160,8 +164,8 @@ void _serviceEnvData_stateTransition()
 	else if (envDataState == ENVDATA_ERR)
 	{
 		ambVld = 0;
-		//ambTemp = 0xFFFF;
-		//ambHumidity = 0xFFFF;
+		ambTemp = 0xFFFF;
+		ambHumidity = 0xFFFF;
 		envDataState = ENVDATA_IDLE;
 
 		#if ENVDATA_DEBUG_LVL_USART >=1
@@ -240,8 +244,8 @@ uint8_t _serviceData_checking()
 	}
 	
 	// Fill global variables with temperature and humidity values
-	ambTemp = (tHi << 8 ) | tLo;
-	ambHumidity = (hHi << 8 ) | hLo;
+	ambTemp = (tHi << 8) | tLo;
+	ambHumidity = (hHi << 8) | hLo;
 	return 0;
 }
 
