@@ -39,7 +39,7 @@ static void serviceKeyboard_configPins_colsAsInputs();
 /* Functions implementation --------------------------------------------------*/
 
 // STEP 1 - Callback function for GPIO click
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+void serviceKeyboard_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	//If last input still not consumed by task, ignore other inputs
 	if(serviceKeyboardInput.inputConsumed && !serviceKeyboard_busyFlag)

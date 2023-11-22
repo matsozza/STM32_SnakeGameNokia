@@ -34,7 +34,7 @@ typedef struct{
 /* Function prototypes -------------------------------------------------------*/
 char serviceKeyboard_consumeKey();
 void serviceKeyboard_TIM_PeriodElapsedCallback();
-
+void serviceKeyboard_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 
 #endif /* INC_CORE_SERVICES_KEYBOARD_H_ */
 
