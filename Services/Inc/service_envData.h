@@ -23,24 +23,14 @@
 /* Typedef declare -----------------------------------------------------------*/
 enum envDataState_e
 {
-    ENVDATA_QUERY_START,
-    ENVDATA_QUERY_WAIT,
-    ENVDATA_QUERY_CONFIRMED,
-    ENVDATA_QUERY_ACKNOWLEDGED1,
-    ENVDATA_QUERY_ACKNOWLEDGED2,
-    ENVDATA_TX_DATA1,
-    ENVDATA_TX_DATA2,
-    ENVDATA_TX_DATA3,
-    ENVDATA_TX_DATA4,
-    ENVDATA_TX_DATA5,
-    ENVDATA_TX_END    
-};
-
-enum envDataITSrc_e
-{
-    ENVDATA_SRC_LOWRES,
-    ENVDATA_SRC_HIGHRES,
-    ENVDATA_SRC_EXTI
+    ENVDATA_IDLE,
+    ENVDATA_QUERYING,
+    ENVDATA_QUERY_OK,
+    ENVDATA_QUERY_ACK1,
+    ENVDATA_STREAMING,
+    ENVDATA_CHECKING,
+    ENVDATA_DONE,
+    ENVDATA_ERR
 };
 
 /* Function prototypes -------------------------------------------------------*/

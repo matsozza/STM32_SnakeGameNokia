@@ -115,7 +115,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the queue(s) */
   /* definition and creation of queueUSART2 */
-  osMessageQDef(queueUSART2, 5, uint32_t);
+  osMessageQDef(queueUSART2, 256, uint32_t);
   queueUSART2Handle = osMessageCreate(osMessageQ(queueUSART2), NULL);
 
   /* definition and creation of queueLCD */
@@ -124,7 +124,7 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_QUEUES */
 	/* add queues, ... */
-	osPoolDef(mPoolUSART2Handle, 15, USART_message_t);
+	osPoolDef(mPoolUSART2Handle, 256, USART_message_t);
 	mPoolUSART2Handle = osPoolCreate(osPool(mPoolUSART2Handle));
 
 	osPoolDef(mPoolLCDHandle, 512, LCD_dataPackage_t);
