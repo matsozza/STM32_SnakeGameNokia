@@ -63,6 +63,7 @@
 extern SPI_HandleTypeDef hspi1;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim4;
 extern UART_HandleTypeDef huart2;
 extern TIM_HandleTypeDef htim1;
 
@@ -238,6 +239,20 @@ void TIM3_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles TIM4 global interrupt.
+  */
+void TIM4_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM4_IRQn 0 */
+
+  /* USER CODE END TIM4_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim4);
+  /* USER CODE BEGIN TIM4_IRQn 1 */
+
+  /* USER CODE END TIM4_IRQn 1 */
+}
+
+/**
   * @brief This function handles SPI1 global interrupt.
   */
 void SPI1_IRQHandler(void)
@@ -286,6 +301,7 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
 
   /* USER CODE END EXTI15_10_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(ENV_DATA_Pin);
   HAL_GPIO_EXTI_IRQHandler(EXTKEYBOARD_PIN3_Pin);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
@@ -293,5 +309,20 @@ void EXTI15_10_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+
+// FIXME Demux for GPIO EXTI callbacks (find a better scope for this implementation if applicable) @ Sozza-112023
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(GPIO_Pin == ENV_DATA_Pin) // EXTI IT from ENV DATA sensor (DHT22)
+	{
+		serviceEnvData_GPIO_EXTI_Callback(GPIO_Pin);
+	}
+	else // EXTI IT from keyboard sensor (DHT22)
+	{
+		serviceKeyboard_GPIO_EXTI_Callback(GPIO_Pin);
+	}
+  return;
+}
+
 
 /* USER CODE END 1 */

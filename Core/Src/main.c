@@ -94,6 +94,7 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 
   // ***** SEGGER SystemView configuration *****
@@ -196,7 +197,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   // TIM 3 - Time used for querying DHT22 environmental data
   else if (htim->Instance == TIM3)
   {
-	  serviceEnvData_TIM_PeriodElapsedCallback();
+	  serviceEnvData_TIM_PeriodElapsedCallback_LowRes();
+  }
+  else if(htim->Instance == TIM4)
+  {
+    serviceEnvData_TIM_PeriodElapsedCallback_HighRes();
   }
 
   /* USER CODE END Callback 1 */

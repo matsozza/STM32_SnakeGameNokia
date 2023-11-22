@@ -71,6 +71,9 @@ void Error_Handler(void);
 #define LCD_DIN_GPIO_Port GPIOA
 #define LCD_DC_Pin GPIO_PIN_4
 #define LCD_DC_GPIO_Port GPIOC
+#define ENV_DATA_Pin GPIO_PIN_12
+#define ENV_DATA_GPIO_Port GPIOB
+#define ENV_DATA_EXTI_IRQn EXTI15_10_IRQn
 #define EXTKEYBOARD_PIN7_Pin GPIO_PIN_6
 #define EXTKEYBOARD_PIN7_GPIO_Port GPIOD
 #define EXTKEYBOARD_PIN6_Pin GPIO_PIN_9
