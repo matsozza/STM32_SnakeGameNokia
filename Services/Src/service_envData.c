@@ -18,7 +18,7 @@
 
 enum envDataState_e envDataState = ENVDATA_IDLE;
 uint8_t idxSample = 0;
-uint8_t intError = 0;
+uint8_t errCode = 0;
 uint16_t ambTemp = 0;
 uint16_t ambHumidity = 0;
 uint8_t ambVld = 0;
@@ -31,8 +31,8 @@ void _serviceEnvData_stateTransition();
 void _serviceEnvData_stateFunction();
 void _serviceEnvData_queryStart();
 void _serviceEnvData_queryEnd();
-void _serviceData_streaming();
-void _serviceData_checking();
+uint8_t _serviceData_streaming();
+uint8_t _serviceData_checking();
 void _IO_setPinAsInput();
 void _IO_setPinAsOutput();
 uint32_t _misc_samplePer(uint32_t samplePrev, uint32_t sampleCurr);
@@ -41,18 +41,6 @@ uint32_t _misc_samplePer(uint32_t samplePrev, uint32_t sampleCurr);
 
 void serviceEnvData_TIM_PeriodElapsedCallback_LowRes() // Called when a query is to be requested
 {
-	#if ENVDATA_DEBUG_LVL_USART >=1
-	char debugMsg[25];
-	sprintf(debugMsg, "--> %d\n\r\n\r", (int)idxSample);
-	USART2_addToQueue(debugMsg);
-
-	for(uint16_t idx = 0; idx < 86 ; idx++)
-	{
-		sprintf(debugMsg, " %d ", (int)debugBuffer[idx]);
-		USART2_addToQueue(debugMsg);
-	}
-	#endif
-
 	_serviceEnvData_queryStart();
 }
 
@@ -81,6 +69,12 @@ void serviceEnvData_GPIO_EXTI_Callback(uint16_t GPIO_Pin) // DATA Pin interrupti
 
 void _serviceEnvData_queryStart()
 {
+	#if ENVDATA_DEBUG_LVL_USART >=1
+	char debugMsg[25];
+	sprintf(debugMsg, "\n\r-->QUERY\n\r");
+	USART2_addToQueue(debugMsg);
+	#endif
+	
 	// Set pin as output
 	_IO_setPinAsOutput();
 	
@@ -92,7 +86,7 @@ void _serviceEnvData_queryStart()
 
 	// Start timer values
 	idxSample = 0;
-	intError = 0;
+	errCode = 0;
 	samplePrev = sampleCurr;
 	sampleCurr = ENVDATA_CLK_SRC;
 }
@@ -111,11 +105,7 @@ void _serviceEnvData_queryEnd()
 
 void _serviceEnvData_stateTransition()
 {
-	if(intError != 0) // If any internal error happens
-	{
-		envDataState = ENVDATA_ERR;
-	}
-	else if(envDataState == ENVDATA_IDLE && idxSample == 1)
+	if(envDataState == ENVDATA_IDLE && idxSample == 1)
 	{
 		envDataState = ENVDATA_QUERYING;
 	}
@@ -133,48 +123,62 @@ void _serviceEnvData_stateTransition()
 	}
 	else if(envDataState == ENVDATA_STREAMING)
 	{
-		if(idxSample == 86)
+		if(idxSample < 86)
 		{
-			envDataState = ENVDATA_CHECKING;
+			if(_serviceData_streaming() != 0) envDataState = ENVDATA_ERR;
 		}
 		else
 		{
-			_serviceData_streaming();
+			envDataState = ENVDATA_CHECKING;
 		}
 	}
 	else if (envDataState == ENVDATA_CHECKING)
 	{
-		_serviceData_checking();
+		if(_serviceData_checking() != 0)
+		{
+			envDataState = ENVDATA_ERR;
+		}
+		else
+		{
+			envDataState = ENVDATA_DONE;
+		}
+	}
+	
+	
+	// Error / Done handling - separate conditional
+	if(envDataState == ENVDATA_DONE)
+	{
 		envDataState = ENVDATA_IDLE;
+
+		#if ENVDATA_DEBUG_LVL_USART >=1
+		char debugMsg[25];
+		sprintf(debugMsg, "OK_%d_%d\n\r", (int)ambTemp, (int)ambHumidity);
+		USART2_addToQueue(debugMsg);
+		#endif
+
 	}
 	else if (envDataState == ENVDATA_ERR)
 	{
 		ambVld = 0;
+		//ambTemp = 0xFFFF;
+		//ambHumidity = 0xFFFF;
 		envDataState = ENVDATA_IDLE;
+
+		#if ENVDATA_DEBUG_LVL_USART >=1
+		char debugMsg[25];
+		sprintf(debugMsg, "NOK_Cd_%d\n\r", errCode);
+		USART2_addToQueue(debugMsg);
+		#endif
 	}
 }
 
-/*
-void _serviceData_stateFunction()
-{
-	if(envDataState == ENVDATA_STREAMING)
-	{
-		_serviceData_streaming();
-	}
-	else if(envDataState == ENVDATA_CHECKING)
-	{
-		_serviceData_checking();
-	}
-}
-*/
-
-
-void _serviceData_streaming()
+uint8_t _serviceData_streaming()
 {
 	static uint8_t idxBuf = 0;
 	static uint8_t edgeNum = 0;
 	static uint8_t edgePer[2] = {0,0};
 
+	// Process the waveform and convert to binary values
 	if(edgeNum == 0){
 		edgeNum = 1;
 		edgePer[0] = samplePerDurn;
@@ -197,21 +201,24 @@ void _serviceData_streaming()
 		}
 		else
 		{
-			intError = 1; //Period error
+			errCode = 1;
+			return 1; // NOK
 		}
 	}
 
-	// Reset counter for next cycle if finished OR error
-	if(idxBuf == 40 || intError != 0)
+	// Reset counter for next cycle if finished
+	if(idxBuf == 40)
 	{
 		idxBuf = 0;
 		edgeNum = 0;
 	}
+
+	return 0; // OK
 }
 
-void _serviceData_checking()
+uint8_t _serviceData_checking()
 {
-	uint8_t tHi=0, tLo=0, hHi=0, hLo=0, checkRec;
+	uint8_t tHi=0, tLo=0, hHi=0, hLo=0, checkRec=0;
 
 	// Convert from buffer to integer values
 	for(uint8_t idx = 0; idx < 8 ; idx++)
@@ -228,14 +235,14 @@ void _serviceData_checking()
 
 	if((uint8_t)(checkCalc & 0xff) != checkRec)
 	{
-		intError = 2;
-		return;
+		errCode = 2;
+		return 1;
 	}
 	
 	// Fill global variables with temperature and humidity values
 	ambTemp = (tHi << 8 ) | tLo;
 	ambHumidity = (hHi << 8 ) | hLo;
-	ambVld = 1;
+	return 0;
 }
 
 void _IO_setPinAsOutput()
