@@ -30,6 +30,7 @@
 #include "SEGGER_SYSVIEW.h"
 #include "service_lcd.h"
 #include "service_keyboard.h"
+#include "service_envData.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -191,6 +192,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   // TIM 2 - Time used for keyboard debouncing
   else if (htim->Instance == TIM2) {
 	  serviceKeyboard_TIM_PeriodElapsedCallback();
+  }
+  // TIM 3 - Time used for querying DHT22 environmental data
+  else if (htim->Instance == TIM3)
+  {
+	  serviceEnvData_TIM_PeriodElapsedCallback();
   }
 
   /* USER CODE END Callback 1 */

@@ -11,6 +11,7 @@
 /* Private includes ----------------------------------------------------------*/
 #include "task_manager.h"
 #include "freertos.h"
+#include "tim.h"
 
 /* External variables includes -----------------------------------------------*/
 // FreeRTOS featured variables
@@ -60,6 +61,7 @@ void taskManager_100ms_run()
 void taskManager_500ms_init()
 {
 	task500ms_LCDWrite=0;
+	HAL_TIM_Base_Start_IT(&htim3); // Start htim3 since the beginning of the application (move to task manager in RTOS level)
 }
 
 void taskManager_500ms_run()
