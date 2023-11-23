@@ -17,22 +17,25 @@
 /* Internal variables includes -----------------------------------------------*/
 
 enum envDataState_e envDataState = ENVDATA_IDLE;
-uint8_t idxSample = 0;
-uint8_t errCode = 0;
-uint16_t ambTemp = 0;
-uint16_t ambHumidity = 0;
-uint8_t ambVld = 0;
+
+uint8_t idxSample = 0, errCode = 0, dataAvailable = 0;
+uint16_t ambTemp = 0, ambHumidity = 0;
+
 volatile uint32_t samplePrev, sampleCurr, samplePerDurn;
+
+#if ENVDATA_DEBUG_LVL_USART >=2
 uint32_t debugBuffer[100];
+#endif
+
 uint8_t streamBuffer[40];
 
 /* Internal functions includes --------------------------------------------------*/
 void _serviceEnvData_stateTransition();
 void _serviceEnvData_stateFunction();
-void _serviceEnvData_queryStart();
-void _serviceEnvData_queryEnd();
-uint8_t _serviceData_streaming();
-uint8_t _serviceData_checking();
+void _queryStart();
+void _queryEnd();
+uint8_t _streaming();
+uint8_t _checking();
 void _IO_setPinAsInput();
 void _IO_setPinAsOutput();
 uint32_t _misc_samplePer(uint32_t samplePrev, uint32_t sampleCurr);
@@ -41,12 +44,12 @@ uint32_t _misc_samplePer(uint32_t samplePrev, uint32_t sampleCurr);
 
 void serviceEnvData_TIM_PeriodElapsedCallback_LowRes() // Called when a query is to be requested
 {
-	_serviceEnvData_queryStart();
+	_queryStart();
 }
 
 void serviceEnvData_TIM_PeriodElapsedCallback_HighRes() // Called when query start counter (~800ms) is expired
 {
-	_serviceEnvData_queryEnd();
+	_queryEnd();
 }
 
 void serviceEnvData_GPIO_EXTI_Callback(uint16_t GPIO_Pin) // DATA Pin interruption (either while INPUT or OUTPUT mode)
@@ -57,56 +60,15 @@ void serviceEnvData_GPIO_EXTI_Callback(uint16_t GPIO_Pin) // DATA Pin interrupti
 	samplePerDurn = _misc_samplePer(samplePrev, sampleCurr);
 
 	// Update sample counters
+	#if ENVDATA_DEBUG_LVL_USART >=2
 	debugBuffer[idxSample] = samplePerDurn;
+	#endif
 	idxSample++;
 
 	// Call stream processing function
-	//_serviceData_stateFunction();
 	_serviceEnvData_stateTransition();
 
 	return;
-}
-
-void _serviceEnvData_queryStart()
-{
-	#if ENVDATA_DEBUG_LVL_USART >=1
-	char debugMsg[25];
-	sprintf(debugMsg, "QUERY_ST\n\r");
-	USART2_addToQueue(debugMsg);
-	#endif
-	
-	// Set pin as output
-	_IO_setPinAsOutput();
-	
-	// Set DHT22 DATA pin to LOW
-	HAL_GPIO_WritePin(ENV_DATA_GPIO_Port, ENV_DATA_Pin, GPIO_PIN_RESET);
-
-	// Set counter to 800us and start counter 
-	HAL_TIM_Base_Start_IT(&ENVDATA_COUNTER_HIGHRES);
-
-	// Start timer values
-	idxSample = 0;
-	errCode = 0;
-	samplePrev = sampleCurr;
-	sampleCurr = ENVDATA_CLK_SRC;
-}
-
-void _serviceEnvData_queryEnd()
-{
-	#if ENVDATA_DEBUG_LVL_USART >=1
-	char debugMsg[25];
-	sprintf(debugMsg, "QUERY_FN\n\r");
-	USART2_addToQueue(debugMsg);
-	#endif	
-	
-	// Set pin to high level
-	HAL_GPIO_WritePin(ENV_DATA_GPIO_Port, ENV_DATA_Pin, GPIO_PIN_SET);
-
-	// Stop high-res counter
-	HAL_TIM_Base_Stop_IT(&ENVDATA_COUNTER_HIGHRES); 
-
-	// Set pin to input
-	_IO_setPinAsInput();
 }
 
 void _serviceEnvData_stateTransition()
@@ -132,38 +94,39 @@ void _serviceEnvData_stateTransition()
 	{
 		if(idxSample < 86)
 		{
-			if(_serviceData_streaming() != 0) envDataState = ENVDATA_ERR;
+			if(_streaming() != 0) envDataState = ENVDATA_ERR;
 		}
 		else
 		{
 			envDataState = ENVDATA_CHECKING;
 		}
 	}
-	
-	
+		
 	// STEP 2 - No EXTI Trigger - Perform checksum
 	if (envDataState == ENVDATA_CHECKING)
 	{
-		envDataState = _serviceData_checking() != 0 ? ENVDATA_ERR : ENVDATA_DONE;
+		envDataState = _checking() != 0 ? ENVDATA_ERR : ENVDATA_DONE;
 	}
-	
-	
+		
 	// STEP 3 - No EXTI trigger - Result (Error / Done) handling 
 	if(envDataState == ENVDATA_DONE)
 	{
+		dataAvailable = 1;
 		envDataState = ENVDATA_IDLE;
-		ambVld = 1;
 
 		#if ENVDATA_DEBUG_LVL_USART >=1
 		char debugMsg[25];
 		sprintf(debugMsg, "OK_%d_%d\n\r", (int)ambTemp, (int)ambHumidity);
 		USART2_addToQueue(debugMsg);
-		#endif
 
+		#if ENVDATA_DEBUG_LVL_USART >=2
+		_debug_printBuffers();
+		#endif		
+		#endif
 	}
 	else if (envDataState == ENVDATA_ERR)
 	{
-		ambVld = 0;
+		dataAvailable = 0;
 		ambTemp = 0xFFFF;
 		ambHumidity = 0xFFFF;
 		envDataState = ENVDATA_IDLE;
@@ -172,11 +135,57 @@ void _serviceEnvData_stateTransition()
 		char debugMsg[25];
 		sprintf(debugMsg, "NOK_Cd_%d\n\r", errCode);
 		USART2_addToQueue(debugMsg);
+		
+		#if ENVDATA_DEBUG_LVL_USART >=2
+		_debug_printBuffers();
+		#endif
 		#endif
 	}
 }
 
-uint8_t _serviceData_streaming()
+void _queryStart()
+{
+	// Start global values
+	idxSample = 0;
+	errCode = 0;
+	samplePrev = sampleCurr;
+	sampleCurr = ENVDATA_CLK_SRC;
+
+	// Set pin as output
+	_IO_setPinAsOutput();
+	
+	// Set DHT22 DATA pin to LOW
+	HAL_GPIO_WritePin(ENV_DATA_GPIO_Port, ENV_DATA_Pin, GPIO_PIN_RESET);
+
+	// Set counter to 800us and start counter 
+	HAL_TIM_Base_Start_IT(&ENVDATA_COUNTER_HIGHRES);
+
+	#if ENVDATA_DEBUG_LVL_USART >=1
+	char debugMsg[25];
+	sprintf(debugMsg, "QUERY_ST\n\r");
+	USART2_addToQueue(debugMsg);
+	#endif
+}
+
+void _queryEnd()
+{
+	// Set pin to high level
+	HAL_GPIO_WritePin(ENV_DATA_GPIO_Port, ENV_DATA_Pin, GPIO_PIN_SET);
+
+	// Stop high-res counter
+	HAL_TIM_Base_Stop_IT(&ENVDATA_COUNTER_HIGHRES); 
+
+	// Set pin to input
+	_IO_setPinAsInput();
+
+	#if ENVDATA_DEBUG_LVL_USART >=1
+	char debugMsg[25];
+	sprintf(debugMsg, "QUERY_FN\n\r");
+	USART2_addToQueue(debugMsg);
+	#endif	
+}
+
+uint8_t _streaming()
 {
 	static uint8_t idxBuf = 0;
 	static uint8_t edgeNum = 0;
@@ -205,6 +214,15 @@ uint8_t _serviceData_streaming()
 		}
 		else
 		{
+			#if ENVDATA_DEBUG_LVL_USART >=1
+			char debugMsg[25];
+			sprintf(debugMsg, "EDGE_%d_%d\n\r", edgePer[0], edgePer[1]);
+			USART2_addToQueue(debugMsg);
+			#endif
+
+			idxBuf = 0;
+			edgeNum = 0;
+
 			errCode = 1;
 			return 1; // NOK
 		}
@@ -220,7 +238,7 @@ uint8_t _serviceData_streaming()
 	return 0; // OK
 }
 
-uint8_t _serviceData_checking()
+uint8_t _checking()
 {
 	uint8_t tHi=0, tLo=0, hHi=0, hLo=0, checkRec=0;
 
@@ -235,9 +253,15 @@ uint8_t _serviceData_checking()
 	}
 
 	// Perform checksum validation
-	uint16_t checkCalc = (uint16_t)tHi + (uint16_t)tLo + (uint16_t)hHi + (uint16_t)hLo;
+	uint8_t checkCalc = (uint8_t) ((uint16_t)tHi + (uint16_t)tLo + (uint16_t)hHi + (uint16_t)hLo) & 0XFF;
 
-	if((uint8_t)(checkCalc & 0xff) != checkRec)
+	#if ENVDATA_DEBUG_LVL_USART >=1
+	char debugMsg[25];
+	sprintf(debugMsg, "CHK_%d_%d\n\r", checkRec, checkCalc);
+	USART2_addToQueue(debugMsg);
+	#endif
+
+	if(checkCalc != checkRec)
 	{
 		errCode = 2;
 		return 1;
@@ -287,3 +311,25 @@ uint32_t _misc_samplePer(uint32_t samplePrev, uint32_t sampleCurr)
 		return ((0xFFFFFFFF - samplePrev) + sampleCurr) / (uint32_t) ENVDATA_CLK_FRQ;
 	}
 }
+
+#if ENVDATA_DEBUG_LVL_USART >=2
+void _debug_printBuffers()
+{
+	char debugMsg[15];
+	for(uint8_t idxB = 0; idxB < 86; idxB++)
+	{
+		sprintf(debugMsg, " %d ", debugBuffer[idxB]);
+		USART2_addToQueue(debugMsg);
+	}
+	sprintf(debugMsg, "\n\r");
+	USART2_addToQueue(debugMsg);
+
+	for(uint8_t idxB = 0; idxB < 40; idxB++)
+	{
+		sprintf(debugMsg, " %d ", streamBuffer[idxB]);
+		USART2_addToQueue(debugMsg);
+	}
+	sprintf(debugMsg, "\n\r");
+	USART2_addToQueue(debugMsg);
+}
+#endif

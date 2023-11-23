@@ -15,7 +15,7 @@
 #include "gpio.h"
 
 /* Defines -------------------------------------------------------------------*/
-#define ENVDATA_DEBUG_LVL_USART 1
+#define ENVDATA_DEBUG_LVL_USART 2
 #define ENVDATA_COUNTER_HIGHRES htim4
 #define ENVDATA_CLK_SRC DWT->CYCCNT
 #define ENVDATA_CLK_FRQ 168 // freq. in MHz
