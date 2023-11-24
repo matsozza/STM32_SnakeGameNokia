@@ -12,6 +12,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "service_tempSensor.h"
+#include "service_envData.h"
 #include "service_lcd.h"
 #include "service_lcd_fonts.h"
 #include <stdlib.h>

@@ -42,6 +42,34 @@ uint32_t _misc_samplePer(uint32_t samplePrev, uint32_t sampleCurr);
 
 /* Functions implementation --------------------------------------------------*/
 
+// ********************* API Consumption *********************
+int16_t serviceEnvData_getAmbTemperature()
+{
+	if(dataAvailable & 0b01 > 0) // Data available for consumption
+	{
+		dataAvailable = dataAvailable & 0b10; // Clear bit 0
+		return ambTemp;
+	}
+	else // Data not available for consumption
+	{
+		return 0xFFFF;		
+	}
+}
+
+int16_t serviceEnvData_getAmbHumidity()
+{
+	if(dataAvailable & 0b10 > 0) // Data available for consumption
+	{
+		dataAvailable = dataAvailable & 0b01; // Clear bit 1
+		return ambHumidity;
+	}
+	else // Data not available for consumption
+	{
+		return 0xFFFF;		
+	}
+}
+
+// ********************* Interruption callbacks *********************
 void serviceEnvData_TIM_PeriodElapsedCallback_LowRes() // Called when a query is to be requested (every ~2.5s)
 {
 	_queryStart();
@@ -71,6 +99,7 @@ void serviceEnvData_GPIO_EXTI_Callback(uint16_t GPIO_Pin) // DATA Pin interrupti
 	return;
 }
 
+// ********************* State machines / internal and local methods *********************
 void _serviceEnvData_stateTransition()
 {
 	// STEP 1 - EXTI Trigger
@@ -111,18 +140,17 @@ void _serviceEnvData_stateTransition()
 	// STEP 3 - No EXTI trigger - Result (Error / Done) handling 
 	if(envDataState == ENVDATA_DONE)
 	{
-		dataAvailable = 1;
+		dataAvailable = 0b11;
 		envDataState = ENVDATA_IDLE;
 
 		#if ENVDATA_DEBUG_LVL_USART >=1
 		char debugMsg[25];
 		sprintf(debugMsg, "OK_%d_%d\n\r", (int)ambTemp, (int)ambHumidity);
 		USART2_addToQueue(debugMsg);
-
+		#endif
 		#if ENVDATA_DEBUG_LVL_USART >=2
 		_debug_printBuffers();
 		#endif		
-		#endif
 	}
 	else if (envDataState == ENVDATA_ERR)
 	{
@@ -135,10 +163,9 @@ void _serviceEnvData_stateTransition()
 		char debugMsg[25];
 		sprintf(debugMsg, "NOK_Cd_%d\n\r", errCode);
 		USART2_addToQueue(debugMsg);
-		
+		#endif
 		#if ENVDATA_DEBUG_LVL_USART >=2
 		_debug_printBuffers();
-		#endif
 		#endif
 	}
 }

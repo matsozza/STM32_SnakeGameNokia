@@ -34,6 +34,9 @@ enum envDataState_e
 };
 
 /* Function prototypes -------------------------------------------------------*/
+int16_t serviceEnvData_getAmbTemperature();
+int16_t serviceEnvData_getAmbHumidity();
+
 void serviceEnvData_TIM_PeriodElapsedCallback_LowRes();
 void serviceEnvData_TIM_PeriodElapsedCallback_HighRes();
 void serviceEnvData_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
