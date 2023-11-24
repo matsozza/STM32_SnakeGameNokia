@@ -42,12 +42,12 @@ uint32_t _misc_samplePer(uint32_t samplePrev, uint32_t sampleCurr);
 
 /* Functions implementation --------------------------------------------------*/
 
-void serviceEnvData_TIM_PeriodElapsedCallback_LowRes() // Called when a query is to be requested
+void serviceEnvData_TIM_PeriodElapsedCallback_LowRes() // Called when a query is to be requested (every ~2.5s)
 {
 	_queryStart();
 }
 
-void serviceEnvData_TIM_PeriodElapsedCallback_HighRes() // Called when query start counter (~800ms) is expired
+void serviceEnvData_TIM_PeriodElapsedCallback_HighRes() // Called when query start counter (~1000ms) is expired
 {
 	_queryEnd();
 }
@@ -162,7 +162,7 @@ void _queryStart()
 
 	#if ENVDATA_DEBUG_LVL_USART >=1
 	char debugMsg[25];
-	sprintf(debugMsg, "QUERY_ST\n\r");
+	sprintf(debugMsg, "\n\rQUERY_ST\n\r");
 	USART2_addToQueue(debugMsg);
 	#endif
 }
@@ -318,7 +318,7 @@ void _debug_printBuffers()
 	char debugMsg[15];
 	for(uint8_t idxB = 0; idxB < 86; idxB++)
 	{
-		sprintf(debugMsg, " %d ", debugBuffer[idxB]);
+		sprintf(debugMsg, "%d ", debugBuffer[idxB]);
 		USART2_addToQueue(debugMsg);
 	}
 	sprintf(debugMsg, "\n\r");
@@ -326,7 +326,7 @@ void _debug_printBuffers()
 
 	for(uint8_t idxB = 0; idxB < 40; idxB++)
 	{
-		sprintf(debugMsg, " %d ", streamBuffer[idxB]);
+		sprintf(debugMsg, "%d ", streamBuffer[idxB]);
 		USART2_addToQueue(debugMsg);
 	}
 	sprintf(debugMsg, "\n\r");
