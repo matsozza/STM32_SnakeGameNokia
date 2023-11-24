@@ -23,7 +23,7 @@ static void _moduleTemperature_stateFunction(LCD_displayBuffer_t *LCD_displayBuf
 static void _moduleTemperature_sendToLCD();
 static void _clearPrintArea();
 static void _get_CPUTemp();
-static void _getAmbTemp();
+static void _get_AmbTemp();
 static void _get_AmbHumidity();
 
 /* Functions implementation --------------------------------------------------*/
@@ -80,7 +80,7 @@ static void _moduleTemperature_sendToLCD()
 			_get_CPUTemp();
 			break;
 		case 1:
-			_getAmbTemp();
+			_get_AmbTemp();
 			break;
 		case 2:
 			_get_AmbHumidity();
@@ -153,7 +153,7 @@ static void _get_CPUTemp()
 	}
 }
 
-static void _getAmbTemp()
+static void _get_AmbTemp()
 {
 	static double dataDoubleFil = -255;
 	static uint8_t dataTimeout = 0;
@@ -174,7 +174,7 @@ static void _getAmbTemp()
 	LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer, ':',0,48);
 
 	// Query data from external device
-	uint16_t dataValue_query = serviceEnvData_getAmbTemperature();
+	uint16_t dataValue_query = serviceEnvData_get_AmbTemperature();
 	if(dataValue_query != 0xFFFF)
 	{
 		dataValue = dataValue_query; // If valid, send to printable value
