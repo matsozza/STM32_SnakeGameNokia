@@ -174,7 +174,7 @@ static void _get_AmbTemp()
 	LCD_Buffer_writeASCIIChar(moduleTemperature_LCD_displayBuffer, ':',0,48);
 
 	// Query data from external device
-	uint16_t dataValue_query = serviceEnvData_get_AmbTemperature();
+	uint16_t dataValue_query = serviceEnvData_getAmbTemperature();
 	if(dataValue_query != 0xFFFF)
 	{
 		dataValue = dataValue_query; // If valid, send to printable value
