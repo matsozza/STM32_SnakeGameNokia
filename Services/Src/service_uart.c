@@ -23,10 +23,9 @@ USART_message_t *USART2_msg2Queue;
 /* Functions implementation --------------------------------------------------*/
 int USART2_addToQueue(char *msg){
 	//Add to queue
-	USART2_msg2Queue = (USART_message_t*) osPoolAlloc(mPoolUSART2Handle);
-
-	strcpy(USART2_msg2Queue->message, msg);
-	osMessagePut(queueUSART2Handle, (uint32_t) USART2_msg2Queue, 0);
+	USART2_msg2Queue = (USART_message_t*) osPoolAlloc(mPoolUSART2Handle); // Allocate a memory pool with the size of the USART message
+	strcpy(USART2_msg2Queue->message, msg); // Put the contents of the message into the allocated pool
+	osMessagePut(queueUSART2Handle, (uint32_t) USART2_msg2Queue, 0); // Put the address of the pool into the queue
 
 	return 0;
 }
