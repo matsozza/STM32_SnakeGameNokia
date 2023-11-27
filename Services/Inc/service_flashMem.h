@@ -12,12 +12,15 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
+#include "service_uart.h"
 
 /* Defines -------------------------------------------------------------------*/
 #define FLASHMEM_DEFAULT_SECTOR FLASH_SECTOR_11
 #define FLASHMEM_START_ADDRESS 0x080E0000
 #define FLASHMEM_END_ADDRESS 0x080FFFFF
 #define FLASHMEM_DEFAULT_VRANGE FLASH_VOLTAGE_RANGE_3
+
+#define FLASHMEM_DEBUG_LVL_USART 1
 
 /* Typedef declare -----------------------------------------------------------*/
 

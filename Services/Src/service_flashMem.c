@@ -18,31 +18,67 @@
 
 int8_t flashMem_writeByte(uint8_t Data, uint32_t Address, uint32_t Offset)
 {
+	#if FLASHMEM_DEBUG_LVL_USART >=1
+	char debugMsg[24];
+	sprintf(debugMsg, "FLASH_REQ_B\n\r");
+	USART2_addToQueue(debugMsg);
+	#endif
+
 	if(HAL_FLASH_Unlock() == HAL_OK)
 	{
 		uint32_t finalAddr = Address + Offset;
-		if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, finalAddr, (uint64_t)Data) == HAL_OK)
+		if(HAL_FLASH_Program_IT(FLASH_TYPEPROGRAM_BYTE, finalAddr, (uint64_t)Data) == HAL_OK)
 		{
 			HAL_FLASH_Lock();
+
+			#if FLASHMEM_DEBUG_LVL_USART >=1
+			sprintf(debugMsg, "FLASH_OK\n\r");
+			USART2_addToQueue(debugMsg);
+			#endif
+
 			return 0;
 		}
 	}
 	HAL_FLASH_Lock();
+
+	#if FLASHMEM_DEBUG_LVL_USART >=1
+	sprintf(debugMsg, "FLASH_NOK\n\r");
+	USART2_addToQueue(debugMsg);
+	#endif
+
 	return -1;
 }
 
 int8_t flashMem_writeHalfWord(uint16_t Data, uint32_t Address, uint32_t Offset)
 {
+	#if FLASHMEM_DEBUG_LVL_USART >=1
+	char debugMsg[24];
+	sprintf(debugMsg, "FLASH_REQ_HW\n\r");
+	USART2_addToQueue(debugMsg);
+	#endif
+	
 	if(HAL_FLASH_Unlock() == HAL_OK)
 	{
 		uint32_t finalAddr = Address + Offset;
-		if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, finalAddr, (uint64_t)Data) == HAL_OK)
+		if(HAL_FLASH_Program_IT(FLASH_TYPEPROGRAM_HALFWORD, finalAddr, (uint64_t)Data) == HAL_OK)
 		{
 			HAL_FLASH_Lock();
+	
+			#if FLASHMEM_DEBUG_LVL_USART >=1
+			sprintf(debugMsg, "FLASH_OK\n\r");
+			USART2_addToQueue(debugMsg);
+			#endif
+
 			return 0;
 		}
 	}
 	HAL_FLASH_Lock();
+
+	#if FLASHMEM_DEBUG_LVL_USART >=1
+	sprintf(debugMsg, "FLASH_NOK\n\r");
+	USART2_addToQueue(debugMsg);
+	#endif
+
 	return -1;
 }
 
@@ -66,3 +102,5 @@ int8_t flashMem_eraseSector()
 	}
 	return -1;
 }
+
+
