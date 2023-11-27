@@ -45,7 +45,7 @@ int USART2_consumeFromQueue(){
 			// Transmit prepared message to USART2
 			#if(UART_USE_IT == 0)	//Blocking mode (no interruption)
 				HAL_UART_Transmit( &huart2,	(uint8_t*) msgFromQueue, strlen((char*)msgFromQueue), 5000);
-			#else 					//Non-blocking mode (Interuption)
+			#else 					//Non-blocking mode (Interruption)
 				HAL_UART_Transmit_IT(&huart2,(uint8_t*) msgFromQueue, strlen((char*)msgFromQueue));
 			#endif
 		}
