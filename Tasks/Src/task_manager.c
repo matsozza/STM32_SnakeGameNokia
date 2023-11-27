@@ -61,7 +61,7 @@ void taskManager_100ms_run()
 void taskManager_500ms_init()
 {
 	task500ms_LCDWrite=0;
-	HAL_TIM_Base_Start_IT(&htim3); // Start htim3 since the beginning of the application (move to task manager in RTOS level)
+	serviceEnvData_serviceInit(); // Start DHT22 envData service
 }
 
 void taskManager_500ms_run()
