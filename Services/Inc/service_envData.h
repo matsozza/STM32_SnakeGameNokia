@@ -16,24 +16,14 @@
 
 /* Defines -------------------------------------------------------------------*/
 #define ENVDATA_DEBUG_LVL_USART 2
+#define ENVDATA_COUNTER_LOWRES htim3
 #define ENVDATA_COUNTER_HIGHRES htim4
-#define ENVDATA_CLK_SRC DWT->CYCCNT
 #define ENVDATA_CLK_FRQ 168 // freq. in MHz
 
 /* Typedef declare -----------------------------------------------------------*/
-enum envDataState_e
-{
-    ENVDATA_IDLE,
-    ENVDATA_QUERYING,
-    ENVDATA_QUERY_OK,
-    ENVDATA_QUERY_ACK1,
-    ENVDATA_STREAMING,
-    ENVDATA_CHECKING,
-    ENVDATA_DONE,
-    ENVDATA_ERR
-};
 
 /* Function prototypes -------------------------------------------------------*/
+void serviceEnvData_serviceInit();
 int16_t serviceEnvData_getAmbTemperature();
 int16_t serviceEnvData_getAmbHumidity();
 
