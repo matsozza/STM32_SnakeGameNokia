@@ -18,6 +18,7 @@
 #include "service_uart.h"
 #include "service_lcd.h"
 #include "service_keyboard.h"
+#include "service_envData.h"
 #include "module_mainMenu.h"
 #include "module_temperature.h"
 
