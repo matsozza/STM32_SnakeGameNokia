@@ -103,11 +103,11 @@ int main(void)
   volatile unsigned int *DWT_LAR   = (volatile unsigned int *)0xE0001FB0; //address of the register
   volatile unsigned int *SCB_DEMCR  = (volatile unsigned int *)0xE000EDFC; //address of the register
 
-    *SCB_DEMCR |= 0x01000000;
-    *DWT_LAR = 0xC5ACCE55; // unlock
-    *DWT_CYCCNT = 0; // reset the counter
-    *DWT_CONTROL |= 1 ; // enable the counter
-  //  DWT->CTRL |= (1<<0); //Start CYCCNT for timestamp counting (Sozza)
+  *SCB_DEMCR |= 0x01000000;
+  *DWT_LAR = 0xC5ACCE55; // unlock
+  *DWT_CYCCNT = 0; // reset the counter
+  *DWT_CONTROL |= 1 ; // enable the counter
+
   //SEGGER_SYSVIEW_Conf();
   //SEGGER_SYSVIEW_Start();
 
