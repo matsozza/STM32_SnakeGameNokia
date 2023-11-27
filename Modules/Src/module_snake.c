@@ -131,7 +131,7 @@ void moduleSnake_autoPlay()
 	}
 
 	#if MODSNAKE_DEBUG_LVL_USART >=1
-	char debugMsg[25];
+	char debugMsg[24];
 	sprintf(debugMsg, "MODSNAKE_NokM %d\n\r", nokMoves);
 	USART2_addToQueue(debugMsg);
 	#endif
@@ -745,7 +745,7 @@ void _food_updateFood()
 				if(snakeObj.bodyComponent[bodyPart].posRow == randomRow && snakeObj.bodyComponent[bodyPart].posCol == randomCol)
 				{
 					#if MODSNAKE_DEBUG_LVL_USART >=2
-					char debugMsg[25];
+					char debugMsg[24];
 					sprintf(debugMsg, "MODSNAKE_ResetFood\n\r");
 					USART2_addToQueue(debugMsg);
 					#endif
@@ -756,7 +756,7 @@ void _food_updateFood()
 				else if (bodyPart == snakeObj.size-1)
 				{
 					#if MODSNAKE_DEBUG_LVL_USART >=2
-					char debugMsg[25];
+					char debugMsg[24];
 					sprintf(debugMsg, "MODSNAKE_PlacedFood\n\r");
 					USART2_addToQueue(debugMsg);
 					#endif

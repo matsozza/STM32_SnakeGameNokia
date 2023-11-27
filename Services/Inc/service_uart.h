@@ -19,7 +19,7 @@
 
 /* Typedef declare -----------------------------------------------------------*/
 typedef struct{
-	char message[16];
+	char message[24];
 } USART_message_t;
 
 

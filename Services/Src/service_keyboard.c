@@ -75,7 +75,7 @@ void serviceKeyboard_TIM_PeriodElapsedCallback()
 		serviceKeyboardInput.inputConsumed = 0;
 		
 		#if EXTKEYBOARD_DEBUG_LVL_USART >=1
-			char debugMsg[25];
+			char debugMsg[24];
 			sprintf(debugMsg, "SKB_ColAttempt:%d\n\r", serviceKeyboard_colReadAttempts);
 			USART2_addToQueue(debugMsg);
 		#endif
@@ -89,7 +89,7 @@ void serviceKeyboard_TIM_PeriodElapsedCallback()
 	else
 	{
 		#if EXTKEYBOARD_DEBUG_LVL_USART >=1
-			char debugMsg[15];
+			char debugMsg[24];
 			sprintf(debugMsg, "SKB_LostKey\n\r", serviceKeyboard_colReadAttempts);
 			USART2_addToQueue(debugMsg);
 		#endif
