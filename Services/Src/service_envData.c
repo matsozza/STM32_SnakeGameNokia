@@ -122,7 +122,7 @@ static void _queryStart()
 	_TIM_setHighResPeriod(900);
 	HAL_TIM_Base_Start_IT(&ENVDATA_COUNTER_HIGHRES);
 
-	#if ENVDATA_DEBUG_LVL_USART >=1
+	#if ENVDATA_DEBUG_LVL_USART >=2
 	char debugMsg[24];
 	sprintf(debugMsg, "\n\rQUERY_ST\n\r");
 	USART2_addToQueue(debugMsg);
@@ -145,7 +145,7 @@ static void _queryEnd()
 	_TIM_setHighResPeriod(10000);
 	HAL_TIM_Base_Start_IT(&ENVDATA_COUNTER_HIGHRES);
 
-	#if ENVDATA_DEBUG_LVL_USART >=1
+	#if ENVDATA_DEBUG_LVL_USART >=2
 	char debugMsg[24];
 	sprintf(debugMsg, "QUERY_END\n\r");
 	USART2_addToQueue(debugMsg);
@@ -274,7 +274,7 @@ static void _publishStreamResult(uint8_t errCode)
 
 	if(checkCalc != checkRec) errCode |= 0b10000; // Checksum error
 
-	#if ENVDATA_DEBUG_LVL_USART >=1
+	#if ENVDATA_DEBUG_LVL_USART >=2
 	char debugMsg[24];
 	sprintf(debugMsg, "CHK_%d_%d\n\r", checkRec, checkCalc);
 	USART2_addToQueue(debugMsg);
@@ -300,7 +300,7 @@ static void _publishStreamResult(uint8_t errCode)
 
 		#if ENVDATA_DEBUG_LVL_USART >=1
 		char debugMsg[24];
-		sprintf(debugMsg, "ERR_%d\n\r", errCode);
+		sprintf(debugMsg, "T_ERR_%d\n\r", errCode);
 		USART2_addToQueue(debugMsg);
 		#endif
 	}
