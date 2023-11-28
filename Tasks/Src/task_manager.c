@@ -40,6 +40,7 @@ extern LCD_displayBuffer_t *LCD_displayBuffer01;
 void taskManager_100ms_init()
 {
 	task100ms_keyPressed = 'x'; 
+	flashMem_initService();
 }
 
 void taskManager_100ms_run()
