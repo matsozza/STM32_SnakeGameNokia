@@ -30,6 +30,7 @@
 #include "SEGGER_SYSVIEW.h"
 #include "service_lcd.h"
 #include "service_keyboard.h"
+#include "service_envData.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,10 +94,20 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 
   // ***** SEGGER SystemView configuration *****
-  DWT->CTRL |= (1<<0); //Start CYCCNT for timestamp counting (Sozza)
+  volatile unsigned int *DWT_CYCCNT  = (volatile unsigned int *)0xE0001004; //address of the register
+  volatile unsigned int *DWT_CONTROL = (volatile unsigned int *)0xE0001000; //address of the register
+  volatile unsigned int *DWT_LAR   = (volatile unsigned int *)0xE0001FB0; //address of the register
+  volatile unsigned int *SCB_DEMCR  = (volatile unsigned int *)0xE000EDFC; //address of the register
+
+  *SCB_DEMCR |= 0x01000000;
+  *DWT_LAR = 0xC5ACCE55; // unlock
+  *DWT_CYCCNT = 0; // reset the counter
+  *DWT_CONTROL |= 1 ; // enable the counter
+
   //SEGGER_SYSVIEW_Conf();
   //SEGGER_SYSVIEW_Start();
 
@@ -191,6 +202,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   // TIM 2 - Time used for keyboard debouncing
   else if (htim->Instance == TIM2) {
 	  serviceKeyboard_TIM_PeriodElapsedCallback();
+  }
+  // TIM 3 - Time used for querying DHT22 environmental data
+  else if (htim->Instance == TIM3)
+  {
+	  serviceEnvData_TIM_PeriodElapsedCallback_LowRes();
+  }
+  else if(htim->Instance == TIM4)
+  {
+    serviceEnvData_TIM_PeriodElapsedCallback_HighRes();
   }
 
   /* USER CODE END Callback 1 */

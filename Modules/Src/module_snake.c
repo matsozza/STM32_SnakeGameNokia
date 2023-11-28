@@ -131,7 +131,7 @@ void moduleSnake_autoPlay()
 	}
 
 	#if MODSNAKE_DEBUG_LVL_USART >=1
-	char debugMsg[25];
+	char debugMsg[24];
 	sprintf(debugMsg, "MODSNAKE_NokM %d\n\r", nokMoves);
 	USART2_addToQueue(debugMsg);
 	#endif
@@ -326,7 +326,7 @@ void _moduleSnake_gameOver()
 	}
 	
 	// Write gameover text
-	uint16_t snakeRecordSize = flashMem_getHalfWord(FLASHMEM_START_ADDRESS, MODSNAKE_EEPROM_RECORD);
+	uint16_t snakeRecordSize = flashMem_getHalfWord(MODSNAKE_EEPROM_RECORD);
 	char snakeRecordStr[4] = {'\0','\0','\0','\0'};
 	if(moduleSnake_resetEEPROM == 1)
 	{
@@ -375,18 +375,19 @@ void _moduleSnake_gameOver()
 	LCD_Buffer_writeASCIIChar(moduleSnake_LCD_displayBuffer, snakeRecordStr[3], 28, 72);
 	gameOverTic++;
 
-	if(gameOverTic>50)
+	if(gameOverTic > 50)
 	{
 		// FIXME Temporary work-around, shall be managed by flashMem lib
 		// Reset record value to current value in non-volatile memory (NVM)
 
 		if(moduleSnake_resetEEPROM == 1 || snakeRecordSize < snakeObj.size)
 		{
-			flashMem_eraseSector();
-			flashMem_writeHalfWord((uint16_t)snakeObj.size, (uint32_t)FLASHMEM_START_ADDRESS, (uint32_t)MODSNAKE_EEPROM_RECORD); // Reset command
+
+			flashMem_writeHalfWord((uint16_t)snakeObj.size, (uint32_t)MODSNAKE_EEPROM_RECORD); // write record value
+			flashMem_write2flash(); // send to flash memory
 		}
 
-		moduleSnakeStateTrans = MODSNAKE_GAMEOVER_STOPPED;
+		moduleSnakeStateTrans = MODSNAKE_GAMEOVER_STOPPED; // State transition
 		gameOverTic=0;
 		moduleSnake_resetEEPROM=0;
 	}
@@ -745,7 +746,7 @@ void _food_updateFood()
 				if(snakeObj.bodyComponent[bodyPart].posRow == randomRow && snakeObj.bodyComponent[bodyPart].posCol == randomCol)
 				{
 					#if MODSNAKE_DEBUG_LVL_USART >=2
-					char debugMsg[25];
+					char debugMsg[24];
 					sprintf(debugMsg, "MODSNAKE_ResetFood\n\r");
 					USART2_addToQueue(debugMsg);
 					#endif
@@ -756,7 +757,7 @@ void _food_updateFood()
 				else if (bodyPart == snakeObj.size-1)
 				{
 					#if MODSNAKE_DEBUG_LVL_USART >=2
-					char debugMsg[25];
+					char debugMsg[24];
 					sprintf(debugMsg, "MODSNAKE_PlacedFood\n\r");
 					USART2_addToQueue(debugMsg);
 					#endif

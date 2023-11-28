@@ -11,6 +11,7 @@
 /* Private includes ----------------------------------------------------------*/
 #include "task_manager.h"
 #include "freertos.h"
+#include "tim.h"
 
 /* External variables includes -----------------------------------------------*/
 // FreeRTOS featured variables
@@ -39,6 +40,7 @@ extern LCD_displayBuffer_t *LCD_displayBuffer01;
 void taskManager_100ms_init()
 {
 	task100ms_keyPressed = 'x'; 
+	flashMem_initService();
 }
 
 void taskManager_100ms_run()
@@ -60,6 +62,7 @@ void taskManager_100ms_run()
 void taskManager_500ms_init()
 {
 	task500ms_LCDWrite=0;
+	serviceEnvData_serviceInit(); // Start DHT22 envData service
 }
 
 void taskManager_500ms_run()
