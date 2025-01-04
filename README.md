@@ -5,7 +5,7 @@
 ---
 **Short video:** Gameplay demo available on Youtube - click to open: 
  
-[![Video](.//images/videoThumb.png)](https://youtu.be/vmf_LfWBd14)
+[![Video](https://img.youtube.com/vi/vmf_LfWBd14/0.jpg)](https://youtu.be/watch?v=vmf_LfWBd14)
 
 ---
 
